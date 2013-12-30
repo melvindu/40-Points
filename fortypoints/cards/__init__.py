@@ -3,25 +3,25 @@ from fortypoints.cards import constants as CARD
 
 
 class Deck(object):
-	def __init__(self):
-		deck = []
-		for suit in CARD.SUITS:
-			for num in CARD.NUMBERS:
-				card = Card(num, suit)
-				deck.append(card)
-		self.cards = deck
+  def __init__(self):
+    deck = []
+    for suit in CARD.SUITS:
+      for num in CARD.NUMBERS:
+        card = Card(num, suit)
+        deck.append(card)
+    self.cards = deck
 
-	def shuffle(self):
-		random.shuffle(self.cards)
+  def shuffle(self):
+    random.shuffle(self.cards)
 
-	def sort(self):
+  def sort(self):
     self.cards.sort()
 
 
 class Card(object):
   def __init__(self, num, suit):
-	  self.num = num
-	  self.suit = suit
+    self.num = num
+    self.suit = suit
 
   @property
   def name(self):

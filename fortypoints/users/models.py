@@ -10,17 +10,17 @@ class User(db.Model, ModelMixin):
   role = db.Column(db.SmallInteger, default=USER.USER)
   status = db.Column(db.SmallInteger, default=USER.NEW)
 
-      def __init__(self, name=None, email=None, password=None):
-        self.name = name
-        self.email = email
-        self.password = password
+  def __init__(self, name=None, email=None, password=None):
+    self.name = name
+    self.email = email
+    self.password = password
 
 
-      def get_status(self):
-        return USER.STATUS[self.status]
+  def get_status(self):
+    return USER.STATUS[self.status]
 
-      def get_role(self):
-        return USER.ROLE[self.role]
+  def get_role(self):
+    return USER.ROLE[self.role]
 
-      def __repr__(self):
-        return '<User {name}>'.format(name=self.name)
+  def __repr__(self):
+    return '<User {name}>'.format(name=self.name)
