@@ -1,8 +1,8 @@
 class Suit(object):
-	HEART = 1
-	SPADE = 2
-	CLUB = 3
-	DIAMOND = 4
+	HEART = 'heart'
+	SPADE = 'spade'
+	CLUB = 'club'
+	DIAMOND = 'diamond'
 
 class Number(object):
 	TWO = 2
@@ -20,9 +20,6 @@ class Number(object):
 	ACE = 14
 	SMALL_JOKER = 15
 	BIG_JOKER = 16
-
-NUM_SUITS = 4
-NUM_NUMBERS = 15
 
 NUMBERS = (Number.TWO, Number.THREE, Number.FOUR, Number.FIVE, Number.SIX, 
 	Number.SEVEN, Number.EIGHT, Number.NINE, Number.TEN, Number.JACK, 
