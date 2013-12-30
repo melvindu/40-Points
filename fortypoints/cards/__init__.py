@@ -19,12 +19,7 @@ class Card(object):
 	  self.suit = suit
 
 	def __eq__(self, other):
-		if self.suit != other.suit:
-			return False
-		if self.num == other.num:
-			return True
-		else:
-			return False
+    return self.suit == other.suit and self.num == other.num
 
 	def __lt__(self, other):
 		if SUITS.index(self.suit) >= SUITS.index(other.suit):
