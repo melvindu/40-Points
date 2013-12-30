@@ -4,12 +4,6 @@ class Card(object):
 	def __init__ (self, num, suit):
 		self.num = num
 		self.suit = suit
-		if num == FIVE:
-			self.points = 5
-		elif num == TEN or num == KING:
-			self.points = 10
-		else:
-			self.points = 0
 
   @property
   def num(self):
@@ -23,13 +17,13 @@ class Card(object):
 
   @property
   def suit(self):
-  	return self._suit
+    return self._suit
 
   @suit.setter
   def suit(self, suit):
-  	if suit not in SUITS:
-  		raise ValueError('Card() suit is invalid')
-  	self._suit = suit
+    if suit not in SUITS:
+      raise ValueError('Card() suit is invalid')
+    self._suit = suit
 
   @property
   def points(self):
