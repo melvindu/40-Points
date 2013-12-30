@@ -1,4 +1,5 @@
 from fortypoints.cards.constants import Number
+from fortypoints.cards.constants import Suit
 
 class Card(object):
 	def __init__ (self, num, suit):
