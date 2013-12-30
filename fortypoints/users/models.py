@@ -1,6 +1,8 @@
-from fortypoints import db
+import fortypoints as fp
 from fortypoints.models import ModelMixin
 from fortypoints.users import constants as USER
+
+db = fp.db
 
 class User(db.Model, ModelMixin):
   id = db.Column(db.Integer(unsigned=True), primary_key=True)
