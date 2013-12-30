@@ -1,28 +1,48 @@
-class Suit(object):
-	HEART = 'heart'
-	SPADE = 'spade'
-	CLUB = 'club'
-	DIAMOND = 'diamond'
+DIAMOND = 0
+CLUB = 1
+HEART = 2
+SPADE = 3
+SUIT = {
+	DIAMOND: 'diamond',
+	CLUB: 'club',
+	HEART: 'heart',
+	SPADE: 'spade'
+}
 
-class Number(object):
-	TWO = 2
-	THREE = 3
-	FOUR = 4
-	FIVE = 5
-	SIX = 6
-	SEVEN = 7
-	EIGHT = 8
-	NINE = 9
-	TEN = 10
-	JACK = 11
-	QUEEN = 12
-	KING = 13
-	ACE = 14
-	SMALL_JOKER = 15
-	BIG_JOKER = 16
+TWO = 2
+THREE = 3
+FOUR = 4
+FIVE = 5
+SIX = 6
+SEVEN = 7
+EIGHT = 8
+NINE = 9
+TEN = 10
+JACK = 11
+QUEEN = 12
+KING = 13
+ACE = 14
+SMALL_JOKER = 15
+BIG_JOKER = 16
+NUMBER = {
+	TWO: 'two',
+	THREE: 'three',
+	FOUR: 'four',
+	FIVE: 'five',
+	SIX: 'six',
+	SEVEN: 'seven',
+	EIGHT: 'eight',
+	NINE: 'nine',
+	TEN: 'ten',
+	JACK: 'jack',
+	QUEEN: 'queen',
+	KING: 'king',
+	ACE: 'ace',
+	SMALL_JOKER: 'small_joker',
+	BIG_JOKER: 'big_joker'
+}
 
-NUMBERS = (Number.TWO, Number.THREE, Number.FOUR, Number.FIVE, Number.SIX, 
-	Number.SEVEN, Number.EIGHT, Number.NINE, Number.TEN, Number.JACK, 
-	Number.QUEEN, Number.KING, Number.ACE, Number.SMALL_JOKER, Number.BIG_JOKER)
+NUMBERS = (TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE,
+	         TEN, JACK, QUEEN, KING, ACE, SMALL_JOKER, BIG_JOKER)
 
-SUITS = (Suit.DIAMOND, Suit.CLUB, Suit.HEART, Suit.SPADE)
+SUITS = (DIAMOND, CLUB, HEART, SPADE)
