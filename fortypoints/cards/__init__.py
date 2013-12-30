@@ -2,15 +2,24 @@ from random import randrange
 from fortypoints.cards.constants import NUMBERS, SUITS, Number, Suit
 
 class Deck(object):
-	deck = []
-	for suit in SUITS:
-		for num in NUMBERS:
-			card = Card(num, suit)
-			deck.insert(randrange(len[deck]), card)
-	self.cards = deck
+	def __init__(self):
+		deck = []
+		for suit in SUITS:
+			for num in NUMBERS:
+				card = Card(num, suit)
+				deck.append(card)
+		self.cards = deck
+
+	def shuffle(self):
+		shuffled = []
+		unshuffled = self
+		for card in self:
+			temp = unshuffled.pop()
+			shuffled.insert(randrange(len[self]), temp)
+		return shuffled
 
 class Card(object):
-  def __init__ (self, num, suit):
+  def __init__(self, num, suit):
 	  self.num = num
 	  self.suit = suit
 
