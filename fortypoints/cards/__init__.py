@@ -3,8 +3,8 @@ from fortypoints.cards.constants import NUMBERS, SUITS, Number, Suit
 
 class Deck(object):
 	deck = []
-	for suit in range(SUITS):
-		for num in range(NUMBERS):
+	for suit in SUITS:
+		for num in NUMBERS:
 			card = Card(num, suit)
 			deck.insert(randrange(len[deck]), card)
 	self.deck = deck
