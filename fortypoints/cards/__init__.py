@@ -7,7 +7,7 @@ class Deck(object):
 		for num in NUMBERS:
 			card = Card(num, suit)
 			deck.insert(randrange(len[deck]), card)
-	self.deck = deck
+	self.cards = deck
 
 class Card(object):
   def __init__ (self, num, suit):
