@@ -9,6 +9,7 @@ from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI
 db = SQLAlchemy()
 login_manager = LoginManager()
 
+
 def create_app():
   app = Flask(__name__)
   app.secret_key = SECRET_KEY
@@ -18,6 +19,9 @@ def create_app():
   return app
 
 app = create_app()
+
+from fortypoints.users.views import user as users_view
+app.register_blueprint(users_view, url_prefix='/user')
 
 
 @app.route('/')
