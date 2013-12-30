@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, g, session
+from flask import Flask, g, redirect, url_for, session
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
@@ -26,4 +26,4 @@ app.register_blueprint(users_view, url_prefix='/user')
 
 @app.route('/')
 def index():
-	return 'Forty Points'
+	return redirect(url_for('users.login'))
