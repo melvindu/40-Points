@@ -5,12 +5,12 @@ class Round(object):
   a list of eligible card plays. 
   """
   @classmethod
-  def factory(cls, player, cards, game):
+  def factory(cls, game, player, cards):
     # TODO(yjohnmei): create the appropriate round type given the cards and game.
     # raise an Exception if the cards are not allowed to be played given game state.
     pass
 
-  def __init__(player, cards, game):
+  def __init__(game, player, cards):
     self._game = game
     self._plays = {player: cards}
 
