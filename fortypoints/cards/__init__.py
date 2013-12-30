@@ -20,3 +20,21 @@ class Card(object):
     if num not in Number:
       raise ValueError('Card() value is invalid')
     self._num = num
+
+  @property
+  def suit(self):
+  	return self._suit
+
+  @suit.setter
+  def suit(self, suit):
+  	if suit not in Suit:
+  		raise ValueError('Card() suit is invalid')
+  	self._suit = suit
+
+  @property
+  def points(self):
+  	return self._points
+
+  @points.setter
+  def points(self, points):
+  	self._points = points
