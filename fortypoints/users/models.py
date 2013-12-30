@@ -7,6 +7,7 @@ from fortypoints.users import constants as USER
 db = fp.db
 
 class User(db.Model, ModelMixin):
+  __tablename__ = 'user'
   id = db.Column(db.Integer(unsigned=True), primary_key=True)
   name = db.Column(db.String(50), unique=True)
   email = db.Column(db.String(120), unique=True)
@@ -19,7 +20,10 @@ class User(db.Model, ModelMixin):
     self.email = email
     self.password = password
 
-
+  @property
+  def games(self):
+    return self.players.games
+    
   def get_status(self):
     return USER.STATUS[self.status]
 

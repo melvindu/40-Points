@@ -7,6 +7,7 @@ from fortypoints.games import constants as GAME
 db = fp.db
 
 class Game(db.Model, ModelMixin):
+  __tablename__ = 'game'
   id = db.Column(db.Integer(unsigned=True), primary_key=True)
   trump_number = db.Column(db.SmallInteger(unsigned=True), nullable=True)
   trump_suit = db.Column(db.SmallInteger(unsigned=True), nullable=True)
