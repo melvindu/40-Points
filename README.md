@@ -26,4 +26,5 @@ The following assumes you have all of the recommended tools listed above install
 #### 2. Create and initialize virtualenv for the project:
 
     $ virtualenv venv
+    $ source venv/bin/activate
     $ pip install -r requirements.txt
