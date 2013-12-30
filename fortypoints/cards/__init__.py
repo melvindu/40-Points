@@ -1,4 +1,14 @@
-from fortypoints.cards.constants import NUMBERS, SUITS, Number
+from random import randrange
+from fortypoints.cards.constants import NUMBERS, SUITS, Number, Suit, NUM_SUITS, NUM_NUMBERS
+
+NUM_SKIP = 2
+
+class Deck(object):
+	deck = []
+	for i in range(NUM_SUITS):
+		for j in range(NUM_NUMBERS):
+			card = Card(j + NUM_SKIP, i)
+			deck.insert(randrange(len[a]), card)
 
 class Card(object):
   def __init__ (self, num, suit):
