@@ -1,0 +1,69 @@
+from nose.tools import eq_, ok_
+
+from fortypoints.cards import Deck, Card, constants as CARD
+
+sorted_cards = [
+  Card(CARD.TWO, CARD.DIAMOND),
+  Card(CARD.THREE, CARD.DIAMOND),
+  Card(CARD.FOUR, CARD.DIAMOND),
+  Card(CARD.FIVE, CARD.DIAMOND),
+  Card(CARD.SIX, CARD.DIAMOND),
+  Card(CARD.SEVEN, CARD.DIAMOND),
+  Card(CARD.EIGHT, CARD.DIAMOND),
+  Card(CARD.NINE, CARD.DIAMOND),
+  Card(CARD.TEN, CARD.DIAMOND),
+  Card(CARD.JACK, CARD.DIAMOND),
+  Card(CARD.QUEEN, CARD.DIAMOND),
+  Card(CARD.KING, CARD.DIAMOND),
+  Card(CARD.ACE, CARD.DIAMOND),
+  Card(CARD.TWO, CARD.CLUB),
+  Card(CARD.THREE, CARD.CLUB),
+  Card(CARD.FOUR, CARD.CLUB),
+  Card(CARD.FIVE, CARD.CLUB),
+  Card(CARD.SIX, CARD.CLUB),
+  Card(CARD.SEVEN, CARD.CLUB),
+  Card(CARD.EIGHT, CARD.CLUB),
+  Card(CARD.NINE, CARD.CLUB),
+  Card(CARD.TEN, CARD.CLUB),
+  Card(CARD.JACK, CARD.CLUB),
+  Card(CARD.QUEEN, CARD.CLUB),
+  Card(CARD.KING, CARD.CLUB),
+  Card(CARD.ACE, CARD.CLUB),
+  Card(CARD.TWO, CARD.HEART),
+  Card(CARD.THREE, CARD.HEART),
+  Card(CARD.FOUR, CARD.HEART),
+  Card(CARD.FIVE, CARD.HEART),
+  Card(CARD.SIX, CARD.HEART),
+  Card(CARD.SEVEN, CARD.HEART),
+  Card(CARD.EIGHT, CARD.HEART),
+  Card(CARD.NINE, CARD.HEART),
+  Card(CARD.TEN, CARD.HEART),
+  Card(CARD.JACK, CARD.HEART),
+  Card(CARD.QUEEN, CARD.HEART),
+  Card(CARD.KING, CARD.HEART),
+  Card(CARD.ACE, CARD.HEART),
+  Card(CARD.TWO, CARD.SPADE),
+  Card(CARD.THREE, CARD.SPADE),
+  Card(CARD.FOUR, CARD.SPADE),
+  Card(CARD.FIVE, CARD.SPADE),
+  Card(CARD.SIX, CARD.SPADE),
+  Card(CARD.SEVEN, CARD.SPADE),
+  Card(CARD.EIGHT, CARD.SPADE),
+  Card(CARD.NINE, CARD.SPADE),
+  Card(CARD.TEN, CARD.SPADE),
+  Card(CARD.JACK, CARD.SPADE),
+  Card(CARD.QUEEN, CARD.SPADE),
+  Card(CARD.KING, CARD.SPADE),
+  Card(CARD.ACE, CARD.SPADE),
+  Card(CARD.SMALL_JOKER, CARD.SMALL_JOKER),
+  Card(CARD.BIG_JOKER, CARD.BIG_JOKER)
+]
+
+def test_card_sort():
+  deck = Deck()
+  eq_(sorted_cards, deck.cards)
+  deck.shuffle()
+  deck.sort()
+  eq_(sorted_cards, deck.cards)
+
+
