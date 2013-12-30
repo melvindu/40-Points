@@ -22,16 +22,20 @@ class Card(object):
     return self.suit == other.suit and self.num == other.num
 
 	def __lt__(self, other):
-		if SUITS.index(self.suit) >= SUITS.index(other.suit):
+		if SUITS.index(self.suit) > SUITS.index(other.suit):
 			return False
+		elif SUITS.index(self.suit) < SUITS.index(other.suit):
+			return True
 		if self.num < other.num:
 			return True
 		else:
 			return False
 
 	def __gt__(self, other):
-		if SUITS.index(self.suit) <= SUITS.index(other.suit):
+		if SUITS.index(self.suit) < SUITS.index(other.suit):
 			return False
+		elif SUITS.index(self.suit) > SUITS.index(other.suit):
+			return True
 		if self.num > other.num:
 			return True
 		else:
