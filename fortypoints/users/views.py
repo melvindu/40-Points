@@ -5,6 +5,7 @@ from fortypoints import login_manager
 from fortypoints.request import nocache
 from fortypoints.template import templated
 from fortypoints.users.forms import LoginForm, RegisterForm
+from fortypoints.users.models import User
 
 @login_manager.user_loader
 def load_user(userid):
@@ -19,7 +20,7 @@ user = Blueprint('users', __name__, template_folder='templates/users')
 @user.route('/')
 @login_required
 def index():
-  return 'HI'
+  return render_template()
 
 @user.route('/login', methods=['GET', 'POST'])
 @nocache
@@ -38,4 +39,4 @@ def login():
       login_user(user)
       return redirect(url_for('index'))
     flash('Wrong email or password', 'error-message')
-  return render_template("users/login.html", form=form)
+  return render_template('users/login.html', form=form)
