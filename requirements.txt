@@ -2,7 +2,7 @@ Flask==0.10.1
 Flask-SQLAlchemy==0.16
 Flask-WTF==0.8
 Jinja2==2.7
-MySQL-python==1.2.4
+PyMySQL==0.6.1
 SQLAlchemy==0.8.1
 Sphinx==1.2b1
 WTForms==1.0.4
