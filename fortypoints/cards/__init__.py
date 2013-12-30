@@ -1,5 +1,4 @@
-from fortypoints.cards.constants import Number
-from fortypoints.cards.constants import Suit
+from fortypoints.cards.constants import NUMBERS, SUITS, Number
 
 class Card(object):
 	def __init__ (self, num, suit):
@@ -18,7 +17,7 @@ class Card(object):
 
   @num.setter
   def num(self, num):
-    if num not in Number:
+    if num not in NUMBERS:
       raise ValueError('Card() value is invalid')
     self._num = num
 
@@ -28,7 +27,7 @@ class Card(object):
 
   @suit.setter
   def suit(self, suit):
-  	if suit not in Suit:
+  	if suit not in SUITS:
   		raise ValueError('Card() suit is invalid')
   	self._suit = suit
 
