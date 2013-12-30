@@ -1,3 +1,5 @@
+from fortypoints.cards.constants import Number
+
 class Card(object):
 	def __init__ (self, num, suit):
 		self.num = num
@@ -8,3 +10,13 @@ class Card(object):
 			self.points = 10
 		else:
 			self.points = 0
+
+  @property
+  def num(self):
+    return self._num
+
+  @num.setter
+  def num(self, num):
+    if num not in Number:
+      raise ValueError('Card() value is invalid')
+    self._num = num
