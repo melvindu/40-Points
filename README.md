@@ -28,3 +28,8 @@ The following assumes you have all of the recommended tools listed above install
     $ virtualenv venv
     $ source venv/bin/activate
     $ pip install -r requirements.txt
+
+#### 3. Start the server:
+    
+    $ python run.py
+
