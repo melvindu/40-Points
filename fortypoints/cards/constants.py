@@ -17,5 +17,12 @@ class Number(object):
 	JACK = 11
 	QUEEN = 12
 	KING = 13
-	SMALL_JOKER = 14
-	BIG_JOKER = 15
+	ACE = 14
+	SMALL_JOKER = 15
+	BIG_JOKER = 16
+
+NUMBERS = (Number.TWO, Number.THREE, Number.FOUR, Number.FIVE, Number.SIX, 
+	Number.SEVEN, Number.EIGHT, Number.NINE, Number.TEN, Number.JACK, 
+	Number.QUEEN, Number.KING, Number.ACE, Number.SMALL_JOKER, Number.BIG_JOKER)
+
+SUITS = (Suit.HEART, Suit.SPADE, Suit.CLUB, Suit.DIAMOND)
