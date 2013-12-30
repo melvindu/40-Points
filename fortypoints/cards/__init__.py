@@ -18,6 +18,24 @@ class Card(object):
 	  self.num = num
 	  self.suit = suit
 
+	def __eq__(self, other):
+		if self.num == other.num:
+			return True
+		else:
+			return False
+
+	def __lt__(self, other):
+		if self.num < other.num:
+			return True
+		else:
+			return False
+
+	def __gt__(self, other):
+		if self.num > other.num:
+			return True
+		else:
+			return False
+
   @property
   def num(self):
     return self._num
