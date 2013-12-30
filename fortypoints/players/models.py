@@ -21,5 +21,10 @@ class Player(db.Model, ModelMixin):
     self.game_id = game.id
     self.user_id = user.id
 
-  def __repr__(self):
-    return '<Player size={size} trump={trump}>'.format(size=self.size, trump=self.trump)
+  def __str__(self):
+    return '<Player \'{user}\' level={level} house={house} game_id={game_id}>'.format(
+                      user=self.user.name, 
+                      level=self.level,
+                      house=self.house,
+                      game_id=self.game_id
+    )
