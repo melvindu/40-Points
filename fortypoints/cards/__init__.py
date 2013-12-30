@@ -34,8 +34,9 @@ class Card(object):
 
   @property
   def points(self):
-  	return self._points
-
-  @points.setter
-  def points(self, points):
-  	self._points = points
+    if self.num == Number.FIVE:
+      return 5
+    elif self.num in (Number.TEN, Number.KING):
+      return 10
+    else:
+      return 0
