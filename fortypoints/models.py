@@ -1,7 +1,7 @@
 class ModelMixin(object):
   @classmethod
   def get(cls, **kwargs):
-    results = cls.query.filter(**kwargs).all()
+    results = cls.query.filter_by(**kwargs).all()
     if len(results) > 1:
       raise ValueError('get() returned more than one result')
     elif len(results) == 1:
