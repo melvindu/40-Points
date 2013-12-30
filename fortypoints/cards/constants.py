@@ -25,4 +25,4 @@ NUMBERS = (Number.TWO, Number.THREE, Number.FOUR, Number.FIVE, Number.SIX,
 	Number.SEVEN, Number.EIGHT, Number.NINE, Number.TEN, Number.JACK, 
 	Number.QUEEN, Number.KING, Number.ACE, Number.SMALL_JOKER, Number.BIG_JOKER)
 
-SUITS = (Suit.HEART, Suit.SPADE, Suit.CLUB, Suit.DIAMOND)
+SUITS = (Suit.DIAMOND, Suit.CLUB, Suit.HEART, Suit.SPADE)

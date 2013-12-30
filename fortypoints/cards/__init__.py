@@ -1,4 +1,4 @@
-from random import randrange, shuffle
+from random import shuffle
 from fortypoints.cards.constants import NUMBERS, SUITS, Number, Suit
 
 class Deck(object):
@@ -19,18 +19,24 @@ class Card(object):
 	  self.suit = suit
 
 	def __eq__(self, other):
+		if self.suit != other.suit:
+			return False
 		if self.num == other.num:
 			return True
 		else:
 			return False
 
 	def __lt__(self, other):
+		if SUITS.index(self.suit) >= SUITS.index(other.suit):
+			return False
 		if self.num < other.num:
 			return True
 		else:
 			return False
 
 	def __gt__(self, other):
+		if SUITS.index(self.suit) <= SUITS.index(other.suit):
+			return False
 		if self.num > other.num:
 			return True
 		else:
