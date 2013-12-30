@@ -1,9 +1,9 @@
 from fortypoints.cards.constants import NUMBERS, SUITS, Number
 
 class Card(object):
-	def __init__ (self, num, suit):
-		self.num = num
-		self.suit = suit
+  def __init__ (self, num, suit):
+	  self.num = num
+	  self.suit = suit
 
   @property
   def num(self):
