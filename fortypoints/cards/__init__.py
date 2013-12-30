@@ -14,15 +14,7 @@ class Deck(object):
 		random.shuffle(self.cards)
 
 	def sort(self):
-		resorted = []
-		for i in self.cards:
-			cur = self.pop()
-			if len(resorted) = 0:
-				resorted.append(cur)
-			else:
-				for j in resorted:
-					if cur.__lt__(resorted[j]) and cur.__gt__(resorted[j + 1]):
-						resorted.insert(j + 1, cur)
+    self.cards.sort()
 
 class Card(object):
   def __init__(self, num, suit):
