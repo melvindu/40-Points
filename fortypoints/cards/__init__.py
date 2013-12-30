@@ -26,11 +26,11 @@ class Card(object):
   @property
   def name(self):
     if self.num in (CARD.SMALL_JOKER, CARD.BIG_JOKER):
-      return CARD.NUMBER[self.num].replace('_', ' ').capitalize()
+      return CARD.NUMBER[self.num].replace('_', ' ').title()
     else:
-      num = CARD.NUMBER[self.num].capitalize()
-      suit = '{suit}s'.format(suit=ARD.suit[self.suit].capitalize())
-      return '{num} of {suit}'.format(num=num, suit=suit)
+      num = CARD.NUMBER[self.num]
+      suit = '{suit}s'.format(suit=CARD.SUIT[self.suit])
+      return '{num} of {suit}'.format(num=num, suit=suit).title()
       
   @property
   def num(self):
@@ -61,8 +61,8 @@ class Card(object):
     else:
       return 0
 
-  def __str__(self):
-    return '<Card {name}>'.format(name=self.name)
+  def __repr__(self):
+    return '<Card \'{name}\'>'.format(name=self.name)
     
   def __eq__(self, other):
     return self.suit == other.suit and self.num == other.num
