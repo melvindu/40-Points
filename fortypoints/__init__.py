@@ -21,9 +21,9 @@ def create_app():
 app = create_app()
 
 from fortypoints.users.views import user as users_view
-app.register_blueprint(users_view, url_prefix='/user')
+app.register_blueprint(users_view)
 
 
 @app.route('/')
 def index():
-	return redirect(url_for('users.login'))
+	return redirect(url_for('users.index'))

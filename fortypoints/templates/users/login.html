@@ -8,7 +8,7 @@
 <link href="../static/css/users/login.css" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<div class="page-header" id="header">
+<div class="row page-header" id="header">
   <h1 id="title">
     Forty Points
     <div>
@@ -16,6 +16,17 @@
         A card game for the ages.
       </small>
     </div>
-  <h1>
+  </h1>
+</div>
+{% from "forms/macros.html" import render_field %}
+<div class="col-md-4 col-md-offset-4" id="login">
+  <form method="POST" action="." class="form">
+    {{ form.hidden_tag() }}
+    {{ render_field(form.email, class="form-control", placeholder="Enter email") }}
+    {{ render_field(form.password, class="form-control", placeholder="Password") }}
+    <hr/>
+    <input type="submit" value="Login" class="btn btn-default btn-block">
+    <a class="btn btn-link btn-block" href="{{ url_for('users.login') }}">Register</a>
+  </form>
 </div>
 {% endblock %}

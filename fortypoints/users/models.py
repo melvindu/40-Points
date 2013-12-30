@@ -1,3 +1,5 @@
+from werkzeug.security import check_password_hash, generate_password_hash
+
 import fortypoints as fp
 from fortypoints.models import ModelMixin
 from fortypoints.users import constants as USER
@@ -23,6 +25,12 @@ class User(db.Model, ModelMixin):
 
   def get_role(self):
     return USER.ROLE[self.role]
+
+  def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+  def check_password(self, password):
+      return check_password_hash(self.password, password)
 
   def __repr__(self):
     return '<User {name}>'.format(name=self.name)
