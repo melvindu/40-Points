@@ -21,7 +21,7 @@ user = Blueprint('users', __name__, template_folder='templates/users')
 def index():
   return 'HI'
 
-@user.route('/login')
+@user.route('/login', methods=['GET', 'POST'])
 @nocache
 def login():
   """
