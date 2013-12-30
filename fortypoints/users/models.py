@@ -18,12 +18,12 @@ class User(db.Model, ModelMixin):
   def __init__(self, name=None, email=None, password=None):
     self.name = name
     self.email = email
-    self.password = password
+    self.set_password(password)
 
   @property
   def games(self):
     return self.players.games
-    
+
   def get_status(self):
     return USER.STATUS[self.status]
 
