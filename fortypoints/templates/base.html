@@ -10,10 +10,13 @@
   {% block css %}
   <link href="../static/css/bootstrap.min.css" rel="stylesheet">
   {% endblock %}
-  <div id="messages-wrap">
-    <div id="messages">
+  <div id="messages-wrap" class="row">
+    <div id="messages" class="col-md-6 col-md-offset-3">
       {% for category, msg in get_flashed_messages(with_categories=true) %}
-      <p class="message flash-{{ category }}">{{ msg }}</p>
+      <div class="alert alert-{{ category }} fade in">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        {{ msg }}
+      </div>
       {% endfor %}
     </div>
   </div>

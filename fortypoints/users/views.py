@@ -41,7 +41,7 @@ def login():
       # it's a safe place to store the user id
       login_user(user)
       return redirect(url_for('index'))
-    flash('Wrong email or password', 'error-message')
+    flash('Wrong email or password', 'danger')
   return render_template('users/login.html', form=form)
 
 
@@ -55,7 +55,7 @@ def register():
   if form.validate_on_submit():
     user = users.create_user(form.name.data, form.email.data, form.password.data)
     if not user:
-      flash('User already exists')
+      flash('User already exists', category=  'warning')
       return redirect(url_for('users.login'))
     login_user(user)
     return redirect(url_for('index'))
