@@ -1,7 +1,13 @@
 {% extends "base.html" %}
+{% import "users/macros.html" as user_macros %}
+
+{% block leftsidebar %}
+<a class="btn btn-default" href="{{ url_for('games.new') }}">New Game</a>
+{% endblock %}
 
 {% block content %}
     <h1 class="page-header">Games</h1>
-    {{ current_user.players.all() }}
-    {{ current_user.games }}
+    {% for game in current_user.games %}
+      {{ user_macros.render_game(game) }}
+    {% endfor %}
 {% endblock %}
