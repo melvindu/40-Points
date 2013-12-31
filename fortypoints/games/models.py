@@ -26,4 +26,8 @@ class Game(db.Model, ModelMixin):
     self.trump_suit = card.suit
 
   def __repr__(self):
-    return '<Game size={size} trump={trump}>'.format(size=self.size, trump=self.trump)
+    return '<Game size={size} trump_number={num} trump_suit={suit}>'.format(
+            size=self.size, 
+            num=self.trump_number,
+            suit=self.trump_suit
+    )

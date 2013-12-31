@@ -23,7 +23,7 @@ class User(db.Model, ModelMixin, UserMixin):
 
   @property
   def games(self):
-    return self.players.games
+    return list(set(player.game for player in self.players))
 
   def get_status(self):
     return USER.STATUS[self.status]
