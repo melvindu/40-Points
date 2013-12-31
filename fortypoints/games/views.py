@@ -9,7 +9,7 @@ from fortypoints.users import get_user
 game = Blueprint('games', __name__, template_folder='templates/games')
 
 
-@game.route('/play/<int:game_id>', methods=['GET', 'POST'])
+@game.route('/play/<int:game_id>')
 @login_required
 def play(game_id):
   """
@@ -39,7 +39,7 @@ def new():
           flash('Invalid User {username}'.format(username=username), 'danger')
           return render_template('games/new.html', form=form)
         users.append(user)
-        
+
       if len(users) < GAME.MIN_PLAYERS:
         flash('Must invite at least {min} players'.format(min=GAME.MIN_PLAYERS), 'danger')
         return render_template('games/new.html', form=form)
