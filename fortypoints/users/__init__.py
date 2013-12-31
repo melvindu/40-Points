@@ -14,6 +14,8 @@ def get_user(email, password):
       raise InvalidPasswordException
   return user
 
+def get_user_by_id(userid):
+  return User.get(id=userid)
 
 def create_user(name, email, password):
   user = User(name, email, password)

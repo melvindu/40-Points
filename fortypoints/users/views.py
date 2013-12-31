@@ -10,7 +10,7 @@ from fortypoints.users.forms import LoginForm, RegisterForm
 
 @login_manager.user_loader
 def load_user(userid):
-    return users.get_users(id=userid)
+    return users.get_user_by_id(userid=userid)
 
 @login_manager.unauthorized_handler
 def handle_unauthorized():
@@ -21,7 +21,7 @@ user = Blueprint('users', __name__, template_folder='templates/users')
 @user.route('/')
 @login_required
 def index():
-  return render_template()
+  return render_template('users/index.html')
 
 @user.route('/login', methods=['GET', 'POST'])
 def login():
