@@ -14,7 +14,7 @@ class Player(db.Model, ModelMixin):
   level = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   house = db.Column(db.Boolean, nullable=False)
 
-  game = db.relationship('Game', backref=db.backref('players', lazy='dynamic'))
+  game = db.relationship('Game', foreign_keys=game_id, backref=db.backref('players', lazy='dynamic'))
   user = db.relationship('User', backref=db.backref('players', lazy='dynamic'))
 
   def __init__(self, game, user):
