@@ -3,7 +3,7 @@ import fortypoints as fp
 from fortypoints.cards import Card
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
-from fortypoints.players import get_player_by_id
+from fortypoints.players import get_player, get_player_by_id
 
 db = fp.db
 
@@ -34,6 +34,9 @@ class Game(db.Model, ModelMixin):
   @current_player.setter
   def current_player(self, player):
     self.current_player_id = player.id
+
+  def get_player(self, user):
+    return get_player(self, user)
 
   def __repr__(self):
     return '<Game size={size} trump_number={num} trump_suit={suit}>'.format(

@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% import "users/macros.html" as user_macros %}
 
+{% block css %}
+{{ super() }}
+<link href="../static/css/users/index.css" rel="stylesheet">
+{% endblock %}
+
 {% block leftsidebar %}
 <h1 class="page-header">
   <a class="btn btn-primary" href="{{ url_for('games.new') }}">New Game</a>
@@ -8,8 +13,20 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="page-header">Games</h1>
+<h1 class="page-header">Games</h1>
+<div id="games">
+  <ol>
     {% for game in current_user.games %}
-      {{ user_macros.render_game(game) }}
+
+    {% if loop.index is divisibleby 2 %}
+    {% set divisible = "even" %}
+    {% else %}
+    {% set divisible = "odd" %}
+    {% endif %}
+    <li>
+      {{ user_macros.render_game(game, current_user, divisible) }}
+    </li>
     {% endfor %}
+  </ol>
+</div>
 {% endblock %}
