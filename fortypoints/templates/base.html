@@ -10,6 +10,13 @@
   {% block css %}
   <link href="../static/css/bootstrap.min.css" rel="stylesheet">
   {% endblock %}
+  <div id="messages-wrap">
+    <div id="messages">
+      {% for category, msg in get_flashed_messages(with_categories=true) %}
+      <p class="message flash-{{ category }}">{{ msg }}</p>
+      {% endfor %}
+    </div>
+  </div>
 </head>
 <body>
   {% block navbar %}
