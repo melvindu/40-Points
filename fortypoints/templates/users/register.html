@@ -9,6 +9,7 @@
     {{ render_field(form.password, class="form-control", placeholder="Password") }}
     <hr/>
     <input type="submit" value="Register" class="btn btn-success btn-block">
+    <a class="btn btn-link btn-block" href="{{ url_for('users.login') }}">Login</a>
   </form>
 </div>
 {% endblock %}
