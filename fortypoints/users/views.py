@@ -32,7 +32,7 @@ def login():
   # make sure data are valid, but doesn't validate password is right
   if form.validate_on_submit():
     try:
-      user = users.get_user(email=form.email.data, form.password.data)
+      user = users.get_user(form.email.data, form.password.data)
     except InvalidPasswordException:
       user = None
     # we use werzeug to validate user's password
