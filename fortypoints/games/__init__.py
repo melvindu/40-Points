@@ -77,7 +77,7 @@ class Round(object):
           for (index, card) in enumerate(cardValueList.sort()):
             if card.suit != cardValueList[index + 1].suit or card.number != cardValueList[index + 1].number - 1:
               isTopConsecutivePairsCardsRound = False
-            elif pairTracker[card] == 2 && pairTracker[cardValueList[index + 1]] == 2:
+            elif pairTracker[card] == 2 and pairTracker[cardValueList[index + 1]] == 2:
               numConsecutivePairs += 1
           if (isTopConsecutivePairsCardsRound):
             return TopConsecutivePairCardsRound(game, player, play)
@@ -196,27 +196,6 @@ class Round(object):
   def eligible_plays(player):
     eligible = []
     """if it is a single card non-trump round, add in all cards of the same suit. if out of that suit, add in all trump cards. if it is out of that suit and it is a TRUMP round then add in all cards."""
-    FOR SingleCardRound CASE #dunno syntax
-        hand = player.hand
-        suit = SingleCardRound.play.suit
-        for card in hand:
-          if card.suit = suit: #dunno syntax
-            eligible.append(card)
-        if eligible IS BLANK #dunno syntax
-          if suit != TRUMP
-            for card in hand where card.suit = TRUMP #dunno syntax
-            eligible.append(card) #add in all  trump cards as eligible play if they're out of the suit  
-            if suit = TRUMP
-              for eligible.
-              
-              
-      hand = player.hand
-            for player in games.players:
-        hand = player.hand
-        for card in hand:
-          remainder.append(card)
-      add to eligiblePlays;
-      return eligiblePlays; 
     raise NotImplementedError
 
 
