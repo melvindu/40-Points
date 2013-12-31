@@ -3,6 +3,7 @@ import fortypoints as fp
 from fortypoints.cards import Card
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
+from fortypoints.players import get_player_by_id
 
 db = fp.db
 
@@ -12,7 +13,8 @@ class Game(db.Model, ModelMixin):
   trump_number = db.Column(db.SmallInteger(unsigned=True), nullable=True)
   trump_suit = db.Column(db.SmallInteger(unsigned=True), nullable=True)
   size = db.Column(db.SmallInteger(unsigned=True))
-  
+  current_player_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('player.id'), nullable=True)
+
   def __init__(self, num_players):
     self.size = num_players
 
@@ -24,6 +26,14 @@ class Game(db.Model, ModelMixin):
   def trump(self, card):
     self.trump_number = card.num
     self.trump_suit = card.suit
+
+  @property
+  def current_player(self):
+    return get_player_by_id(self.current_player_id)
+
+  @current_player.setter
+  def current_player(self, player):
+    self.current_player_id = player.id
 
   def __repr__(self):
     return '<Game size={size} trump_number={num} trump_suit={suit}>'.format(
