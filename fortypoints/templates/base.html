@@ -54,9 +54,19 @@
     </div><!-- /.navbar-collapse -->
   </nav>
   {% endblock %}
-  <div id="content">
-    {% block content %}
-    {% endblock %}
+  <div class="row">
+    <div id="left-side-bar" class="col-md-2">
+      {% block leftsidebar %}
+      {% endblock %}
+    </div>
+    <div id="content" class="col-md-8">
+      {% block content %}
+      {% endblock %}
+    </div>
+    <div id="right-side-bar" class="col-md-2">
+      {% block rightsidebar %}
+      {% endblock %}
+    </div>
   </div>
 
   <div id="footer">
