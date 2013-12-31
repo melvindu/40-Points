@@ -1,5 +1,6 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-f
+from flask_login import login_required
+
 from fortypoints.template import templated
 from fortypoints import games
 from fortypoints.games.forms import NewGameForm
@@ -7,7 +8,7 @@ from fortypoints.games.forms import NewGameForm
 game = Blueprint('games', __name__, template_folder='templates/games')
 
 
-@user.route('/new', methods=['GET', 'POST'])
+@game.route('/new', methods=['GET', 'POST'])
 @login_required
 def new():
   """

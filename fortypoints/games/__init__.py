@@ -5,76 +5,89 @@ class Round(object):
   a list of eligible card plays. 
   """
   @classmethod
-  def factory(cls, game, player, cards):
-    # TODO(yjohnmei): create the appropriate round type given the cards and game.
-    if len(cards) == 1:
-      return SingleCardRound(game, player, cards)
-    if len(cards) > 1:
-      cards.sort()
+  def factory(cls, game, player, play):
+    """check for single card play"""
+    if len(play) == 1:    
+      return SingleCardRound(game, player, play)
+    
+    if len(play) > 1:
+      play.sort()
       
       """if number of cards > 1, checks to see if all cards are the same"""
-      for i in range(len(cards) - 1):
-        cur = cards[i]
-        next = cards[i + 1]
-        if cur.__eq__(next):
+      for i in range(len(play) - 1):
+        if play[i].__eq__(play[i + 1]):
           allSame = True
-        else allSame = False          
-      if (allSame):
-        return TupleCardsRound(game, player, cards)
-      
-      """if number of cards > 1 && cards not the same, check if hand is all (non)consecutive tuples"""
-      tupleChecker = defaultdict(int)
-      for j in range(len(cards)):
-        cur = cards[j]
-        tupleChecker[cur] += 1
-      keys = tupleChecker.keys()
-      curKey = keys[0]
-      tuples = True
-      for key in keys: 
-        int copies = keys[key]
-        if curKey != copies:
-          tuples = False
-      if (tuples): # if tuples is true, check if they're consecutive
-        consecutiveTuples = True
-        for (index, key) in enumerate(keys.sort()):
-          if key.suit != keys[index + 1].suit or key.number != keys[index + 1].number - 1:
-            consecutiveTuples = False
-        if (consecutiveTuples)
-          return ConsecutiveTupleCardsRound(game, player, cards)
         else:
-          return TupleCardsRound(game, player, cards)
+          allSame = False          
+      if (allSame):
+        return TupleCardsRound(game, player, play)
+      
+      """if number of cards > 1 && cards not the same, check if play is all consecutive tuples"""
+      tupleTracker = defaultdict(int)
+      for j in range(len(play)):
+        tupleTracker[play[j]] += 1
+      cardValueList = tupleTracker.keys()
+      numTuples = cardValueList[0]
+      constainsTuples = True
+      for cardValue in cardValueList: 
+        numCopies = cardValueList[tuple]
+        if numTuples != numCopies:
+          containsTuples = False
+      if (containsTuples): # if hand is all tuples, see if they're consecutive
+        isConsecutiveTupleCardsRound = True
+        for (index, key) in enumerate(cardValueList.sort()):
+          if key.suit != keys[index + 1].suit or key.number != keys[index + 1].number - 1:
+            isConsecutiveTupleCardsRound = False
+        if (isConsecutiveTupleCardsRound):
+          return ConsecutiveTupleCardsRound(game, player, play)
      
-    """   
-    else check that the cards being are the highest cards in that suit
-    look at the card "groups" that are in play and then check to see that there's no group in someone's hand that's higher than the current group
-    is there a tuple? how many? if there is, mark this as a tuple with n tuples is there a consectuple? if there is, mark it as a consectuple
-    """  
-     remainder = []
-     for player in games.players:
-       hand = player.hand
-       for card in hand:
-         remainder.append(card)
-     remainderHash = defaultdict(int)
-     for k in range(len(remainder)):
-       cur2 = remainder[k]
-       remainderHash[cur2] += 1
-     
-     remainderKeys = remainderHash.keys()
-     intTuples = 0
-     
-     for key in keys: # go through each card being played
-       for remainderKey in remainderKeys: # go through each card in the remainder of deck 
-       if key.suit != remainderKey.suit:
-         continue
-       if key.number < remainderKey.number:
-         if tupleChecker[key] <= remainderHash[remainderKey]:
-           
-           return TopCardsRound(game, player, cards)
+      """   
+      else check that the cards are the highest cards in that suit:
+      look at the card "groups" that are in play and then check to see that there's no group in someone's hand that's higher than the current group
+      is there a tuple? how many? if there is, mark this as a tuple with n tuples is there a consectuple? if there is, mark it as a consectuple
+      """  
+      """making hash table for remainder of deck"""
+      remainder = []
+      for player in games.players:
+        hand = player.hand
+        for card in hand:
+          remainder.append(card)
          
+      remainderHash = defaultdict(int)
+      for k in range(len(remainder)):
+        remainderHash[remainder[k]] += 1
+     
+      """below, check cardgroup against cardgroups in the remainderdeck to see if there's any higher cardgroups there"""
+      remainderCards = remainderHash.keys()
+      isTopCardsRound = True
+      numTuples = defaultdict(int)
+      for card in tuples: 
+        if tupleTracker[card] > 1:
+          numTuples[tupleTracker[card]] += 1
+        for remainderCard in remainderCards: 
+          if card.suit != remainderCard.suit:
+            continue
+          if card.number < remainderCard.number:
+            if tupleTracker[card] > remainderHash[remainderCard]:
+              isTopCardsRound = False # if any cardgroup is higher, then topGame is false
+ 
+      """by now this is definitely a topcardround, now to see if there's any tuples and how many tuples up in here"""
+      if isTopCardsRound:
+        if numTuples:
+          isTopConsecutiveTuplesRound = True
+          for (index, card) in enumerate(tuples.sort()):
+            if card.suit != tuples[index + 1].suit or card.number != tuples[index + 1].number - 1: # problem
+              isTopConsecutiveTupleCardsRound = False
+          if (isTopConsecutiveTupleCardsRound):
+            return TopConsecutiveTupleCardsRound(game, player, play)
+          else:
+            return TopCardsRound(game, player, play)
+     
+      """if gets to here without returning something, this is a failed play"""
 
-  def __init__(game, player, cards):
+  def __init__(game, player, play):
     self._game = game
-    self._plays = {player: cards}
+    self._plays = {player: play}
 
   @property
   def size(self):
@@ -88,10 +101,10 @@ class Round(object):
   def plays(self):
     return self._plays
 
-  def add_play(self, player, cards):
-    if cards not in self.eligible_plays(player):
+  def add_play(self, player, play):
+    if play not in self.eligible_plays(player):
       raise ValueError('Cannot add illegal play to round')
-    self._plays[player] = cards
+    self._plays[player] = play
 
   def eligible_plays(player):
     raise NotImplementedError
