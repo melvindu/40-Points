@@ -35,6 +35,7 @@ def login():
   if form.validate_on_submit():
     user = users.get_user(email=form.email.data)
     # we use werzeug to validate user's password
+    print user
     if user and user.check_password(form.password.data):
       # the session can't be modified as it's signed, 
       # it's a safe place to store the user id

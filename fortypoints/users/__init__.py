@@ -8,7 +8,7 @@ db = fp.db
 
 
 def get_user(**kwargs):
-  user = User.get(**kwargs)
+  return User.get(**kwargs)
 
 def get_user_by_id(userid):
   return User.get(id=userid)
