@@ -7,11 +7,11 @@ class Round(object):
   @classmethod
   def profactory(cls, game, player, play):
     """check for single card play"""
-   if len(play) == 1:    
+    if len(play) == 1:    
       return SingleCardRound(game, player, play)
 
-   if len(play) > 1:
-     play.sort()
+    if len(play) > 1:
+      play.sort()
      
       """if number of cards > 1, checks to see if all cards are the same"""
       for i in range(len(play) - 1):
@@ -26,7 +26,7 @@ class Round(object):
       pairTracker = defaultdict(int)
       for j in range(len(play)):
         pairTracker[play[j]] += 1
-      cardValueList = tupleTracker.keys()
+      cardValueList = cardTracker.keys()
       numPairs = cardValueList[0]
       containsPairs = True
       for cardValue in cardValueList: 
@@ -35,7 +35,7 @@ class Round(object):
           containsPairs = False
       if (containsPairs): # if hand is all tuples, see if they're consecutive
         isConsecutivePairCardsRound = True
-        numConsecutivePairs = 0
+        numConsecutivePairs = 1
         for (index, key) in enumerate(cardValueList.sort()):
           if key.suit != keys[index + 1].suit or key.number != keys[index + 1].number - 1:
             isConsecutivePairCardsRound = False
@@ -78,7 +78,7 @@ class Round(object):
           for (index, card) in enumerate(cardValueList.sort()):
             if card.suit != cardValueList[index + 1].suit or card.number != cardValueList[index + 1].number - 1:
               isTopConsecutivePairsCardsRound = False
-            else:
+            elif pairTracker[card] == 2 && pairTracker[cardValueList[index + 1]] == 2:
               numConsecutivePairs += 1
           if (isTopConsecutivePairsCardsRound):
             return TopConsecutivePairCardsRound(game, player, play)
@@ -196,19 +196,20 @@ class Round(object):
 
   def eligible_plays(player):
     eligible = []
-    """if it is a single card non-trump round, add in all cards of the same suit. if out of that suit, add in all trump cards"""
-    if SingleCardRound #dunno syntax
-    
-      
-      hand = player.hand
-      for card in hand:
-          if card.suit = SingleCardRound.play.suit: #dunno syntax
+    """if it is a single card non-trump round, add in all cards of the same suit. if out of that suit, add in all trump cards. if it is out of that suit and it is a TRUMP round then add in all cards."""
+    FOR SingleCardRound CASE #dunno syntax
+        hand = player.hand
+        suit = SingleCardRound.play.suit
+        for card in hand:
+          if card.suit = suit: #dunno syntax
             eligible.append(card)
             hasSameSuit = True
-          if hasSameSuit = False #dunno syntax
-            for trumpcard in hand where card.suit = TRUMP #dunno syntax
+        if hasSameSuit = False #dunno syntax
+          if suit != TRUMP
+            for card in hand where card.suit = TRUMP #dunno syntax
             eligible.append(trumpcard) #add in all  trump cards as eligible play if they're out of the suit  
-            
+            if suit = TRUMP
+              for eligi
       hand = player.hand
             for player in games.players:
         hand = player.hand
