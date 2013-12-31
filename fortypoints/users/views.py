@@ -33,12 +33,9 @@ def login():
   form = LoginForm(request.form)
   # make sure data are valid, but doesn't validate password is right
   if form.validate_on_submit():
-    try:
-      user = users.get_user(form.email.data, form.password.data)
-    except InvalidPasswordException:
-      user = None
+    user = users.get_user(email=form.email.data)
     # we use werzeug to validate user's password
-    if user:
+    if user and user.check_password(form.password.data):
       # the session can't be modified as it's signed, 
       # it's a safe place to store the user id
       login_user(user)
@@ -67,7 +64,7 @@ def register():
   if form.validate_on_submit():
     user = users.create_user(form.name.data, form.email.data, form.password.data)
     if not user:
-      flash('User already exists', category=  'warning')
+      flash('User already exists', category='warning')
       return redirect(url_for('users.login'))
     login_user(user)
     return redirect(url_for('index'))

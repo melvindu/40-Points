@@ -7,12 +7,8 @@ from fortypoints.users.exceptions import InvalidPasswordException
 db = fp.db
 
 
-def get_user(email, password):
-  user = User.get(email=email)
-  if user:
-    if not user.check_password(password):
-      raise InvalidPasswordException
-  return user
+def get_user(**kwargs):
+  user = User.get(**kwargs)
 
 def get_user_by_id(userid):
   return User.get(id=userid)
