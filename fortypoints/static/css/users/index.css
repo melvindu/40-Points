@@ -6,6 +6,10 @@
   border: 1px solid #DEDEFF;
 }
 
+#games a {
+  color: black;
+}
+
 .game-group {
   border-bottom: 1px solid #DEDEFF;
   padding: 1px 10px;
