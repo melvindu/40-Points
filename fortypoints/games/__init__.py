@@ -13,7 +13,7 @@ def create_game(users):
   game = Game(len(users))
   db.session.add(game)
   db.session.commit()
-  for user in user:
+  for user in users:
     create_player(game, user)
     return game
 
