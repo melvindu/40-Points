@@ -58,7 +58,6 @@ class Round(object):
       isTopCardsRound = True
       numPairs = defaultdict(int)
       for card in cardValueList: 
-      
         """this shit is not immediately useful. it just counts the number of tuples"""
         if pairTracker[card] == 2:
           numPairs[pairTracker[card]] += 1 #numTuples is actually hash table for init play
@@ -148,7 +147,7 @@ class Round(object):
       numTuples = defaultdict(int)
       for card in cardValueList: 
       
-      """this shit is not immediately useful. it just counts the number of tuples"""
+        """this shit is not immediately useful. it just counts the number of tuples"""
         if tupleTracker[card] > 1:
           numTuples[tupleTracker[card]] += 1 #numTuples is actually hash table for init play
       
@@ -203,13 +202,14 @@ class Round(object):
         for card in hand:
           if card.suit = suit: #dunno syntax
             eligible.append(card)
-            hasSameSuit = True
-        if hasSameSuit = False #dunno syntax
+        if eligible IS BLANK #dunno syntax
           if suit != TRUMP
             for card in hand where card.suit = TRUMP #dunno syntax
-            eligible.append(trumpcard) #add in all  trump cards as eligible play if they're out of the suit  
+            eligible.append(card) #add in all  trump cards as eligible play if they're out of the suit  
             if suit = TRUMP
-              for eligi
+              for eligible.
+              
+              
       hand = player.hand
             for player in games.players:
         hand = player.hand
