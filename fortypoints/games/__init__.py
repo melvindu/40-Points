@@ -1,23 +1,3 @@
-import fortypoints as fp
-from fortypoints.players import create_player
-from fortypoints.games.models import Game
-
-db = fp.db
-
-
-def get_game(game_id):
-  return Game.get(id=game_id)
-
-
-def create_game(users):
-  game = Game(len(users))
-  db.session.add(game)
-  db.session.commit()
-  for user in user:
-    create_player(game, user)
-  return game
-
-
 class Round(object):
   """
   Round class. Base class and factory for 40 point game rounds.
@@ -25,7 +5,90 @@ class Round(object):
   a list of eligible card plays. 
   """
   @classmethod
-  def factory(cls, game, player, play):
+  def profactory(cls, game, player, play):
+    """check for single card play"""
+   if len(play) == 1:    
+      return SingleCardRound(game, player, play)
+
+   if len(play) > 1:
+     play.sort()
+     
+      """if number of cards > 1, checks to see if all cards are the same"""
+      for i in range(len(play) - 1):
+        if play[i].__eq__(play[i + 1]):
+          allSame = True
+        else:
+          allSame = False          
+      if (allSame):
+        return PairCardsRound(game, player, play)   
+        
+      """if number of cards > 1 && cards not the same, check if play is all consecutive tuples"""
+      pairTracker = defaultdict(int)
+      for j in range(len(play)):
+        pairTracker[play[j]] += 1
+      cardValueList = tupleTracker.keys()
+      numPairs = cardValueList[0]
+      containsPairs = True
+      for cardValue in cardValueList: 
+        numCopies = cardValueList[cardValue]
+        if numPairs != numCopies:
+          containsPairs = False
+      if (containsPairs): # if hand is all tuples, see if they're consecutive
+        isConsecutivePairCardsRound = True
+        numConsecutivePairs = 0
+        for (index, key) in enumerate(cardValueList.sort()):
+          if key.suit != keys[index + 1].suit or key.number != keys[index + 1].number - 1:
+            isConsecutivePairCardsRound = False
+          else:
+            numConsecutivePairs += 1
+        if (isConsecutivePairCardsRound):
+          return ConsecutivePairCardsRound(game, player, play)
+
+      remainder = []
+      for player in games.players:
+        hand = player.hand
+        for card in hand:
+          remainder.append(card)
+         
+      remainderHash = defaultdict(int)
+      for k in range(len(remainder)):
+        remainderHash[remainder[k]] += 1
+
+      """below, check cardgroup against cardgroups in the remainderdeck to see if there's any higher cardgroups there"""
+      isTopCardsRound = True
+      numPairs = defaultdict(int)
+      for card in cardValueList: 
+      
+      """this shit is not immediately useful. it just counts the number of tuples"""
+        if pairTracker[card] == 2:
+          numPairs[pairTracker[card]] += 1 #numTuples is actually hash table for init play
+      
+        for remainderCard in remainder: 
+          if card.suit != remainderCard.suit:
+            continue
+          if card.number < remainderCard.number:
+            if pairTracker[card] <= remainderHash[remainderCard]:
+              isTopCardsRound = False # if any cardgroup is higher, then topGame is false
+ 
+      """by now this is definitely a topcardround, now to see if there's any tuples and how many tuples up in here"""
+      if isTopCardsRound:
+        if numPairs:
+          numConsecutivePairs = 0
+          isTopConsecutivePairsRound = True
+          for (index, card) in enumerate(cardValueList.sort()):
+            if card.suit != cardValueList[index + 1].suit or card.number != cardValueList[index + 1].number - 1:
+              isTopConsecutivePairsCardsRound = False
+            else:
+              numConsecutivePairs += 1
+          if (isTopConsecutivePairsCardsRound):
+            return TopConsecutivePairCardsRound(game, player, play)
+          else:
+            return TopCardsRound(game, player, play)
+     
+      """if gets to here without returning something, this is a failed play"""
+    
+  @classmethod
+  def factory(cls, game, player, play): # RIP n decks ;_; 
     """check for single card play"""
     if len(play) == 1:    
       return SingleCardRound(game, player, play)
@@ -55,9 +118,12 @@ class Round(object):
           containsTuples = False
       if (containsTuples): # if hand is all tuples, see if they're consecutive
         isConsecutiveTupleCardsRound = True
+        numConsecutiveTuples = 0
         for (index, key) in enumerate(cardValueList.sort()):
           if key.suit != keys[index + 1].suit or key.number != keys[index + 1].number - 1:
             isConsecutiveTupleCardsRound = False
+          else:
+            numConsecutiveTuples += 1
         if (isConsecutiveTupleCardsRound):
           return ConsecutiveTupleCardsRound(game, player, play)
      
@@ -78,25 +144,27 @@ class Round(object):
         remainderHash[remainder[k]] += 1
      
       """below, check cardgroup against cardgroups in the remainderdeck to see if there's any higher cardgroups there"""
-      remainderCards = remainderHash.keys()
       isTopCardsRound = True
       numTuples = defaultdict(int)
-      for card in tuples: 
+      for card in cardValueList: 
+      
+      """this shit is not immediately useful. it just counts the number of tuples"""
         if tupleTracker[card] > 1:
-          numTuples[tupleTracker[card]] += 1
-        for remainderCard in remainderCards: 
+          numTuples[tupleTracker[card]] += 1 #numTuples is actually hash table for init play
+      
+        for remainderCard in remainder: 
           if card.suit != remainderCard.suit:
             continue
           if card.number < remainderCard.number:
-            if tupleTracker[card] > remainderHash[remainderCard]:
+            if tupleTracker[card] <= remainderHash[remainderCard]:
               isTopCardsRound = False # if any cardgroup is higher, then topGame is false
  
       """by now this is definitely a topcardround, now to see if there's any tuples and how many tuples up in here"""
       if isTopCardsRound:
         if numTuples:
           isTopConsecutiveTuplesRound = True
-          for (index, card) in enumerate(tuples.sort()):
-            if card.suit != tuples[index + 1].suit or card.number != tuples[index + 1].number - 1: # problem
+          for (index, card) in enumerate(cardValueList.sort()):
+            if card.suit != cardValueList[index + 1].suit or card.number != cardValueList[index + 1].number - 1: # problem
               isTopConsecutiveTupleCardsRound = False
           if (isTopConsecutiveTupleCardsRound):
             return TopConsecutiveTupleCardsRound(game, player, play)
@@ -127,23 +195,44 @@ class Round(object):
     self._plays[player] = play
 
   def eligible_plays(player):
+    eligible = []
+    """if it is a single card non-trump round, add in all cards of the same suit. if out of that suit, add in all trump cards"""
+    if SingleCardRound #dunno syntax
+    
+      
+      hand = player.hand
+      for card in hand:
+          if card.suit = SingleCardRound.play.suit: #dunno syntax
+            eligible.append(card)
+            hasSameSuit = True
+          if hasSameSuit = False #dunno syntax
+            for trumpcard in hand where card.suit = TRUMP #dunno syntax
+            eligible.append(trumpcard) #add in all  trump cards as eligible play if they're out of the suit  
+            
+      hand = player.hand
+            for player in games.players:
+        hand = player.hand
+        for card in hand:
+          remainder.append(card)
+      add to eligiblePlays;
+      return eligiblePlays; 
     raise NotImplementedError
 
 
 class SingleCardRound(Round):
   pass
 
-class ConsecutiveTupleCardsRound(Round):
+class ConsecutivePairCardsRound(Round):
   pass
 
-class TupleCardsRound(Round):
+class PairCardsRound(Round):
   pass
 
 class TopCardsRound(Round):
   pass
   
-class TopConsectutiveTupleCardsRound(TopCardsRound):
+class TopConsectutivePairCardsRound(TopCardsRound):
   pass
   
-class TopTupleCardsRound(TupleCardsRound, TopCardsRound):
+class TopPairCardsRound(PairCardsRound, TopCardsRound):
   pass
