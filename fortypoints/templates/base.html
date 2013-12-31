@@ -88,7 +88,7 @@
 
 {% block script %}
 <script src="https://code.jquery.com/jquery.js"></script>
-<script src="../static/js/bootstrap.min.js"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 {% endblock %}
 </body>
 </html>
