@@ -1,6 +1,6 @@
 import fortypoints as fp
 
-from fortypoints.cards import Card
+from fortypoints.cards import Card, constants as CARD
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
 
@@ -20,6 +20,8 @@ class Player(db.Model, ModelMixin):
   def __init__(self, game, user):
     self.game_id = game.id
     self.user_id = user.id
+    self.level = CARD.TWO
+    self.house = False
 
   def __str__(self):
     return '<Player \'{user}\' level={level} house={house} game_id={game_id}>'.format(

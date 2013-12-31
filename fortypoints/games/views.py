@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import login_required
+from flask_login import current_user, login_required
 
 from fortypoints.template import templated
 from fortypoints.games import create_game, constants as GAME
@@ -31,11 +31,15 @@ def new():
       form.players.append_entry()
       return render_template('games/new.html', form=form)
     else:
-      users = [get_user(name=field.data) for field in form.players.entries]
-      users = filter(None, users)
-      if len(users) != len(form.players.entries):
-        flash('Invalid User', 'danger')
-        return render_template('games/new.html', form=form)
+      usernames = [field.data for field in form.players.entries] + [current_user.name]
+      users = []
+      for username in usernames:
+        user = get_user(name=username)
+        if not user:
+          flash('Invalid User {username}'.format(username=username), 'danger')
+          return render_template('games/new.html', form=form)
+        users.append(user)
+        
       if len(users) < GAME.MIN_PLAYERS:
         flash('Must invite at least {min} players'.format(min=GAME.MIN_PLAYERS), 'danger')
         return render_template('games/new.html', form=form)
