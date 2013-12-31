@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask.ext.login import login_required, login_user
 
 from fortypoints import login_manager
@@ -41,6 +41,7 @@ def login():
       # it's a safe place to store the user id
       login_user(user)
       return redirect(url_for('index'))
+    flash('Wrong email or password', 'error-message')
   return render_template('users/login.html', form=form)
 
 
@@ -54,12 +55,8 @@ def register():
   if form.validate_on_submit():
     user = users.create_user(form.name.data, form.email.data, form.password.data)
     if not user:
-      try:
-        user = users.get_user(form.email.data, form.password.data)
-      except InvalidPasswordException:
-        user = None
-    if user:
-      login_user(user)
-      return redirect(url_for('index'))
-    flash('Wrong email or password', 'error-message')
+      flash('User already exists')
+      return redirect(url_for('users.login'))
+    login_user(user)
+    return redirect(url_for('index'))
   return render_template('users/register.html', form=form)
