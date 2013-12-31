@@ -1,3 +1,4 @@
+from flask.ext.login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 
 import fortypoints as fp
@@ -6,7 +7,7 @@ from fortypoints.users import constants as USER
 
 db = fp.db
 
-class User(db.Model, ModelMixin):
+class User(db.Model, ModelMixin, UserMixin):
   __tablename__ = 'user'
   id = db.Column(db.Integer(unsigned=True), primary_key=True)
   name = db.Column(db.String(50), unique=True)
