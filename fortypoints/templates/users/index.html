@@ -2,7 +2,9 @@
 {% import "users/macros.html" as user_macros %}
 
 {% block leftsidebar %}
-<a class="btn btn-default" href="{{ url_for('games.new') }}">New Game</a>
+<h1 class="page-header">
+  <a class="btn btn-primary" href="{{ url_for('games.new') }}">New Game</a>
+</h1>
 {% endblock %}
 
 {% block content %}
