@@ -5,7 +5,7 @@
 
 {% block css %}
 {{ super() }}
-<link href="../static/css/title.css" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/title.css') }}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 <div class="row page-header" id="header">

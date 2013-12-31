@@ -3,7 +3,7 @@
 
 {% block css %}
 {{ super() }}
-<link href="../static/css/users/index.css" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/users/index.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block leftsidebar %}
