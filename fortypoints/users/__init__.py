@@ -9,10 +9,10 @@ db = fp.db
 
 def get_user(email, password):
   user = User.get(email=email)
-  if user.check_password(password):
-    return user
-  else:
-    raise InvalidPasswordException
+  if user:
+    if not user.check_password(password):
+      raise InvalidPasswordException
+  return user
 
 
 def create_user(name, email, password):

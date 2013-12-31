@@ -41,7 +41,6 @@ def login():
       # it's a safe place to store the user id
       login_user(user)
       return redirect(url_for('index'))
-    flash('Wrong email or password', 'error-message')
   return render_template('users/login.html', form=form)
 
 
