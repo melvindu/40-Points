@@ -33,10 +33,12 @@ def new():
     else:
       users = [get_user(name=field.data) for field in form.players.entries]
       users = filter(None, users)
-      if users < GAME.MIN_PLAYERS:
+      if len(users) != len(form.players.entries):
+        flash('Invalid User', 'danger')
+        return render_template('games/new.html', form=form)
+      if len(users) < GAME.MIN_PLAYERS:
         flash('Must invite at least {min} players'.format(min=GAME.MIN_PLAYERS), 'danger')
         return render_template('games/new.html', form=form)
       game = create_game(users)
-      return redirect(url_for('games.play'))
-    flash('Invalid User', 'danger')
+      return redirect(url_for('games.play', game_id=game.id))
   return render_template('games/new.html', form=form)
