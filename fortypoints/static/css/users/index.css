@@ -15,3 +15,7 @@
 .game-group.even {
   background-color: #FFFFF5;
 }
+
+.game-label {
+  margin: 0 4px;
+}
