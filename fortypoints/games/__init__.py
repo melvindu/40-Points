@@ -15,7 +15,7 @@ def create_game(users):
   db.session.commit()
   for user in users:
     create_player(game, user)
-    return game
+  return game
 
 class Round(object):
   """
