@@ -19,4 +19,4 @@ def new():
   if form.validate_on_submit():
     pass
   flash('Wrong email or password', 'danger')
-  return render_template('users/login.html', form=form)
+  return render_template('games/new.html', form=form)
