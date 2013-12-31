@@ -21,7 +21,9 @@ def create_app():
 app = create_app()
 
 from fortypoints.users.views import user as users_view
+from fortypoints.games.views import game as games_view
 app.register_blueprint(users_view)
+app.register_blueprint(games_view, url_prefix='/game')
 
 
 @app.route('/')
