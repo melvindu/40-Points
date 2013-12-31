@@ -5,6 +5,7 @@ from fortypoints import login_manager
 from fortypoints.request import nocache
 from fortypoints.template import templated
 from fortypoints import users
+from fortypoints.users.exceptions import InvalidPasswordException
 from fortypoints.users.forms import LoginForm, RegisterForm
 
 @login_manager.user_loader
@@ -23,7 +24,6 @@ def index():
   return render_template()
 
 @user.route('/login', methods=['GET', 'POST'])
-@nocache
 def login():
   """
   Login form
@@ -31,12 +31,36 @@ def login():
   form = LoginForm(request.form)
   # make sure data are valid, but doesn't validate password is right
   if form.validate_on_submit():
-    user = users.get_user(email=form.email.data)
+    try:
+      user = users.get_user(email=form.email.data, form.password.data)
+    except InvalidPasswordException:
+      user = None
     # we use werzeug to validate user's password
-    if user and user.check_password(form.password.data):
+    if user:
       # the session can't be modified as it's signed, 
       # it's a safe place to store the user id
       login_user(user)
       return redirect(url_for('index'))
     flash('Wrong email or password', 'error-message')
   return render_template('users/login.html', form=form)
+
+
+@user.route('/register', methods=['GET', 'POST'])
+def register():
+  """
+  Register form
+  """
+  form = RegisterForm(request.form)
+  # make sure data are valid, but doesn't validate password is right
+  if form.validate_on_submit():
+    user = users.create_user(form.name.data, form.email.data, form.password.data)
+    if not user:
+      try:
+        user = users.get_user(form.email.data, form.password.data)
+      except InvalidPasswordException:
+        user = None
+    if user:
+      login_user(user)
+      return redirect(url_for('index'))
+    flash('Wrong email or password', 'error-message')
+  return render_template('users/register.html', form=form)
