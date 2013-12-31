@@ -1,5 +1,5 @@
 from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask.ext.login import login_required, login_user
+from flask.ext.login import current_user, login_required, login_user, logout_user
 
 from fortypoints import login_manager
 from fortypoints.request import nocache
@@ -18,10 +18,12 @@ def handle_unauthorized():
 
 user = Blueprint('users', __name__, template_folder='templates/users')
 
+
 @user.route('/')
 @login_required
 def index():
   return render_template('users/index.html')
+
 
 @user.route('/login', methods=['GET', 'POST'])
 def login():
@@ -43,6 +45,16 @@ def login():
       return redirect(url_for('index'))
     flash('Wrong email or password', 'danger')
   return render_template('users/login.html', form=form)
+
+
+@user.route('/logout')
+@login_required
+def logout():
+  """
+  Logout route
+  """
+  logout_user()
+  return redirect(url_for('users.login'))
 
 
 @user.route('/register', methods=['GET', 'POST'])
