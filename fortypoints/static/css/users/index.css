@@ -1,0 +1,19 @@
+#games ol {
+  list-style-type: none;
+  padding: 0px 10px;
+}
+
+.game-group {
+  border-radius: 5px;
+  margin: 5px;
+  padding: 1px;
+  padding-bottom: 3px;
+}
+
+.game-group.even {
+  background-color: #EEF;
+}
+
+.game-group.odd {
+  background-color: #FAF;
+}

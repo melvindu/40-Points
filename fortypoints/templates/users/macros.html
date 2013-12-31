@@ -1,0 +1,6 @@
+{% macro render_game(game, user, divisible) %}
+<div class="game-group {{ divisible }}">
+  <h4><a href="{{ url_for('games.play', game_id=game.id) }}">Game {{ game.id }}</a></h4>
+  <span class="label label-info">{{ game.get_player(user).level }}<span>
+</div>
+{% endmacro %}
