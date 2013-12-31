@@ -13,7 +13,11 @@ class Game(db.Model, ModelMixin):
   trump_number = db.Column(db.SmallInteger(unsigned=True), nullable=True)
   trump_suit = db.Column(db.SmallInteger(unsigned=True), nullable=True)
   size = db.Column(db.SmallInteger(unsigned=True))
-  current_player_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('player.id'), nullable=True)
+  current_player_id = db.Column(db.Integer(unsigned=True), 
+                                db.ForeignKey('player.id', 
+                                              use_alter=True, 
+                                              name='current_player_id'), 
+                                nullable=True)
 
   def __init__(self, num_players):
     self.size = num_players
