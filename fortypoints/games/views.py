@@ -17,6 +17,9 @@ def new():
   form = NewGameForm(request.form)
   # make sure data are valid, but doesn't validate password is right
   if form.validate_on_submit():
-    pass
-  flash('Wrong email or password', 'danger')
+    if form.add_player.data:
+      form.players.append_entry()
+      return render_template('games/new.html', form=form)
+    else:
+      pass
   return render_template('games/new.html', form=form)

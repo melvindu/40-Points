@@ -1,3 +1,23 @@
+import fortypoints as fp
+from fortypoints.players import create_player
+from fortypoints.games.models import Game
+
+db = fp.db
+
+
+def get_game(game_id):
+  return Game.get(id=game_id)
+
+
+def create_game(users):
+  game = Game(len(users))
+  db.session.add(game)
+  db.session.commit()
+  for user in user:
+    create_player(game, user)
+  return game
+
+
 class Round(object):
   """
   Round class. Base class and factory for 40 point game rounds.
