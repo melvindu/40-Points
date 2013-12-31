@@ -190,7 +190,8 @@ class Round(object):
             return TopCardsRound(game, player, play)
      
       """if gets to here without returning something, this is a failed play"""
-
+      raise ValueError('Cannot play illegal play to round')
+      
   def __init__(game, player, play):
     self._game = game
     self._plays = {player: play}
