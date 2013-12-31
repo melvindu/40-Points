@@ -15,7 +15,7 @@ class User(db.Model, ModelMixin):
   role = db.Column(db.SmallInteger, default=USER.USER)
   status = db.Column(db.SmallInteger, default=USER.NEW)
 
-  def __init__(self, name=None, email=None, password=None):
+  def __init__(self, name, email, password):
     self.name = name
     self.email = email
     self.set_password(password)
