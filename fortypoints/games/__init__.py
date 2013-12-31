@@ -59,7 +59,7 @@ class Round(object):
       numPairs = defaultdict(int)
       for card in cardValueList: 
       
-      """this shit is not immediately useful. it just counts the number of tuples"""
+        """this shit is not immediately useful. it just counts the number of tuples"""
         if pairTracker[card] == 2:
           numPairs[pairTracker[card]] += 1 #numTuples is actually hash table for init play
       
