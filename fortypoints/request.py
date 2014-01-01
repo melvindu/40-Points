@@ -23,6 +23,6 @@ def websocket(blueprint, *args, **kwargs):
     @wraps(func)
     def decorator(*args, **kwargs):
       ws = request.environ['wsgi.websocket']
-      return func(ws)
+      return func(ws, *args, **kwargs)
     return decorator
   return wrapper
