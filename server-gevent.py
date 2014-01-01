@@ -1,9 +1,3 @@
-from tornado.wsgi import WSGIContainer
-from tornado.web import Application, FallbackHandler
-from tornado.httpserver import HTTPServer
-from tornado.ioloop import IOLoop
-
-from chat import ChatSocketHandler, ChatApplication
 from fortypoints import app
 
 from gevent.pywsgi import WSGIServer
