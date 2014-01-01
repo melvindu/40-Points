@@ -38,9 +38,10 @@ class ChatSocketHandler(tornado.websocket.WebSocketHandler):
         # for iOS 5.0 Safari
         return True
 
-    @flask_context(app)
+    @flask_context(fp.app)
     @login_required
     def open(self):
+        print 'OPENED'
         ChatSocketHandler.waiters.add(self)
 
     def on_close(self):
