@@ -19,8 +19,10 @@ def create_app():
 
   from fortypoints.users.views import user as users_view
   from fortypoints.games.views import game as games_view
+  from chat.views import chat as chats_view
   app.register_blueprint(users_view)
   app.register_blueprint(games_view, url_prefix='/game')
+  app.register_blueprint(chats_view, url_prefix='/chat')
 
   return app
 
