@@ -26,7 +26,22 @@ def create_app():
 
 app = create_app()
 
+from fortypoints.request import websocket
+@websocket(app, '/websocket')
+def handle_websocket(ws):
 
+    print ws
+    while True:
+        message = ws.receive()
+        if message is None:
+            break
+        else:
+            message = json.loads(message)
+
+            r  = "I have received this message from you : %s" % message
+            r += "<br>Glad to be your webserver."
+            ws.send(json.dumps({'output': r}))
+            
 @app.route('/')
 def index():
 	return redirect(url_for('users.index'))
