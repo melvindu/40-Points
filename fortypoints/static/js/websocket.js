@@ -6,17 +6,17 @@ WEBSOCKET = (function() {
     websocket.onopen = function() {
       backboneView.trigger('socket:open');
     };
-    websocket.onmessage = function() {
-      backboneView.trigger('socket:message');
+    websocket.onmessage = function(message) {
+      backboneView.trigger('socket:message', message);
     };
-    websocket.onerror = function() {
-      backboneView.trigger('socket:error');
+    websocket.onerror = function(error) {
+      backboneView.trigger('socket:error', error);
+    };
+    websocket.onclose = function() {
+      backboneView.trigger('socket:close');
     };
 
     backboneView.websocket = websocket;
-    backboneView.send = function(data) {
-      backboneView.websocket.send(data);
-    }
   }
 
   mod.setupWebSocket = setupWebSocket;

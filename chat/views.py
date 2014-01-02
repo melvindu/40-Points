@@ -10,7 +10,7 @@ chat = Blueprint('chats', __name__)
 
 
 @websocket(chat, '/game/<int:game_id>')
-@player_required
+#@player_required
 def game_chat_handler(ws, game_id):
   while True:
     message = ws.receive()
