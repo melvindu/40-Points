@@ -9,8 +9,8 @@
 
 {% block rightsidebar %}
 <div id="chat">
-  <textarea readonly class="chats">
-  </textarea>
+  <ol class="chats">
+  </ol>
   <textarea class="form-control chat-input" rows="3" placeholder="Chat"></textarea>
 </div>
 {% endblock %}
@@ -18,5 +18,10 @@
 {% block script %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/games/views/chat.js') }}"></script>
+<script>
+  $(document).ready(function() {
+    USER = "{{ current_user.name }}"
+  });
+</script>
 <script src="{{ url_for('static', filename='js/games/play.js') }}"></script>
 {% endblock %}

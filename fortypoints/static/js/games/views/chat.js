@@ -38,8 +38,7 @@ FriendView = Backbone.View.extend({
     },
 
     render: function(chatItem) {
-        this.$el.find('.chats').append(chatItem);
-        console.log('rendered');
+      this.$el.find('.chats').append(chatItem );
     },
 
     events: {
@@ -61,7 +60,10 @@ FriendView = Backbone.View.extend({
 
     sendChat: function(keypress) {
       if (keypress.which == 13) {
-        this.websocket.send($(keypress.target).val());
+        this.websocket.send(JSON.stringify({
+          user: USER,
+          message: $(keypress.target).val()
+        }));
         $(keypress.target).val('');
         return false;
       }

@@ -11,8 +11,13 @@
   background-color: #F5F5F5;
   height: 84%;
   margin-bottom: 4px;
+  overflow-y: auto;
   resize: none;
   width: 100%;
+}
+
+.chats li {
+  list-style-type: none;
 }
 
 .chat-input {

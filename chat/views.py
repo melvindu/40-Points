@@ -1,6 +1,7 @@
 import simplejson as json
 
-from flask import Blueprint
+from flask import Blueprint, get_template_attribute
+from flask.ext.login import current_user
 
 from fortypoints.games.views import game
 from fortypoints.players.decorators import player_required
@@ -14,15 +15,10 @@ chat = Blueprint('chats', __name__)
 def game_chat_handler(ws, game_id):
   while True:
     message = ws.receive()
-    print message
     if message is None:
-      print 'broke'
+      print 'None message, closing socket'
       break
     else:
-      #message = json.loads(message)
-
-      r  = "I have received this message from you : %s" % message
-      r += "<br>Glad to be your webserver."
-      print 'sending'
-      ws.send(json.dumps({'output': r}))
-      print 'sent'
+      message = json.loads(message)
+      render_chat = get_template_attribute('games/macros.html', 'render_chat')
+      ws.send(render_chat(message['user'], message['message']))
