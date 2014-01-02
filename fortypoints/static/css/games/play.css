@@ -12,8 +12,10 @@
   height: 84%;
   margin-bottom: 4px;
   overflow-y: auto;
+  padding-left: 2px;
   resize: none;
   width: 100%;
+  word-wrap: break-word;
 }
 
 .chats li {
