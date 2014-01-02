@@ -11,6 +11,8 @@ def player_required(func):
   def wrapper(*args, **kwargs):
     game_id = kwargs['game_id']
     game = get_game(game_id)
+    if not current_user:
+      return login_required(func)(*args, **kwargs)
     player = get_player(game, current_user)
     if player:
       return login_required(func)(*args, **kwargs)
