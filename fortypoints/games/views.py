@@ -62,6 +62,14 @@ def update(game_id):
 
 @websocket(game, '/update-stream/<int:game_id>')
 def update_stream(ws, game_id):
-  updater = GameClientUpdater.factory(game_id)
-  updater.connect(ws)
-  updater.listen()
+  print game_id
+  try:
+    updater = GameClientUpdater.factory(game_id)
+    print updater
+    updater.connect(ws)
+    updater._websocket_manager.broadcast('hello')
+    updater.listen()
+    while ws.receive():
+      print 'receiving'
+  except Exception as e:
+    print e
