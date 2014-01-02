@@ -9,7 +9,7 @@ chat = Blueprint('chats', __name__)
 
 
 @websocket(chat, '/game/<int:game_id>')
-def handle_websocket(ws, game_id):
+def game_chat_handler(ws, game_id):
   while True:
     message = ws.receive()
     print message
