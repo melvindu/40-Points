@@ -39,6 +39,7 @@ def login():
       # the session can't be modified as it's signed, 
       # it's a safe place to store the user id
       login_user(user)
+      users.ghetto_login_user(user)
       return redirect(url_for('index'))
     flash('Wrong email or password', 'danger')
   return render_template('users/login.html', form=form)
@@ -50,6 +51,10 @@ def logout():
   """
   Logout route
   """
+  try:
+    users.ghetto_logout(current_user)
+  except Exception:
+    pass
   logout_user()
   return redirect(url_for('users.login'))
 
@@ -67,5 +72,6 @@ def register():
       flash('User already exists', category='warning')
       return redirect(url_for('users.login'))
     login_user(user)
+    users.ghetto_login_user(user)
     return redirect(url_for('index'))
   return render_template('users/register.html', form=form)
