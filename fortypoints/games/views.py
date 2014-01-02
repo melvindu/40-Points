@@ -4,7 +4,7 @@ from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from fortypoints.template import templated
-from fortypoints.games import create_game, constants as GAME
+from fortypoints.games import create_game, get_game, constants as GAME
 from fortypoints.games.forms import NewGameForm
 from fortypoints.games.updates import GameClientUpdater
 from fortypoints.request import WebSocketManager, websocket
@@ -20,7 +20,8 @@ def play(game_id):
   """
   Play a game.
   """
-  return render_template('games/play.html', game_id=game_id)
+  players = get_game(game_id).players
+  return render_template('games/play.html', game_id=game_id, players=players)
 
 
 @game.route('/new', methods=['GET', 'POST'])
