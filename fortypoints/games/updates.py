@@ -8,16 +8,17 @@ class GameClientManager(object):
   game_map = WeakValueDictionary()
   @classmethod
   def factory(cls, game_id):
-    cls.clean()
-    if game_id in game_map:
-      return game_map[game_id]
+    GameClientManager.clean_all()
+    if game_id in cls.game_map:
+      return cls.game_map[game_id]
     else:
-      game_map[game_id] = GameClientManager()
-      return game_map[game_id]
+      manager = GameClientManager()
+      cls.game_map[game_id] = manager
+      return cls.game_map[game_id]
 
   @classmethod
-  def clean(cls):
-    for game_client_manager in game_map.values():
+  def clean_all(cls):
+    for game_client_manager in cls.game_map.values():
       game_client_manager.clean()
 
   def __init__(self):
