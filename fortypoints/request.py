@@ -49,6 +49,10 @@ class WebSocketManager(object):
         sockets.append(socket)
     self._sockets = sockets
 
+  def broadcast(self, message):
+    for socket in self.sockets:
+      socket.send(message)
+
   def __len__(self):
     return len(self._sockets)
 
