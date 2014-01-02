@@ -11,6 +11,8 @@
   background-color: #F5F5F5;
   height: 84%;
   margin-bottom: 4px;
+  resize: none;
+  width: 100%;
 }
 
 .chat-input {
