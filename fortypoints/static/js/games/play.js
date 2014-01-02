@@ -1,0 +1,1 @@
+var chatView = new CHAT.ChatView()

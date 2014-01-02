@@ -1,4 +1,5 @@
-(function() {
+WEBSOCKET = (function() {
+  var mod = {};
 
   var setupWebSocket = function(backboneView, url) {
     var websocket = new WebSocket(url);
@@ -17,4 +18,7 @@
       backboneView.websocket.send(data);
     }
   }
+
+  mod.setupWebSocket = setupWebSocket;
+  return mod;
 }());

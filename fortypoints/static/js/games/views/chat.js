@@ -1,8 +1,9 @@
-var CHAT = (function() {
+CHAT = (function() {
+  var mod = {};
 
   var ChatView = Backbone.View.extend({
     initialize: function() {
-      //setupWebSocket(this);
+      WEBSOCKET.setupWebSocket(this, 'ws://localhost:5000/chat/game/9');
       this.render();
     },
 
@@ -12,4 +13,6 @@ var CHAT = (function() {
     }
   });
 
+  mod.ChatView = ChatView;
+  return mod;
 }());
