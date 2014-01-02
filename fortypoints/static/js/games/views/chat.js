@@ -21,7 +21,6 @@ FriendView = Backbone.View.extend({
 
     render: function( model ) {
         $("#friends-list").append("<li>"+ model.get("name")+"</li>");
-        console.log('rendered')
     },
 
 });
@@ -30,7 +29,7 @@ FriendView = Backbone.View.extend({
     el: '#chat',
 
     initialize: function() {
-      WEBSOCKET.setupWebSocket(this, 'ws://localhost:5000/chat/game/9');
+      WEBSOCKET.setupWebSocket(this, 'ws://' + location.host + '/chat/game/' + GAME_ID);
       this.on('socket:open', this.showConnected);
       this.on('socket:message', this.showChat);
       this.on('socket:close', this.showClosed);

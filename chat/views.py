@@ -27,6 +27,7 @@ def game_chat_handler(ws, game_id):
   websocket_manager.clean()
   websocket_manager.add_socket(ws)
   cleanup_sockets(10000)
+  print game_id, websocket_manager.sockets
   while True:
     message = ws.receive()
     print message

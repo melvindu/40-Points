@@ -20,7 +20,8 @@
 <script src="{{ url_for('static', filename='js/games/views/chat.js') }}"></script>
 <script>
   $(document).ready(function() {
-    USER = "{{ current_user.name }}"
+    USER = "{{ current_user.name }}";
+    GAME_ID = {{ game_id }};
   });
 </script>
 <script src="{{ url_for('static', filename='js/games/play.js') }}"></script>

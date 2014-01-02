@@ -20,7 +20,7 @@ def play(game_id):
   """
   Play a game.
   """
-  return render_template('games/play.html')
+  return render_template('games/play.html', game_id=game_id)
 
 
 @game.route('/new', methods=['GET', 'POST'])
