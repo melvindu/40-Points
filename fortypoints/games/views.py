@@ -4,13 +4,14 @@ from flask_login import current_user, login_required
 from fortypoints.template import templated
 from fortypoints.games import create_game, constants as GAME
 from fortypoints.games.forms import NewGameForm
+from fortypoints.players.decorators import player_required
 from fortypoints.users import get_user
 
 game = Blueprint('games', __name__, template_folder='templates/games')
 
 
 @game.route('/play/<int:game_id>')
-@login_required
+@player_required
 def play(game_id):
   """
   Play a game.
