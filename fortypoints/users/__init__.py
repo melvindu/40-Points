@@ -47,6 +47,9 @@ def ghetto_logout_user(user):
 
 def ghetto_is_logged_in(username, userkey):
   if username in user_salts:
-    if userkey in user_keys:
+    if userkey in user_keys.values():
       return True
   return False
+
+def ghetto_get_user_key(username):
+  return user
