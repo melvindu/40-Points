@@ -1,3 +1,5 @@
+from multiprocessing import Pool, Queue
+
 from flask import make_response, request
 from functools import update_wrapper, wraps
 
@@ -58,4 +60,32 @@ class WebSocketManager(object):
 
   def __iter__(self):
     return iter(self._sockets)
+
+  def __nonzero__(self):
+    return bool(self._sockets)
+
+
+class WebSocketUpdater(object):
+  def __init__(self, workers=25):
+    self._websocket_manager = WebSocketManager(100)
+    self._update_stream = Queue()
+    self._pool = Pool(25)
+
+  def connect(self, ws):
+    self._websocket_manager.add_socket(ws)
+
+  def listen(self):
+    def _listen(updater):
+      while True:
+        update = updater._update_stream.get()
+        updater._websocket_manager.broadcast(update)
+        if not updater._websocket_manager:
+          break
+    self._pool.apply_async(_listen(self))
+
+  def clean(self):
+    self._websocket_manager.clean()
+
+  def update(message):
+    self._update_stream.put(message)
 

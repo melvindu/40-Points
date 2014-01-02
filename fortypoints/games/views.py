@@ -6,7 +6,7 @@ from flask_login import current_user, login_required
 from fortypoints.template import templated
 from fortypoints.games import create_game, constants as GAME
 from fortypoints.games.forms import NewGameForm
-from fortypoints.games.updates import GameClientManager
+from fortypoints.games.updates import GameClientUpdater
 from fortypoints.request import WebSocketManager, websocket
 from fortypoints.players.decorators import player_required
 from fortypoints.users import get_user
@@ -56,12 +56,12 @@ def new():
 @game.route('/update/<int:game_id>', methods=['POST'])
 @player_required
 def update(game_id):
-  updater = GameClientManager.factory(game_id)
+  updater = GameClientUpdater.factory(game_id)
   updater.update(dict(request.form))
 
 
 @websocket(game, '/update-stream/<int:game_id>')
 def update_stream(ws, game_id):
-  updater = GameClientManager.factory(game_id)
+  updater = GameClientUpdater.factory(game_id)
   updater.connect(ws)
   updater.listen()
