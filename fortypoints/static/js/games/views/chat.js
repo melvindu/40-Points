@@ -52,6 +52,7 @@ FriendView = Backbone.View.extend({
 
     showChat: function(message) {
       this.render(message.data);
+      $('.chats').scrollTop($('.chats')[0].scrollHeight - $('.chats').height());
     },
 
     showClosed: function() {
