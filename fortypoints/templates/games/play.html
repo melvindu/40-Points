@@ -14,3 +14,8 @@
   <textarea class="form-control chat-input" rows="3" placeholder="Chat"></textarea>
 </div>
 {% endblock %}
+
+{% block script %}
+{{ super() }}
+<script src="{{ url_for('static', filename='js/games/views/chat.js') }}"></script>
+{% endblock %}
