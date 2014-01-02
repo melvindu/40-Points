@@ -8,7 +8,6 @@ class GameClientUpdater(WebSocketUpdater):
   game_map = WeakValueDictionary()
   @classmethod
   def factory(cls, game_id):
-    GameClientUpdater.clean_all()
     if game_id in cls.game_map:
       return cls.game_map[game_id]
     else:
