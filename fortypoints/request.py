@@ -26,3 +26,29 @@ def websocket(blueprint, *args, **kwargs):
       return func(ws, *args, **kwargs)
     return decorator
   return wrapper
+
+
+class WebSocketManager(object):
+  def __init__(self, max_size):
+    self._max_size = max_size
+    self._sockets = []
+
+  @property
+  def sockets(self):
+    return self._sockets
+
+  def add_socket(self, socket):
+    if len(self.sockets) > self._max_size:
+      self.clean()
+    self._sockets.append(socket)
+
+  def clean(self):
+    sockets = []
+    for socket in self.sockets:
+      if not socket.closed:
+        sockets.append(socket)
+    self._sockets = sockets
+
+  def __len__(self):
+    return len(self._sockets)
+
