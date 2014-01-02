@@ -63,8 +63,8 @@ def new():
   return render_template('games/new.html', form=form)
 
 
-@websocket(game, '/game/update/<int:game_id>')
-def update(ws, game_id):
+@websocket(game, '/game/update-stream/<int:game_id>')
+def update_stream(ws, game_id):
   _game_update_sockets[game_id].append(ws)
   _cleanup_sockets(10000)
   while True:
