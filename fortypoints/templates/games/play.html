@@ -1,10 +1,21 @@
 {% extends "base.html" %}
-
+{% from "games/macros.html" import render_score %}
 {% block css %}
 {{ super() }}
 <link href="{{ url_for('static', filename='css/games/play.css') }}" rel="stylesheet">
 {% endblock %}
 {% block content %}
+{% endblock %}
+
+{%block leftsidebar %}
+<div id="scoreboard">
+  <ol class="scores">
+    {% for player in players %}
+        {{ render_score(player) }}
+        <hr/>
+    {% endfor %}
+  </ol>
+</div>
 {% endblock %}
 
 {% block rightsidebar %}
@@ -18,6 +29,7 @@
 {% block script %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/games/views/chat.js') }}"></script>
+<script src="{{ url_for('static', filename='js/games/views/score.js') }}"></script>
 <script>
   $(document).ready(function() {
     USER = "{{ current_user.name }}";

@@ -3,3 +3,9 @@
   <b>{{ user }}:</b> {{ message }}
 </li>
 {% endmacro %}
+
+{% macro render_score(player) %}
+<li>
+  <b>{{ player.user.name }}:</b> {{ player.score }}
+</li>
+{% endmacro %}

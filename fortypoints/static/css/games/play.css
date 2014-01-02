@@ -1,4 +1,4 @@
-#chat {
+#chat, #scoreboard {
   border-radius: 5px;
   border: 1px solid black;
   height: 80%;
@@ -7,7 +7,7 @@
   width: 13%;
 }
 
-.chats {
+.chats, .scores {
   background-color: #F5F5F5;
   height: 84%;
   margin-bottom: 4px;
@@ -24,4 +24,12 @@
 
 .chat-input {
   resize: none;
+}
+
+#scoreboard li {
+  list-style-type: none;
+}
+
+.scores {
+  height: 100%;
 }
