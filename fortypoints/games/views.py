@@ -1,13 +1,27 @@
+from collections import defaultdict
+
 from flask import Blueprint, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from fortypoints.template import templated
 from fortypoints.games import create_game, constants as GAME
 from fortypoints.games.forms import NewGameForm
+from fortypoints.games.updates import update_queue
+from fortypoints.request import WebSocketManager, websocket
 from fortypoints.players.decorators import player_required
 from fortypoints.users import get_user
 
 game = Blueprint('games', __name__, template_folder='templates/games')
+
+
+_game_update_sockets = defaultdict(lambda: WebSocketManager(100))
+
+
+def _cleanup_sockets(max_size):
+  size = sum([len(manager) for manager in _game_update_sockets.values()], 0)
+  if size > max_size:
+    for manager in _game_update_sockets.values():
+      manager.clean()
 
 
 @game.route('/play/<int:game_id>')
@@ -47,3 +61,20 @@ def new():
       game = create_game(users)
       return redirect(url_for('games.play', game_id=game.id))
   return render_template('games/new.html', form=form)
+
+
+@websocket(game, '/game/update/<int:game_id>')
+def update(ws, game_id):
+  _game_update_sockets[game_id].append(ws)
+  _cleanup_sockets(10000)
+  while True:
+    message = update_queue.get()
+    if message is None:
+      print 'None message, closing socket'
+      _game_update_sockets[game_id].remove(ws)
+      break
+    else:
+      message = json.loads(message)
+      render_chat = get_template_attribute('games/macros.html', 'render_chat')
+      for socket in _game_update_sockets[game_id]:
+        socket.send(render_chat(message['user'], message['message']))
