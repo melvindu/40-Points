@@ -24,6 +24,7 @@ def cleanup_sockets(max_size):
 #@player_required
 def game_chat_handler(ws, game_id):
   websocket_manager = game_chat_sockets[game_id]
+  websocket_manager.clean()
   websocket_manager.add_socket(ws)
   cleanup_sockets(10000)
   while True:
