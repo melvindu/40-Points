@@ -1,0 +1,18 @@
+#chat {
+  border-radius: 5px;
+  border: 1px solid black;
+  height: 80%;
+  padding: 3px;
+  position: fixed;
+  width: 13%;
+}
+
+.chats {
+  background-color: #F5F5F5;
+  height: 84%;
+  margin-bottom: 4px;
+}
+
+.chat-input {
+  resize: none;
+}
