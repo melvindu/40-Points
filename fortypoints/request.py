@@ -1,7 +1,9 @@
 from multiprocessing import Pool, Process, Queue
+from functools import update_wrapper, wraps
+from threading import Thread
 
 from flask import make_response, request
-from functools import update_wrapper, wraps
+from geventwebsocket  import WebSocketError
 
 def nocache(f):
     def new_func(*args, **kwargs):
@@ -52,8 +54,14 @@ class WebSocketManager(object):
     self._sockets = sockets
 
   def broadcast(self, message):
+    sockets = []
     for socket in self.sockets:
-      socket.send(message)
+      try:
+        socket.send(message)
+        sockets.append(socket)
+      except WebSocketError:
+        print 'failed to broadcast to socket {0}, removing'.format(socket)
+    self._sockets = sockets
 
   def __len__(self):
     return len(self._sockets)
@@ -80,7 +88,7 @@ class WebSocketUpdater(object):
         updater._websocket_manager.broadcast(update)
         if not updater._websocket_manager:
           break
-    Process(target=_listen, args=(self, )).start()
+    Thread(target=_listen, args=(self, )).start()
 
   def clean(self):
     self._websocket_manager.clean()
