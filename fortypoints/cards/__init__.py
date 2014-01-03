@@ -23,8 +23,8 @@ class Deck(object):
 
 class Card(object):
   def __init__(self, num, suit):
-    self.num = num
-    self.suit = suit
+    self._num = num
+    self._suit = suit
     if self.num in CARD.JOKERS or self.suit in CARD.JOKERS:
       if self.num != self.suit:
         raise ValueError('Card() joker initialization failed')
