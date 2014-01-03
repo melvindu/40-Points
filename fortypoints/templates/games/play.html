@@ -30,11 +30,32 @@
 {{ super() }}
 <script src="{{ url_for('static', filename='js/games/views/chat.js') }}"></script>
 <script src="{{ url_for('static', filename='js/games/views/score.js') }}"></script>
+<script src="{{ url_for('static', filename='js/games/models/player.js') }}"></script>
 <script>
   $(document).ready(function() {
     USER = "{{ current_user.name }}";
     GAME_ID = {{ game_id }};
+    var chatView = new CHAT.ChatView()
+    var views = [chatView]
+    var players = new PLAYER.Players()
+    {% for player in players %}
+    players.add(new PLAYER.Player({
+      id: {{ player.id }},
+      name: "{{ player.name }}"
+    }));
+    console.log(players)
+    {% endfor %}
+    var gameUpdater = new WebSocket('ws://' + location.host + '/game/update-stream/' + GAME_ID)
+
+    gameUpdater.onmessage = function(message) {
+      for (index in views) {
+        views[index].trigger(message.data.event);
+      }
+    };
+
+    window.onbeforeunload = function() {
+      gameUpdater.close()
+    };
   });
 </script>
-<script src="{{ url_for('static', filename='js/games/play.js') }}"></script>
 {% endblock %}
