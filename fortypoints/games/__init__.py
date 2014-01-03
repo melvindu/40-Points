@@ -1,3 +1,5 @@
+import random
+
 import fortypoints as fp
 from fortypoints.players import create_player
 from fortypoints.games.models import Game
@@ -13,8 +15,9 @@ def create_game(users):
   game = Game(len(users))
   db.session.add(game)
   db.session.commit()
-  for user in users:
-    create_player(game, user)
+  random.shuffle(users)
+  for index, user in enumerate(users):
+    create_player(game, user, index)
   return game
   
 

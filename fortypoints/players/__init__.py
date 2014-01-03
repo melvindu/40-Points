@@ -9,7 +9,7 @@ def get_player(game, user):
 def get_player_by_id(player_id):
   return Player.get(id=player_id)
 
-def create_player(game, user):
-  player = Player(game, user)
+def create_player(game, user, number):
+  player = Player(game, user, number)
   db.session.add(player)
   db.session.commit()

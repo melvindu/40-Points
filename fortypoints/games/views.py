@@ -39,14 +39,15 @@ def new():
       return render_template('games/new.html', form=form)
     else:
       usernames = [field.data for field in form.players.entries] + [current_user.name]
-      users = []
+      users = set()
       for username in usernames:
         user = get_user(name=username)
         if not user:
           flash('Invalid User {username}'.format(username=username), 'danger')
           return render_template('games/new.html', form=form)
-        users.append(user)
-
+        users.add(user)
+      users = list(users)
+      
       if len(users) < GAME.MIN_PLAYERS:
         flash('Must invite at least {min} players'.format(min=GAME.MIN_PLAYERS), 'danger')
         return render_template('games/new.html', form=form)

@@ -13,11 +13,6 @@ class Game(db.Model, ModelMixin):
   trump_number = db.Column(db.SmallInteger(unsigned=True), nullable=True)
   trump_suit = db.Column(db.SmallInteger(unsigned=True), nullable=True)
   size = db.Column(db.SmallInteger(unsigned=True))
-  current_player_id = db.Column(db.Integer(unsigned=True), 
-                                db.ForeignKey('player.id', 
-                                              use_alter=True, 
-                                              name='current_player_id'), 
-                                nullable=True)
 
   def __init__(self, num_players):
     self.size = num_players
@@ -33,7 +28,9 @@ class Game(db.Model, ModelMixin):
 
   @property
   def current_player(self):
-    return get_player_by_id(self.current_player_id)
+    active = lambda p: p.active
+    active_players = filter(active, self.players)
+    return active_players[0] if active_players else None
 
   @current_player.setter
   def current_player(self, player):
