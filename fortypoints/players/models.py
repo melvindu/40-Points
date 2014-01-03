@@ -9,13 +9,14 @@ db = fp.db
 class Player(db.Model, ModelMixin):
   __tablename__ = 'player'
   id = db.Column(db.Integer(unsigned=True), primary_key=True)
-  game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'))
-  user_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('user.id'))
+  game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'), index=True)
+  user_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('user.id'), index=True)
   number = db.Column(db.Integer(unsigned=True), nullable=False)
   active = db.Column(db.Boolean, nullable=False)
   score = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   level = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   house = db.Column(db.Boolean, nullable=False)
+  lead = db.Column(db.Boolean, nullable=False, default=False)
 
   game = db.relationship('Game', foreign_keys=game_id, backref=db.backref('players', lazy='dynamic'))
   user = db.relationship('User', backref=db.backref('players', lazy='dynamic'))
