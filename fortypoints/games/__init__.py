@@ -13,7 +13,7 @@ def get_game(game_id):
  
  
 def create_game(users):
-  game = Game(len(users))
+  game = Game(len(users), 2)
   db.session.add(game)
   db.session.commit()
   create_deck(1, game.id)
