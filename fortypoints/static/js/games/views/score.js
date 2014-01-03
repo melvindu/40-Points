@@ -15,7 +15,7 @@ SCORE = (function() {
     },     
 
     updateScore: function(update) {
-      this.$el.html(update);
+      this.$el.find('.scores').html(update.data);
       this.render();
     }
   });

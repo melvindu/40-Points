@@ -1,7 +1,7 @@
 import simplejson as json
 from collections import defaultdict
 
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, get_template_attribute, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 from fortypoints.template import templated
@@ -55,6 +55,19 @@ def new():
   return render_template('games/new.html', form=form)
 
 
+@game.route('/play-cards/<int:game_id>')
+@player_required
+def play_cards(game_id):
+  updater = GameClientUpdater.factory(game_id)
+  players = get_game(game_id).players
+  render_scores = get_template_attribute('games/macros.html', 'render_scores')
+  update = {
+    'event': 'scoreboard:update',
+    'data': render_scores(players)
+  }
+  updater.update(json.dumps(dict(event='scoreboard:update')))
+
+
 @game.route('/update/<int:game_id>', methods=['GET', 'POST'])
 @player_required
 def update(game_id):
@@ -67,9 +80,7 @@ def update_stream(ws, game_id):
   print game_id
   try:
     updater = GameClientUpdater.factory(game_id)
-    print updater
     updater.connect(ws)
-    updater._websocket_manager.broadcast('hello')
     updater.listen()
     while ws.receive():
       print 'receiving'

@@ -9,3 +9,9 @@
   <b>{{ player.user.name }}:</b> {{ player.score }}
 </li>
 {% endmacro %}
+
+{% macro render_scores(players) %}
+{% for player in players %}
+  {{ render_score(player) }}
+{% endfor %}
+{% endmacro %}
