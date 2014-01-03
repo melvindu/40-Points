@@ -6,6 +6,8 @@ from flask_login import current_user, login_required
 
 import fortypoints as fp
 from fortypoints.template import templated
+from fortypoints.cards import Flip
+from fortypoints.cards.exceptions import FlipError
 from fortypoints.games import create_game, get_game, constants as GAME
 from fortypoints.games.forms import NewGameForm
 from fortypoints.games.updates import update_game_client
@@ -69,13 +71,38 @@ def draw_card(game_id):
     player.active = False
     player.next_player.active = True
     db.session.commit()
-    update_game_client(game_id, 'hand:update', {})
+  update_game_client(game_id, 'hand:update', {})
 
 
 @game.route('/flip-card/<int:game_id>', methods=['POST'])
 @player_required
 def flip_card(game_id):
-  pass
+  game = get_game(game_id)
+  player = get_player(game, current_user)
+  cards = request.form['cards']
+  to_flip_cards = []
+  for card in cards:
+    for player_card in player.cards:
+      if card['num'] == player_card.num and card['suit'] == player_card.suit:
+        to_flip_cards.append(player_card)
+        break
+    raise ValueError('Player doesn\'t own requested card to flip')
+  flipped_cards = lambda c: c.flipped, game.cards
+  flipped = Flip(flipped_cards)
+  to_flip = Flip(to_flip_cards)
+  if to_flip > flipped:
+    for card in flipped_cards:
+      card.flipped = False
+    for card in to_flip_cards:
+      card.flipped = True
+    if not game.house_players:
+      player.house = True
+    db.session.commit()
+  else:
+    raise ValueError('Can\'t flip weaker cards')
+
+
+
 
 
 @game.route('/play-cards/<int:game_id>')
