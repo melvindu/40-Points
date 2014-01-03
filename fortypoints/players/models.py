@@ -12,6 +12,7 @@ class Player(db.Model, ModelMixin):
   game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'))
   user_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('user.id'))
   number = db.Column(db.Integer(unsigned=True), nullable=False)
+  active = db.Column(db.Boolean, nullable=False)
   score = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   level = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   house = db.Column(db.Boolean, nullable=False)
@@ -19,10 +20,11 @@ class Player(db.Model, ModelMixin):
   game = db.relationship('Game', foreign_keys=game_id, backref=db.backref('players', lazy='dynamic'))
   user = db.relationship('User', backref=db.backref('players', lazy='dynamic'))
 
-  def __init__(self, game, user, number):
+  def __init__(self, game, user, number, active=False):
     self.game_id = game.id
     self.user_id = user.id
     self.number = number
+    self.active = active
     self.score = 0
     self.level = CARD.TWO
     self.house = False

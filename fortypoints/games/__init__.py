@@ -17,7 +17,7 @@ def create_game(users):
   db.session.commit()
   random.shuffle(users)
   for index, user in enumerate(users):
-    create_player(game, user, index)
+    create_player(game, user, index, index is 0)
   return game
   
 
