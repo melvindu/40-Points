@@ -85,6 +85,6 @@ class WebSocketUpdater(object):
   def clean(self):
     self._websocket_manager.clean()
 
-  def update(message):
+  def update(self, message):
     self._update_stream.put(message)
 
