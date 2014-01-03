@@ -1,6 +1,6 @@
 import fortypoints as fp
 
-from fortypoints.cards import Card, constants as CARD
+from fortypoints.cards import Card, constants as CARD, Flip
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
 
@@ -36,6 +36,21 @@ class Player(db.Model, ModelMixin):
     else:
       raise ValueError('Inactive player cannot draw.')
 
+  def flip(self, cards):
+    flip = Flip(self.game, cards)
+    for card in self.game.cards:
+      if card.flipped == True:
+        card.flipped = False
+    for card in cards:
+      card.flipped = True
+
+    #set house if this is the first flip of all games
+    if not self.game.house_players:
+      for player in self.game.players:
+        player.lead = False
+      self.house = True
+      self.lead = True
+    db.session.commit()
   @property
   def active(self):
     return self._active

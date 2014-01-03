@@ -56,7 +56,7 @@ def new():
       if len(users) < GAME.MIN_PLAYERS:
         flash('Must invite at least {min} players'.format(min=GAME.MIN_PLAYERS), 'danger')
         return render_template('games/new.html', form=form)
-      game = create_game(users)
+      game = create_game(users, level=2, first=True)
       return redirect(url_for('games.play', game_id=game.id))
   return render_template('games/new.html', form=form)
 
@@ -68,9 +68,14 @@ def draw_card(game_id):
   player = get_player(game, current_user)
   if player.active:
     card = player.draw()
-    player.active = False
     player.next_player.active = True
+    if game.undealt_cards == game.bottom_size:
+      if game.flipped_cards:
+        game.house_lead.active = True
+        while game.undealt_cards:
+          game.house_lead.draw()
     db.session.commit()
+
   update_game_client(game_id, 'hand:update', {})
 
 
@@ -95,14 +100,14 @@ def flip_card(game_id):
       card.flipped = False
     for card in to_flip_cards:
       card.flipped = True
+
+    #set house if this is the first flip of all games
     if not game.house_players:
       player.house = True
+      player.lead = True
     db.session.commit()
   else:
     raise ValueError('Can\'t flip weaker cards')
-
-
-
 
 
 @game.route('/play-cards/<int:game_id>')

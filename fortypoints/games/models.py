@@ -14,10 +14,12 @@ class Game(db.Model, ModelMixin):
   trump_number = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   trump_suit = db.Column(db.SmallInteger(unsigned=True), nullable=True)
   size = db.Column(db.SmallInteger(unsigned=True))
+  first = db.Column(db.Boolean, nullable=False, default=False)
 
-  def __init__(self, num_players, level):
+  def __init__(self, num_players, level, first=False):
     self.size = num_players
     self.trump_number = level
+    self.first = first
 
   @property
   def trump(self):
@@ -42,12 +44,25 @@ class Game(db.Model, ModelMixin):
   def house_players(self):
     return filter(lambda p: p.house, self.players)
 
+  @property
+  def  house_lead(self):
+    lead = filter(lambda p: p.lead, self.players)
+    return lead[0] if lead else None
+
   def get_player(self, user):
     return get_player(self, user)
 
   @property
   def deck(self):
     return self.cards
+
+  @property
+  def undealt_cards(self):
+    return filter(lambda c: c.player_id is None, self.deck)
+
+  @property
+  def flipped_cards(self):
+    return filter(lambda c: c.flipped, self.deck)
 
   @property
   def round(self):
@@ -59,8 +74,7 @@ class Game(db.Model, ModelMixin):
     return num_left % GAME.BOTTOM_MODULO + num_left
 
   def deal(self, player):
-    undealt = filter(lambda c: c.player_id is None, self.deck)
-    card = random.choice(undealt)
+    card = random.choice(self.undealt_cards)
     card.player_id = player.id
     db.session.commit()
     return card
