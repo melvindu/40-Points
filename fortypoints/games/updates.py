@@ -1,8 +1,17 @@
+import simplejson as json
+
 from multiprocessing import Queue
 from weakref import WeakValueDictionary
 
 from fortypoints.request import WebSocketUpdater
 
+
+def update_game_client(game_id, event, update):
+  message = {
+    'event': event,
+    'data': update
+  }
+  GameClientUpdater.factory(game_id).update(json.dumps(message))
 
 class GameClientUpdater(WebSocketUpdater):
   game_map = WeakValueDictionary()

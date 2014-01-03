@@ -7,7 +7,7 @@ from flask_login import current_user, login_required
 from fortypoints.template import templated
 from fortypoints.games import create_game, get_game, constants as GAME
 from fortypoints.games.forms import NewGameForm
-from fortypoints.games.updates import GameClientUpdater
+from fortypoints.games.updates import update_game_client
 from fortypoints.request import WebSocketManager, websocket
 from fortypoints.players.decorators import player_required
 from fortypoints.users import get_user
@@ -58,14 +58,9 @@ def new():
 @game.route('/play-cards/<int:game_id>')
 @player_required
 def play_cards(game_id):
-  updater = GameClientUpdater.factory(game_id)
   players = get_game(game_id).players
   render_scores = get_template_attribute('games/macros.html', 'render_scores')
-  update = {
-    'event': 'scoreboard:update',
-    'data': render_scores(players)
-  }
-  updater.update(json.dumps(dict(event='scoreboard:update')))
+  update_game_client(game_id, 'scoreboard:update', render_scores(players))
 
 
 @game.route('/update/<int:game_id>', methods=['GET', 'POST'])
