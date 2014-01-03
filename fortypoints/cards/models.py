@@ -83,9 +83,9 @@ class CardMixin(object):
 
 class Card(db.Model, ModelMixin, CardMixin):
   id = db.Column(db.Integer(unsigned=True), primary_key=True)
-  game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'), nullable=True)
-  player_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('player.id'), nullable=True)
-  play_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('play.id'), nullable=True)
+  game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'), nullable=True, index=True)
+  player_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('player.id'), nullable=True, index=True)
+  play_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('play.id'), nullable=True, index=True)
   _num = db.Column(db.Integer(unsigned=True), nullable=False)
   _suit = db.Column(db.Integer(unsigned=True), nullable=False)
   bottom = db.Column(db.Boolean(), default=False)
