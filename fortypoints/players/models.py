@@ -12,7 +12,7 @@ class Player(db.Model, ModelMixin):
   game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'), index=True)
   user_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('user.id'), index=True)
   number = db.Column(db.Integer(unsigned=True), nullable=False)
-  active = db.Column(db.Boolean, nullable=False)
+  _active = db.Column(db.Boolean, nullable=False)
   score = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   level = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   house = db.Column(db.Boolean, nullable=False)
@@ -25,7 +25,7 @@ class Player(db.Model, ModelMixin):
     self.game_id = game.id
     self.user_id = user.id
     self.number = number
-    self.active = active
+    self._active = active
     self.score = 0
     self.level = CARD.TWO
     self.house = False
@@ -36,6 +36,17 @@ class Player(db.Model, ModelMixin):
     else:
       raise ValueError('Inactive player cannot draw.')
 
+  @property
+  def active(self):
+    return self._active
+
+  @active.setter
+  def active(self, status):
+    self._active = status:
+    if status:
+      for player in self.game.players:
+        player.active = False
+    
   @property
   def next_player(self):
     players = sorted(self.game.players, key=lambda p: p.number)
