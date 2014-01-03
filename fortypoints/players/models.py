@@ -29,6 +29,9 @@ class Player(db.Model, ModelMixin):
     self.level = CARD.TWO
     self.house = False
 
+  def draw(self):
+    self.game.deal(self)
+
   def __str__(self):
     return '<Player \'{user}\' level={level} house={house} game_id={game_id}>'.format(
                       user=self.user.name, 

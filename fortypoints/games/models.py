@@ -1,3 +1,4 @@
+import random
 import fortypoints as fp
 
 from fortypoints.cards import Card
@@ -38,6 +39,17 @@ class Game(db.Model, ModelMixin):
 
   def get_player(self, user):
     return get_player(self, user)
+
+  @property
+  def deck(self):
+    return self.cards
+
+  def deal(self, player):
+    undealt = filter(lambda c: c.player_id is None, self.deck)
+    card = random.choice(undealt)
+    card.player_id = player.id
+    db.session.commit()
+
 
   def __repr__(self):
     return '<Game size={size} trump_number={num} trump_suit={suit}>'.format(
