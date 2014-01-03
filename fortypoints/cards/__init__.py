@@ -2,6 +2,7 @@ import random
 
 import fortypoints as fp
 from fortypoints.cards import constants as CARD
+from fortypoints.cards.exceptions import FlipError
 from fortypoints.cards.models import Card as CardModel, CardMixin as Card
 
 db = fp.db
@@ -12,11 +13,11 @@ class Flip(object):
     # check unflippable
     flippable_nums = (game.trump_number, CARD.SMALL_JOKER, CARD.BIG_JOKER)
     if not all(card.num in flippable_nums for card in cards):
-      raise ValueError('Can\'t flip non-level card')
+      raise FlipError('Can\'t flip non-level card')
     # check nonequal cards
     if len(cards) > 1:
       if len(set(cards)) > 1:
-        raise ValueError('Can\'t flip nonequivalent cards')
+        raise FlipError('Can\'t flip nonequivalent cards')
     self.game = game
     self.cards = cards
 
