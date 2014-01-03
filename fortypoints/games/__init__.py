@@ -16,7 +16,7 @@ def create_game(users):
   game = Game(len(users))
   db.session.add(game)
   db.session.commit()
-  create_deck(game.id)
+  create_deck(1, game.id)
   random.shuffle(users)
   for index, user in enumerate(users):
     create_player(game, user, index + 1, index is 0)

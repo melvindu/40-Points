@@ -34,9 +34,12 @@ def create_deck(size=1, game_id=None):
   deck.shuffle()
   cards = []
   for card in deck:
+    print card
     card_model = CardModel(card.num, card.suit)
+    print card_model
     if game_id:
       card_model.game_id = game_id
     cards.append(card_model)
+  db.session.add_all(cards)
   fp.db.session.commit()
   return cards
