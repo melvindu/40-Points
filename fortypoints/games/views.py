@@ -54,11 +54,11 @@ def new():
   return render_template('games/new.html', form=form)
 
 
-@game.route('/update/<int:game_id>', methods=['POST'])
+@game.route('/update/<int:game_id>', methods=['GET', 'POST'])
 @player_required
 def update(game_id):
   updater = GameClientUpdater.factory(game_id)
-  updater.update(dict(request.form))
+  updater.update(dict(request.args))
 
 
 @websocket(game, '/update-stream/<int:game_id>')
