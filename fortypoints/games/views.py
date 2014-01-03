@@ -4,16 +4,19 @@ from collections import defaultdict
 from flask import Blueprint, flash, get_template_attribute, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
+import fortypoints as fp
 from fortypoints.template import templated
 from fortypoints.games import create_game, get_game, constants as GAME
 from fortypoints.games.forms import NewGameForm
 from fortypoints.games.updates import update_game_client
 from fortypoints.request import WebSocketManager, websocket
+from fortypoints.players import get_player
 from fortypoints.players.decorators import player_required
 from fortypoints.users import get_user
 
 game = Blueprint('games', __name__, template_folder='templates/games')
 
+db = fp.db
 
 @game.route('/play/<int:game_id>')
 @player_required
@@ -47,13 +50,32 @@ def new():
           return render_template('games/new.html', form=form)
         users.add(user)
       users = list(users)
-      
+
       if len(users) < GAME.MIN_PLAYERS:
         flash('Must invite at least {min} players'.format(min=GAME.MIN_PLAYERS), 'danger')
         return render_template('games/new.html', form=form)
       game = create_game(users)
       return redirect(url_for('games.play', game_id=game.id))
   return render_template('games/new.html', form=form)
+
+
+@game.route('/draw-card/<int:game_id>', methods=['POST'])
+@player_required
+def draw_card(game_id):
+  game = get_game(game_id)
+  player = get_player(game, current_user)
+  if player.active:
+    card = player.draw()
+    player.active = False
+    player.next_player.active = True
+    db.session.commit()
+    update_game_client(game_id, 'hand:update', {})
+
+
+@game.route('/flip-card/<int:game_id>', methods=['POST'])
+@player_required
+def flip_card(game_id):
+  pass
 
 
 @game.route('/play-cards/<int:game_id>')

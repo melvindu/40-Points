@@ -89,6 +89,7 @@ class Card(db.Model, ModelMixin, CardMixin):
   _num = db.Column(db.Integer(unsigned=True), nullable=False)
   _suit = db.Column(db.Integer(unsigned=True), nullable=False)
   bottom = db.Column(db.Boolean(), default=False)
+  flipped = db.Column(db.Boolean(), default=False)
 
   game = db.relationship('Game', foreign_keys=game_id, backref=db.backref('cards', lazy='dynamic'))
   player = db.relationship('Player', backref=db.backref('cards', lazy='dynamic'))

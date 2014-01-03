@@ -58,6 +58,7 @@ class Game(db.Model, ModelMixin):
     card = random.choice(undealt)
     card.player_id = player.id
     db.session.commit()
+    return card
 
   def __repr__(self):
     return '<Game size={size} trump_number={num} trump_suit={suit}>'.format(

@@ -30,7 +30,20 @@ class Player(db.Model, ModelMixin):
     self.house = False
 
   def draw(self):
-    self.game.deal(self)
+    if player.active:
+      return self.game.deal(self)
+    else:
+      raise ValueError('Inactive player cannot draw.')
+
+  @property
+  def next_player(self):
+    players = sorted(self.game.players, key=lambda p: p.number)
+    next_players = filter(lambda p: p.number == self.number + 1, players)
+    if not next_players:
+      return players[0]
+    else:
+      return players[self.number + 1]
+
 
   def __str__(self):
     return '<Player \'{user}\' level={level} house={house} game_id={game_id}>'.format(
