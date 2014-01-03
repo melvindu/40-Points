@@ -44,12 +44,20 @@ class Game(db.Model, ModelMixin):
   def deck(self):
     return self.cards
 
+  @property
+  def round(self):
+    return max([0]+ [play.round or 0 for play in self.plays])
+
+  @property
+  def bottom_size(self):
+    num_left = len(self.deck) % len(self.player)
+    return num_left % GAME.BOTTOM_MODULO + num_left
+
   def deal(self, player):
     undealt = filter(lambda c: c.player_id is None, self.deck)
     card = random.choice(undealt)
     card.player_id = player.id
     db.session.commit()
-
 
   def __repr__(self):
     return '<Game size={size} trump_number={num} trump_suit={suit}>'.format(
@@ -57,3 +65,13 @@ class Game(db.Model, ModelMixin):
             num=self.trump_number,
             suit=self.trump_suit
     )
+
+class Play(db.Model, ModelMixin):
+  __tablename__ = 'play'
+  id = db.Column(db.Integer(unsigned=True), primary_key=True)
+  round = db.Column(db.Integer(unsigned=True), nullable=False)
+  game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'), nullable=True)
+  player_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('player.id'), nullable=True)
+
+  game = db.relationship('Game', foreign_keys=game_id, backref=db.backref('plays', lazy='dynamic'))
+  player = db.relationship('Player', backref=db.backref('plays', lazy='dynamic'))

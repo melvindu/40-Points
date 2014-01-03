@@ -3,7 +3,7 @@ import random
 import fortypoints as fp
 from fortypoints.cards import create_deck
 from fortypoints.players import create_player
-from fortypoints.games.models import Game
+from fortypoints.games.models import Game, Play
 
 db = fp.db
 
@@ -22,7 +22,7 @@ def create_game(users):
     create_player(game, user, index + 1, index is 0)
 
   return game
-  
+
 
 class Play(object):
   def __init__(self, game, player, cards, plays):
