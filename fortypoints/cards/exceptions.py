@@ -1,0 +1,2 @@
+class FlipError(Exception):
+  pass
