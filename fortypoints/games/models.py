@@ -11,12 +11,13 @@ db = fp.db
 class Game(db.Model, ModelMixin):
   __tablename__ = 'game'
   id = db.Column(db.Integer(unsigned=True), primary_key=True)
-  trump_number = db.Column(db.SmallInteger(unsigned=True), nullable=True)
+  trump_number = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   trump_suit = db.Column(db.SmallInteger(unsigned=True), nullable=True)
   size = db.Column(db.SmallInteger(unsigned=True))
 
-  def __init__(self, num_players):
+  def __init__(self, num_players, level):
     self.size = num_players
+    self.trump_number = level
 
   @property
   def trump(self):
@@ -36,6 +37,10 @@ class Game(db.Model, ModelMixin):
   @current_player.setter
   def current_player(self, player):
     self.current_player_id = player.id
+
+  @property
+  def house_players(self):
+    return filter(lambda p: p.house, self.players)
 
   def get_player(self, user):
     return get_player(self, user)
