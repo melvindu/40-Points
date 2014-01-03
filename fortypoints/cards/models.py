@@ -83,14 +83,13 @@ class CardMixin(object):
 
 class Card(db.Model, ModelMixin, CardMixin):
   id = db.Column(db.Integer(unsigned=True), primary_key=True)
-  game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'))
-  player_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('player.id'))
+  game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'), nullable=True)
+  player_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('player.id'), nullable=True)
   _num = db.Column(db.Integer(unsigned=True), nullable=False)
   _suit = db.Column(db.Integer(unsigned=True), nullable=False)
 
   game = db.relationship('Game', foreign_keys=game_id, backref=db.backref('cards', lazy='dynamic'))
   player = db.relationship('Player', backref=db.backref('cards', lazy='dynamic'))
 
-  def __init__(self, player, num, suit):
-    self.player_id = player.id
-    Card.__init__(num, suit)
+  def __init__(self, num, suit):
+    CardMixin.__init__(self, num, suit)

@@ -1,7 +1,10 @@
 import random
 
+import fortypoints as fp
 from fortypoints.cards import constants as CARD
-from fortypoints.cards.models import CardMixin as Card
+from fortypoints.cards.models import Card as CardModel, CardMixin as Card
+
+db = fp.db
 
 
 class Deck(object):
@@ -21,3 +24,19 @@ class Deck(object):
 
   def sort(self):
     self.cards.sort()
+
+  def __iter__(self):
+    return iter(self.cards)
+
+
+def create_deck(size=1, game_id=None):
+  deck = Deck(size)
+  deck.shuffle()
+  cards = []
+  for card in deck:
+    card_model = CardModel(card.num, card.suit)
+    if game_id:
+      card_model.game_id = game_id
+    cards.append(card_model)
+  fp.db.session.commit()
+  return cards
