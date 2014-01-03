@@ -36,20 +36,15 @@
     USER = "{{ current_user.name }}";
     GAME_ID = {{ game_id }};
     var chatView = new CHAT.ChatView()
-    var views = [chatView]
-    var players = new PLAYER.Players()
-    {% for player in players %}
-    players.add(new PLAYER.Player({
-      id: {{ player.id }},
-      name: "{{ player.name }}"
-    }));
-    console.log(players)
-    {% endfor %}
+    var scoreBoardView = new SCORE.ScoreBoardView()
+    var views = [chatView, scoreBoardView]
+
     var gameUpdater = new WebSocket('ws://' + location.host + '/game/update-stream/' + GAME_ID)
 
     gameUpdater.onmessage = function(message) {
+      console.log(message)
       for (index in views) {
-        views[index].trigger(message.data.event);
+        views[index].trigger(JSON.parse(message.data).event, message.data);
       }
     };
 

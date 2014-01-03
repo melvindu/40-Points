@@ -1,3 +1,4 @@
+import simplejson as json
 from collections import defaultdict
 
 from flask import Blueprint, flash, redirect, render_template, request, url_for
@@ -58,7 +59,7 @@ def new():
 @player_required
 def update(game_id):
   updater = GameClientUpdater.factory(game_id)
-  updater.update(dict(request.args))
+  updater.update(json.dumps(dict(event='scoreboard:update')))
 
 
 @websocket(game, '/update-stream/<int:game_id>')
