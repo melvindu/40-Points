@@ -1,7 +1,7 @@
 import simplejson as json
 from collections import defaultdict
 
-from flask import Blueprint, flash, get_template_attribute, redirect, render_template, request, url_for
+from flask import Blueprint, flash, get_template_attribute, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
 import fortypoints as fp
@@ -77,6 +77,7 @@ def draw_card(game_id):
     db.session.commit()
 
   update_game_client(game_id, 'hand:update', {})
+  return jsonify()
 
 
 @game.route('/flip-card/<int:game_id>', methods=['POST'])
@@ -96,15 +97,7 @@ def flip_card(game_id):
   flipped = Flip(flipped_cards)
   to_flip = Flip(to_flip_cards)
   if to_flip > flipped:
-    for card in flipped_cards:
-      card.flipped = False
-    for card in to_flip_cards:
-      card.flipped = True
-
-    #set house if this is the first flip of all games
-    if not game.house_players:
-      player.house = True
-      player.lead = True
+    player.flip(to_flip_cards)
     db.session.commit()
   else:
     raise ValueError('Can\'t flip weaker cards')

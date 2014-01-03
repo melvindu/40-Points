@@ -12,7 +12,7 @@ class Player(db.Model, ModelMixin):
   game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'), index=True)
   user_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('user.id'), index=True)
   number = db.Column(db.Integer(unsigned=True), nullable=False)
-  _active = db.Column(db.Boolean, nullable=False)
+  _active = db.Column('active', db.Boolean, nullable=False)
   score = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   level = db.Column(db.SmallInteger(unsigned=True), nullable=False)
   house = db.Column(db.Boolean, nullable=False)
