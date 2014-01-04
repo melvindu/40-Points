@@ -69,7 +69,7 @@ class Player(db.Model, ModelMixin):
     if not next_players:
       return players[0]
     else:
-      return players[self.number + 1]
+      return next_players[0]
 
   def to_dict(self):
     return {
