@@ -10,16 +10,30 @@
   <ol class="scores">
   </ol>
 </div>
-  <button id="draw-card" class="btn btn-default" url="{{ url_for('games.draw_card', game_id=game_id) }}">Draw</button>
 {% endblock %}
 
 {% block content %}
-<div>
-  <div class="board">
-    {{ render_board(players) }}
+<div class="row">
+  <div class="col-md-12">
+    <div class="board">
+      {{ render_board(players) }}
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <button id="draw-card" class="btn btn-default btn-lg" url="{{ url_for('games.draw_card', game_id=game_id) }}">Draw</button>
+        <button id="flip-card" class="btn btn-success btn-lg" url="{{ url_for('games.flip_card', game_id=game_id) }}">Flip</button>
+      </div>
+      <div class="col-md-4">
+        <div class="me center">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <button id="play-card" class="btn btn-primary btn-lg center pull-right">Play</button>
+      </div>
+    </div>
+    <ol class="hand">
+    </ol>
   </div>
-  <ol class="hand">
-  </ol>
 </div>
 {% endblock %}
 
@@ -48,7 +62,9 @@
       players.add(player);
       {% if loop.index0 == 0 %}
         var hand = new CARD.HandView({model: player});
-        $('.hand').html(hand.render().el)
+        var status = new PLAYER.PlayerStatusView({model: player});
+        $('.hand').html(hand.render().el);
+        $('.me').html(status.render().el);
       {% endif %}
     {% endfor %}
     players.each(function(player) {

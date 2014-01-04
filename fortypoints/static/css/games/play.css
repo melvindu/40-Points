@@ -59,6 +59,20 @@
   padding: 5px;
 }
 
+.me {
+  margin-bottom: 17px !important;
+  margin-top: -10px !important;
+}
+
+#draw-card, #flip-card, #play-card {
+  margin-top: 10px;
+  min-width: 100px;
+}
+
 .center {
   margin: 0 auto;
+}
+
+#content {
+  border: none;
 }
