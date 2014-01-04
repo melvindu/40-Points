@@ -52,6 +52,10 @@ class Player(db.Model, ModelMixin):
       self.lead = True
 
   @property
+  def hand(self):
+    return sorted(self.cards)
+
+  @property
   def active(self):
     return self._active
 
@@ -83,7 +87,7 @@ class Player(db.Model, ModelMixin):
       'level': self.level,
       'house': self.house,
       'lead': self.lead,
-      'cards': [card.to_dict() for card in self.cards]
+      'cards': [card.to_dict() for card in self.hand]
     }
 
   def __str__(self):

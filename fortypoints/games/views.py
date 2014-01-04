@@ -83,8 +83,11 @@ def draw_card(game_id):
   player = get_player(game, current_user)
   if player.active:
     card = player.draw()
+    print player.next_player.user.name
     player.next_player.active = True
+    print player.next_player.active
     if game.undealt_cards == game.bottom_size:
+      print 'spurning'
       if game.flipped_cards:
         game.house_lead.active = True
         while game.undealt_cards:
