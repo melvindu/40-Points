@@ -27,9 +27,12 @@
         <div class="me center">
         </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-2">
+        <div class="current-player">
+        </div>
+      </div>
+      <div class="col-md-2">
         <button id="play-card" class="btn btn-primary btn-lg center pull-right">Play</button>
-        <span class="current-player pull-right"></span>
       </div>
     </div>
     <ol class="hand">
@@ -69,7 +72,8 @@
       {% endif %}
     {% endfor %}
 
-    var currentPlayerView = new PLAYER.CurrentPlayerView({collection: players, el: '.current-player'});
+    var currentPlayerView = new PLAYER.CurrentPlayerView({collection: players});
+    $('.current-player').html(currentPlayerView.render().el);
 
     players.each(function(player) {
       player.fetch();

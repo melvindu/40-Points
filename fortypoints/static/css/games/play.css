@@ -55,24 +55,21 @@
   background-color: #E9C2A6;
   border: 1px solid #995511; 
   border-radius: 5px;
-  height: 400px;
+  height: 320px;
   padding: 5px;
 }
 
-.me {
+.me, .current-player {
   margin-bottom: 17px !important;
   margin-top: -10px !important;
+  word-wrap: break-word;
 }
 
 .current-player {
-  background-color: transparent;;
   color: #5cb85c;
-  display: inline;
-  font-size: 30px;
-
 }
 
-#draw-card, #flip-card, #play-card, .current-player {
+#draw-card, #flip-card, #play-card {
   margin-top: 10px;
   min-width: 100px;
 }

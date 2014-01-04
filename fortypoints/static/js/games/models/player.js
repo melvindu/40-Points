@@ -31,8 +31,7 @@ PLAYER = (function() {
   });
 
   var CurrentPlayerView = Backbone.View.extend({
-    el: '.current-player',
-    tagName: 'div',
+    tagName: 'span',
     initialize: function() {
       _.bindAll(this, 'render');
       this.collection.on('change:active', this.render);
@@ -42,8 +41,7 @@ PLAYER = (function() {
       var view = this;
       this.collection.each(function(player) {
         if (player.get('active')) {
-          console.log("IM ACTIVE!")
-          view.$el.html('<span class="label label-info current-player">Turn: ' + player.get('name') + '</span>');
+          view.$el.html('<h2>Turn: ' + player.get('name') + '<h2>');
         };
       });
       return this;
