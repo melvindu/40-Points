@@ -74,6 +74,7 @@ class Player(db.Model, ModelMixin):
   def to_dict(self):
     return {
       'id': self.id,
+      'name': self.user.name,
       'game_id': self.game_id,
       'user_id': self.user_id,
       'number': self.number,
@@ -83,7 +84,6 @@ class Player(db.Model, ModelMixin):
       'house': self.house,
       'lead': self.lead
     }
-
 
   def __str__(self):
     return '<Player \'{user}\' level={level} house={house} game_id={game_id}>'.format(
