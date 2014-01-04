@@ -57,10 +57,10 @@ class Player(db.Model, ModelMixin):
 
   @active.setter
   def active(self, status):
-    self._active = status
     if status:
       for player in self.game.players:
         player.active = False
+    self._active = status
 
   @property
   def next_player(self):
