@@ -30,6 +30,7 @@ def create_app():
 
 app = create_app()
 
+from fortypoints import jinja_filters
 
 @app.route('/')
 def index():
