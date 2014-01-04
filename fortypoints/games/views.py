@@ -11,7 +11,7 @@ from fortypoints.cards.exceptions import FlipError
 from fortypoints.games import create_game, get_game, constants as GAME
 from fortypoints.games.decorators import game_required
 from fortypoints.games.forms import NewGameForm
-from fortypoints.games.updates import update_game_client
+from fortypoints.games.updates import update_game_client, GameClientUpdater
 from fortypoints.request import WebSocketManager, websocket
 from fortypoints.players import get_player
 from fortypoints.players.decorators import player_required
@@ -94,7 +94,7 @@ def draw_card(game_id):
           game.house_lead.draw()
     db.session.commit()
 
-  update_game_client(game_id, 'hand:update', {})
+  update_game_client(game_id, 'player:update', {})
   return jsonify()
 
 

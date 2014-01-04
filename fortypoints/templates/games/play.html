@@ -65,9 +65,17 @@
     var gameUpdater = new WebSocket('ws://' + location.host + '/game/update-stream/' + GAME_ID)
 
     gameUpdater.onmessage = function(message) {
-      console.log(message)
-      for (index in views) {
-        views[index].trigger(JSON.parse(message.data).event, message.data);
+      var event = JSON.parse(message.data).event;
+      console.log(event)
+      if (event == 'player:update') {
+        players.each(function(player) {
+          player.fetch();
+        });
+      } else {
+        console.log(message)
+        for (index in views) {
+          views[index].trigger(JSON.parse(message.data).event, message.data);
+        }
       }
     };
 
