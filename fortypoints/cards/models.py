@@ -97,3 +97,12 @@ class Card(db.Model, ModelMixin, CardMixin):
 
   def __init__(self, num, suit):
     CardMixin.__init__(self, num, suit)
+
+  def to_dict():
+    return {
+      'num': self.num,
+      'suit': self.suit,
+      'points': self.points,
+      'bottom': self.bottom,
+      'flipped': self.flipped
+    }

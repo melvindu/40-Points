@@ -82,7 +82,8 @@ class Player(db.Model, ModelMixin):
       'score': self.score,
       'level': self.level,
       'house': self.house,
-      'lead': self.lead
+      'lead': self.lead,
+      'cards': [card.to_dict() for card in self.cards]
     }
 
   def __str__(self):

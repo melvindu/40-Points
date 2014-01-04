@@ -8,7 +8,8 @@ import fortypoints as fp
 from fortypoints.template import templated
 from fortypoints.cards import Flip
 from fortypoints.cards.exceptions import FlipError
-from fortypoints.games import create_game, get_game, constants as GAME
+from fortypoints.games import create_game, get_game, constants as games
+from fortypoints.games.decorators import game_required
 from fortypoints.games.forms import NewGameForm
 from fortypoints.games.updates import update_game_client
 from fortypoints.request import WebSocketManager, websocket
@@ -21,10 +22,13 @@ player = Blueprint('players', __name__, template_folder='templates/players')
 db = fp.db
 
 @player.route('/<int:player_id>')
-@player_required
+@game_required
 def player_status(player_id):
   """
   Get player status
   """
   player = get_player_by_id(player_id)
+  player_dict = player.to_dict()
+  if player.user_id != current_user.id:
+    del player_dict['cards']
   return jsonify(player.to_dict())
