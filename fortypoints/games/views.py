@@ -9,6 +9,7 @@ from fortypoints.template import templated
 from fortypoints.cards import Flip
 from fortypoints.cards.exceptions import FlipError
 from fortypoints.games import create_game, get_game, constants as GAME
+from fortypoints.games.decorators import game_required
 from fortypoints.games.forms import NewGameForm
 from fortypoints.games.updates import update_game_client
 from fortypoints.request import WebSocketManager, websocket
@@ -21,7 +22,7 @@ game = Blueprint('games', __name__, template_folder='templates/games')
 db = fp.db
 
 @game.route('/play/<int:game_id>')
-@player_required
+@game_required
 def play(game_id):
   """
   Play a game.
@@ -41,7 +42,7 @@ def play(game_id):
       break
     else:
       others.append(player)
-  return render_template('games/play.html', game_id=game_id, me=me, others=others)
+  return render_template('games/play.html', game_id=game_id, me=me, others=others, players=[me] + others)
 
 
 @game.route('/new', methods=['GET', 'POST'])
@@ -76,7 +77,7 @@ def new():
 
 
 @game.route('/draw-card/<int:game_id>', methods=['POST'])
-@player_required
+@game_required
 def draw_card(game_id):
   game = get_game(game_id)
   player = get_player(game, current_user)
@@ -95,7 +96,7 @@ def draw_card(game_id):
 
 
 @game.route('/flip-card/<int:game_id>', methods=['POST'])
-@player_required
+@game_required
 def flip_card(game_id):
   game = get_game(game_id)
   player = get_player(game, current_user)
@@ -118,7 +119,7 @@ def flip_card(game_id):
 
 
 @game.route('/play-cards/<int:game_id>')
-@player_required
+@game_required
 def play_cards(game_id):
   players = get_game(game_id).players
   render_scores = get_template_attribute('games/macros.html', 'render_scores')
@@ -126,7 +127,7 @@ def play_cards(game_id):
 
 
 @game.route('/update/<int:game_id>', methods=['GET', 'POST'])
-@player_required
+@game_required
 def update(game_id):
   updater = GameClientUpdater.factory(game_id)
   updater.update(json.dumps(dict(event='scoreboard:update')))
