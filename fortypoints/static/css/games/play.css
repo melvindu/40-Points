@@ -64,7 +64,15 @@
   margin-top: -10px !important;
 }
 
-#draw-card, #flip-card, #play-card {
+.current-player {
+  background-color: transparent;;
+  color: #5cb85c;
+  display: inline;
+  font-size: 30px;
+
+}
+
+#draw-card, #flip-card, #play-card, .current-player {
   margin-top: 10px;
   min-width: 100px;
 }

@@ -29,6 +29,7 @@
       </div>
       <div class="col-md-4">
         <button id="play-card" class="btn btn-primary btn-lg center pull-right">Play</button>
+        <span class="current-player pull-right"></span>
       </div>
     </div>
     <ol class="hand">
@@ -55,7 +56,7 @@
   $(document).ready(function() {
     var players = new PLAYER.Players;
     var scores = new SCORE.ScoreBoardView({collection: players});
-    $('.scores').html(scores.render().el)
+    $('.scores').html(scores.render().el);
 
     {% for player in players %}
       var player = new PLAYER.Player({id: {{player.id }} });
@@ -67,9 +68,13 @@
         $('.me').html(status.render().el);
       {% endif %}
     {% endfor %}
+
+    var currentPlayerView = new PLAYER.CurrentPlayerView({collection: players, el: '.current-player'});
+
     players.each(function(player) {
       player.fetch();
     });
+
 
     var drawView = new CARD.DrawView();
 
