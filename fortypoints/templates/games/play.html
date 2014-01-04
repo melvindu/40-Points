@@ -33,11 +33,17 @@
 <script src="{{ url_for('static', filename='js/games/models/player.js') }}"></script>
 <script>
   $(document).ready(function() {
+    var players = new PLAYER.Players;
+    var me = new PLAYER.Player({id: {{ me.id}} });
+    var scores = new SCORE.ScoreBoardView({collection: players})
+    $('.scores').html(scores.render().el)
+    players.add(me)
+
+
     USER = "{{ current_user.name }}";
     GAME_ID = {{ game_id }};
     var chatView = new CHAT.ChatView()
-    var scoreBoardView = new SCORE.ScoreBoardView()
-    var views = [chatView, scoreBoardView]
+    var views = [chatView]
 
     var gameUpdater = new WebSocket('ws://' + location.host + '/game/update-stream/' + GAME_ID)
 
