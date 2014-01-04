@@ -76,7 +76,6 @@ class Game(db.Model, ModelMixin):
   def deal(self, player):
     card = random.choice(self.undealt_cards)
     card.player_id = player.id
-    db.session.commit()
     return card
 
   def __repr__(self):

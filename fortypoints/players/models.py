@@ -50,7 +50,7 @@ class Player(db.Model, ModelMixin):
         player.lead = False
       self.house = True
       self.lead = True
-    db.session.commit()
+
   @property
   def active(self):
     return self._active
