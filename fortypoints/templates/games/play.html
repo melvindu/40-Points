@@ -34,10 +34,15 @@
 <script>
   $(document).ready(function() {
     var players = new PLAYER.Players;
-    var me = new PLAYER.Player({id: {{ me.id}} });
     var scores = new SCORE.ScoreBoardView({collection: players})
     $('.scores').html(scores.render().el)
-    players.add(me)
+
+    {% for player in players %}
+      players.add({id: {{ player.id }} });
+    {% endfor %}
+    players.each(function(player) {
+      player.fetch();
+    });
 
 
     USER = "{{ current_user.name }}";

@@ -9,7 +9,9 @@ var ScoreView = Backbone.View.extend({
         this.model.on('change:score', this.render);
     },
     render: function() {
-      this.$el.html('<b>' + this.model.get('name') + '</b>: ' + this.model.score);
+      if (this.model.get('name')) {
+        this.$el.html('<b>' + this.model.get('name') + '</b>: ' + this.model.get('score') + '<hr/>');
+      }
       return this;
     }
 });
