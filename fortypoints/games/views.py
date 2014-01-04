@@ -27,7 +27,21 @@ def play(game_id):
   Play a game.
   """
   players = get_game(game_id).players
-  return render_template('games/play.html', game_id=game_id, players=players)
+  others = []
+  me = None
+  # sort order others relative to me
+  for player in players:
+    if player.user_id == current_user.id:
+      me = player
+    else:
+      if me:
+        others.append(player)
+  for player in players:
+    if player.id == me.id:
+      break
+    else:
+      others.append(player)
+  return render_template('games/play.html', game_id=game_id, me=me, others=others)
 
 
 @game.route('/new', methods=['GET', 'POST'])
