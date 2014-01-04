@@ -71,6 +71,19 @@ class Player(db.Model, ModelMixin):
     else:
       return players[self.number + 1]
 
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'game_id': self.game_id,
+      'user_id': self.user_id,
+      'number': self.number,
+      'active': self.active,
+      'score': self.score,
+      'level': self.level,
+      'house': self.house,
+      'lead': self.lead
+    }
+
 
   def __str__(self):
     return '<Player \'{user}\' level={level} house={house} game_id={game_id}>'.format(
