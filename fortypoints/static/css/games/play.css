@@ -33,3 +33,8 @@
 .scores {
   height: 100%;
 }
+
+.card {
+  width: 104px;
+  height: 144px;
+}

@@ -4,16 +4,18 @@
 {{ super() }}
 <link href="{{ url_for('static', filename='css/games/play.css') }}" rel="stylesheet">
 {% endblock %}
-{% block content %}
-{% endblock %}
 
 {%block leftsidebar %}
 <div id="scoreboard">
   <ol class="scores">
-    {% for player in players %}
-        {{ render_score(player) }}
-        <hr/>
-    {% endfor %}
+  </ol>
+</div>
+{% endblock %}
+
+{% block content %}
+<div>
+  <ol class="hand">
+    HI
   </ol>
 </div>
 {% endblock %}
@@ -29,16 +31,22 @@
 {% block script %}
 {{ super() }}
 <script src="{{ url_for('static', filename='js/games/views/chat.js') }}"></script>
+<script src="{{ url_for('static', filename='js/games/views/card.js') }}"></script>
 <script src="{{ url_for('static', filename='js/games/views/score.js') }}"></script>
 <script src="{{ url_for('static', filename='js/games/models/player.js') }}"></script>
 <script>
   $(document).ready(function() {
     var players = new PLAYER.Players;
-    var scores = new SCORE.ScoreBoardView({collection: players})
+    var scores = new SCORE.ScoreBoardView({collection: players});
     $('.scores').html(scores.render().el)
 
     {% for player in players %}
-      players.add({id: {{ player.id }} });
+      var player = new PLAYER.Player({id: {{player.id }} });
+      players.add(player);
+      {% if loop.index0 == 0 %}
+        var hand = new CARD.HandView({model: player});
+        $('.hand').html(hand.render().el)
+      {% endif %}
     {% endfor %}
     players.each(function(player) {
       player.fetch();
