@@ -15,3 +15,44 @@
   {{ render_score(player) }}
 {% endfor %}
 {% endmacro %}
+
+{% macro render_board(players) %}
+{% if players | length == 4 %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="play center" player_id="{{ players[2].id }}">
+        HI
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="play center" player_id="{{ players[3].id }}">
+        HI
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="play center" player_id="{{ players[1].id }}">
+        HI
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="play center" player_id="{{ players[0].id }}">
+        HI
+      </div>
+    </div>
+  </div>
+{% else %}
+{% for player in players %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="play" player_id="{{ players[0].id }}">
+        HI
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% endif %}
+{% endmacro %}
