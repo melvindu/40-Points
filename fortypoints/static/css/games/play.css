@@ -1,10 +1,12 @@
 #chat, #scoreboard {
   border-radius: 5px;
   border: 1px solid black;
-  height: 80%;
+  height: 500px;
   padding: 3px;
-  position: fixed;
-  width: 13%;
+}
+
+#scoreboard {
+  min-height: 500px;
 }
 
 .chats, .scores {
@@ -39,8 +41,24 @@
   height: 144px;
 }
 
+.hand {
+  margin-top: 5px;
+}
+
 .hand li {
   list-style-type: none;
   display: inline;
   margin: 0 2px;
+}
+
+.board {
+  background-color: #E9C2A6;
+  border: 1px solid #995511; 
+  border-radius: 5px;
+  height: 400px;
+  padding: 5px;
+}
+
+.center {
+  margin: 0 auto;
 }

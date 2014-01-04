@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% from "games/macros.html" import render_score %}
+{% from "games/macros.html" import render_score, render_board %}
 {% block css %}
 {{ super() }}
 <link href="{{ url_for('static', filename='css/games/play.css') }}" rel="stylesheet">
@@ -10,14 +10,15 @@
   <ol class="scores">
   </ol>
 </div>
+  <button id="draw-card" class="btn btn-default" url="{{ url_for('games.draw_card', game_id=game_id) }}">Draw</button>
 {% endblock %}
 
 {% block content %}
 <div>
   <div class="board">
+    {{ render_board(players) }}
   </div>
   <ol class="hand">
-    HI
   </ol>
 </div>
 {% endblock %}
@@ -54,6 +55,7 @@
       player.fetch();
     });
 
+    var drawView = new CARD.DrawView();
 
     USER = "{{ current_user.name }}";
     GAME_ID = {{ game_id }};
