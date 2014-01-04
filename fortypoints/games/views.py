@@ -1,3 +1,4 @@
+import random
 import simplejson as json
 from collections import defaultdict
 
@@ -9,7 +10,7 @@ from fortypoints.template import templated
 from fortypoints.cards import Flip
 from fortypoints.cards.exceptions import FlipError
 from fortypoints.games import create_game, get_game, constants as GAME
-from fortypoints.games.decorators import game_required
+from fortypoints.games.decorators import game_required, game_response
 from fortypoints.games.forms import NewGameForm
 from fortypoints.games.updates import update_game_client, GameClientUpdater
 from fortypoints.request import WebSocketManager, websocket
@@ -77,26 +78,26 @@ def new():
 
 
 @game.route('/draw-card/<int:game_id>', methods=['POST'])
+@game_response('player:update')
 @game_required
 def draw_card(game_id):
   game = get_game(game_id)
   player = get_player(game, current_user)
+
   if player.active:
     card = player.draw()
-    print player.next_player.user.name
     player.next_player.active = True
-    print player.next_player.active
+
     if game.undealt_cards == game.bottom_size:
-      print 'spurning'
-      if game.flipped_cards:
-        game.house_lead.active = True
-        while game.undealt_cards:
-          game.house_lead.draw()
+      if not game.house_lead:
+        game.house_lead = random.choice(game.players)
+      game.house_lead.active = True
+      game.house_lead.draw_all()
+
     db.session.commit()
-
-  update_game_client(game_id, 'player:update', {})
-  return jsonify()
-
+    return {}
+  else:
+    raise ValueError('It is not your turn to draw')
 
 @game.route('/flip-card/<int:game_id>', methods=['POST'])
 @game_required
