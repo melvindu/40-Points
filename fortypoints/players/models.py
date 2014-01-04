@@ -36,6 +36,10 @@ class Player(db.Model, ModelMixin):
     else:
       raise ValueError('Inactive player cannot draw.')
 
+  def draw_all(self):
+    while self.game.undealt_cards:
+      self.draw()
+
   def flip(self, cards):
     flip = Flip(self.game, cards)
     for card in self.game.cards:

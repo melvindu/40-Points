@@ -45,9 +45,15 @@ class Game(db.Model, ModelMixin):
     return filter(lambda p: p.house, self.players)
 
   @property
-  def  house_lead(self):
+  def house_lead(self):
     lead = filter(lambda p: p.lead, self.players)
     return lead[0] if lead else None
+
+  @house_lead.setter
+  def house_lead(self, player):
+    for other_player in self.players:
+      other_player.lead = False
+    player.lead = True
 
   def get_player(self, user):
     return get_player(self, user)
