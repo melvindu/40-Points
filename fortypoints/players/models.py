@@ -31,7 +31,7 @@ class Player(db.Model, ModelMixin):
     self.house = False
 
   def draw(self):
-    if player.active:
+    if self.active:
       return self.game.deal(self)
     else:
       raise ValueError('Inactive player cannot draw.')

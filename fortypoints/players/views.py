@@ -31,5 +31,7 @@ def player_status(player_id):
   player_dict = player.to_dict()
   if player.user_id != current_user.id:
     del player_dict['cards']
-  player_dict['cards'] = [{'num': '2', 'suit': 'D'}, {'num': '3', 'suit': 'C'}]
+  if 'cards' not in player_dict:
+    player_dict['cards'] = []
+  player_dict['cards'].extend([{'num': '2', 'suit': 'D'}, {'num': '3', 'suit': 'C'}])
   return jsonify(player_dict)

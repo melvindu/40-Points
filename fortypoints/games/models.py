@@ -70,7 +70,7 @@ class Game(db.Model, ModelMixin):
 
   @property
   def bottom_size(self):
-    num_left = len(self.deck) % len(self.player)
+    num_left = len(list(self.deck)) % len(list(self.players))
     return num_left % GAME.BOTTOM_MODULO + num_left
 
   def deal(self, player):
