@@ -38,3 +38,9 @@
   width: 104px;
   height: 144px;
 }
+
+.hand li {
+  list-style-type: none;
+  display: inline;
+  margin: 0 2px;
+}
