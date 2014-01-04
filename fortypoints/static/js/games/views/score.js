@@ -1,25 +1,19 @@
 SCORE = (function() {
   var mod = {};
 
-  var ScoreBoardView = Backbone.View.extend({
-    el: '#scoreboard',
 
+var ScoreView = Backbone.View.extend({
+    tagName: 'span',
     initialize: function() {
-      this.on('scoreboard:update', this.updateScore);
-      _.bindAll(this, 'render');
+        _.bindAll(this, 'render');
+        this.model.on('change:score', this.render);
     },
-
-    render: function(){
-      var template = _.template( $("#scoreboard").html(), {} );
-      this.$el.html(template);
-    },     
-
-    updateScore: function(update) {
-      this.$el.find('.scores').html(update.data);
-      this.render();
+    render: function() {
+        this.$el.html('<b>' + this.model.get('name') + '</b>: ' + this.model.score);
+        return this;
     }
-  });
+});
 
-  mod.ScoreBoardView = ScoreBoardView;
+  mod.ScoreView = ScoreView;
   return mod;
 }());

@@ -1,7 +1,9 @@
 
 PLAYER = (function() {
   var Player = Backbone.Model.extend({
-    urlRoot: '/game/player'
+    urlRoot: '/player',
+    initialize: function() {
+    }
   });
 
   var Players = Backbone.Collection.extend({
