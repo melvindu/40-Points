@@ -2,12 +2,6 @@ DIAMOND = 0
 CLUB = 1
 HEART = 2
 SPADE = 3
-SUIT = {
-	DIAMOND: 'diamond',
-	CLUB: 'club',
-	HEART: 'heart',
-	SPADE: 'spade'
-}
 
 SUITS = (DIAMOND, CLUB, HEART, SPADE)
 
@@ -46,5 +40,14 @@ NUMBER = {
 
 NUMBERS = (TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, 
 					 NINE, TEN, JACK, QUEEN, KING, ACE)
+
+SUIT = {
+	DIAMOND: 'diamond',
+	CLUB: 'club',
+	HEART: 'heart',
+	SPADE: 'spade',
+	SMALL_JOKER: 'small_joker',
+	BIG_JOKER: 'big_joker'
+}
 
 JOKERS = (SMALL_JOKER, BIG_JOKER)
