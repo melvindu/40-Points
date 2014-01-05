@@ -74,7 +74,13 @@ CARD = (function() {
     'click': 'flip'
   },
   flip: function() {
-    $.post(this.$el.attr('url'), {cards: [{num: 2, suit: 2}]}, function(data) {
+    var cards = []
+    $('.card').each(function(index) {
+      if ($(this).attr('play')) {
+        cards.push({num: $(this).attr('num'), suit: $(this).attr('suit')});
+      }
+    });
+    $.post(this.$el.attr('url'), {cards: cards}, function(data) {
       if (!data.status) {
         $('.game-alert').html('<div class="alert alert-warning">' + data.data + '</div>');
         $('.game-alert').show();
