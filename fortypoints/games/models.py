@@ -15,11 +15,29 @@ class Game(db.Model, ModelMixin):
   trump_suit = db.Column(db.SmallInteger(unsigned=True), nullable=True)
   size = db.Column(db.SmallInteger(unsigned=True))
   first = db.Column(db.Boolean, nullable=False, default=False)
+  _state = db.Column('state', db.SmallInteger(unsigned=True), nullable=False)
+  next_game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey(id), index=True)
+
+  next_game = db.relationship('Game', 
+                              uselist=False, 
+                              remote_side=[id], 
+                              backref=db.backref('previous_game', uselist=False))
 
   def __init__(self, num_players, level, first=False):
     self.size = num_players
     self.trump_number = level
     self.first = first
+    self.state = GAME.DRAWING
+
+  @property
+  def state(self):
+    return self._state
+
+  @state.setter
+  def state(self, game_state):
+    if game_state not in GAME.STATES:
+      raise ValueError('Unknown game state {0}'.format(game_state))
+    self._state = game_state
 
   @property
   def trump(self):
