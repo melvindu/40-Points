@@ -125,6 +125,10 @@ def flip_card(game_id):
   def chunks(l, n):
     return [l[i:i+n] for i in range(0, len(l), n)]
   cards = chunks(request.form.values(), 2)
+
+  if not cards:
+    raise ValueError('No cards selected to flip')
+    
   to_flip_cards = []
   for num, suit in cards:
     num = int(num)
