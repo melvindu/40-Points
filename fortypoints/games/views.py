@@ -125,15 +125,18 @@ def flip_card(game_id):
   cards = chunks(request.form.values(), 2)
   to_flip_cards = []
   for num, suit in cards:
+    num = int(num)
+    suit = int(suit)
     card = CardMixin(num, suit)
-    if player.owns_card(card):
+    player_card = player.get_card(card)
+    if player_card:
       to_flip_cards.append(player_card)
     else:
       raise ValueError('Player doesn\'t own requested card to flip')
 
   flipped_cards = filter(lambda c: c.flipped, game.cards)
-  flipped = Flip(flipped_cards)
-  to_flip = Flip(to_flip_cards)
+  flipped = Flip(game, flipped_cards)
+  to_flip = Flip(game, to_flip_cards)
   if to_flip > flipped:
     player.flip(to_flip_cards)
     db.session.commit()
