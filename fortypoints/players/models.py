@@ -61,6 +61,12 @@ class Player(db.Model, ModelMixin):
         return True
     return False
 
+  def get_card(self, card):
+    for my_card in self.hand:
+      if card.num == my_card.num and card.suit == my_card.suit:
+        return my_card
+    return None
+
   @property
   def hand(self):
     return sorted(self.cards)
