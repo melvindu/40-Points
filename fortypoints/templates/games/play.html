@@ -13,6 +13,7 @@
 {% endblock %}
 
 {% block content %}
+<div id="game-state" class="pull-right"></div>
 <div class="game-alert">
 </div>
 <div class="row">
@@ -57,8 +58,15 @@
 <script src="{{ url_for('static', filename='js/games/views/card.js') }}"></script>
 <script src="{{ url_for('static', filename='js/games/views/score.js') }}"></script>
 <script src="{{ url_for('static', filename='js/games/models/player.js') }}"></script>
+<script src="{{ url_for('static', filename='js/games/models/game.js') }}"></script>
 <script>
   $(document).ready(function() {
+    var game = new GAME.Game({id: {{ game_id }} });
+    game.fetch();
+
+    var gameStateView = new GAME.GameStateView({model: game});
+    $('#game-state').html(gameStateView.render().el);
+
     var players = new PLAYER.Players;
     var scores = new SCORE.ScoreBoardView({collection: players});
     $('.scores').html(scores.render().el);

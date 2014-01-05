@@ -6,7 +6,7 @@ GAME = (function() {
   });
 
   var GameStateView = Backbone.View.extend({
-    tagName: 'span',
+    tagName: 'h2',
     initialize: function() {
       _.bindAll(this, 'render');
       this.model.on('change:state', this.render);
@@ -22,12 +22,13 @@ GAME = (function() {
       } else if (state == 3) {
         state = 'COMPLETE'
       }
-      this.$el.html('<h2><span class="game-state">' + state + '</span></h2>');
+      this.$el.html('<span class="label label-info">' + state + '</span>');
       return this;
     }
   });
 
   var mod = {};
-  mod.Game = Game
+  mod.Game = Game;
   mod.GameStateView = GameStateView;
+  return mod;
 }())
