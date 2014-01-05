@@ -88,7 +88,7 @@ def new():
 
 
 @game.route('/draw-card/<int:game_id>', methods=['POST'])
-@game_response('player:update')
+@game_response(['game:update', 'player:update'])
 @game_required
 def draw_card(game_id):
   game = get_game(game_id)
@@ -115,7 +115,7 @@ def draw_card(game_id):
       raise ValueError('It is not your turn to draw')
 
 @game.route('/flip-card/<int:game_id>', methods=['POST'])
-@game_response('player:update')
+@game_response(['game:update', 'player:update'])
 @game_required
 def flip_card(game_id):
   game = get_game(game_id)

@@ -27,7 +27,7 @@ def game_required(func):
       return redirect(url_for('index'))
   return wrapper
 
-def game_response(update):
+def game_response(updates):
   def wrapper(func):
     @wraps(func)
     def decorator(*args, **kwargs):
@@ -40,7 +40,8 @@ def game_response(update):
         game = get_game(game_id)
       try:
         result = func(*args, **kwargs)
-        update_game_client(game.id, update, result)
+        for update in updates:
+          update_game_client(game.id, update, result)
         return jsonify({'status': True, 'data': result})
       except Exception as e:
         logging.exception(e)

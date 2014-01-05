@@ -115,6 +115,8 @@
         players.each(function(player) {
           player.fetch();
         });
+      } else if (event == 'game:update') {
+        game.fetch();
       } else {
         console.log(message)
         for (index in views) {
