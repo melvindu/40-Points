@@ -32,7 +32,7 @@ class Game(db.Model, ModelMixin):
   @property
   def name(self):
     return 'Game #{game_id}'.format(game_id=self.id)
-    
+
   @property
   def state(self):
     return self._state
@@ -98,8 +98,9 @@ class Game(db.Model, ModelMixin):
 
   @property
   def bottom_size(self):
-    num_left = len(list(self.deck)) % len(list(self.players))
-    return num_left % GAME.BOTTOM_MODULO + num_left
+    num_players = len(list(self.players))
+    num_left = len(list(self.deck)) % num_players
+    return num_left % num_players + num_players
 
   def deal(self, player):
     card = random.choice(self.undealt_cards)
