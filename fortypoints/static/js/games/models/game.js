@@ -29,8 +29,29 @@ GAME = (function() {
     }
   });
 
+  var TrumpView = Backbone.View.extend({
+    tagName: 'h2',
+    initialize: function() {
+      _.bindAll(this, 'render');
+      this.model.on('change:trump_number', this.render);
+      this.model.on('change:trump_suit', this.render);
+    },
+    render: function() {
+      var number = String(this.model.get('trump_number'));
+      this.$el.html(number + ' <span style="color:lightgray">of</span> ');
+      if (typeof this.model.trump_suit != 'undefined') {
+        var suit_src = String(this.model.trump_suit) + '.png';
+        this.$el.append('<img src="' + suit_src + '" alt="' + suit_src + '" class="img-rounded trump-suit">');
+      } else {
+        this.$el.append('?');
+      }
+      return this;
+    }
+  });
+
   var mod = {};
   mod.Game = Game;
   mod.GameStateView = GameStateView;
+  mod.TrumpView = TrumpView;
   return mod;
 }())

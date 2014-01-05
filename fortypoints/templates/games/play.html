@@ -14,12 +14,15 @@
 
 {% block content %}
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <div id="game-name">
       <h1>{{ game.name }}</h1>
     </div>
   </div>
-  <div class="col-md-6">
+  <div class="col-md-4">
+    <div class="trump center"></div>
+  </div>
+  <div class="col-md-4">
     <div id="game-state" class="pull-right"></div>
   </div>
 </div>
@@ -74,7 +77,9 @@
     game.fetch();
 
     var gameStateView = new GAME.GameStateView({model: game});
+    var trumpView = new GAME.TrumpView({model: game});
     $('#game-state').html(gameStateView.render().el);
+    $('.trump').html(trumpView.render().el);
 
     var players = new PLAYER.Players;
     var scores = new SCORE.ScoreBoardView({collection: players});

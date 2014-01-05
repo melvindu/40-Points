@@ -2,8 +2,13 @@
   margin-top: 0;
 }
 
-#game-name h1 {
+#game-name h1, .trump h2 {
   margin-top: 0;
+}
+
+.trump-suit {
+  max-height: 30px;
+  width: 22px;
 }
 
 #chat, #scoreboard {
