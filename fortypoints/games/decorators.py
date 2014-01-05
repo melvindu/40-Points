@@ -1,4 +1,5 @@
 from functools import wraps
+import logging
 
 from flask import g, jsonify, redirect, url_for
 from flask.ext.login import current_user, login_required
@@ -42,6 +43,7 @@ def game_response(update):
         update_game_client(game.id, update, result)
         return jsonify({'status': True, 'data': result})
       except Exception as e:
+        logging.exception(e)
         return jsonify({'status': False, 'data': e.message})
     return decorator
   return wrapper
