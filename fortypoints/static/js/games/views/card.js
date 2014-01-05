@@ -1,6 +1,22 @@
 CARD = (function() {
   var mod = {};
 
+  var showAlert = function(data) {
+    if (!data.status) {
+      $('.game-alert').html('<div class="alert alert-warning">' + data.data + '</div>');
+      $('.game-alert').show();
+      location.href = '#game-state'
+      $('.game-alert').delay(1000).fadeOut('slow');
+    } else {
+      if (data.data.alert) {
+        $('.game-alert').html('<div class="alert alert-success">' + data.alert + '</div>');
+        $('.game-alert').show();
+        location.href = '#game-state'
+        $('.game-alert').delay(1000).fadeOut('slow');
+      }
+    }
+  };
+
   var CardView = Backbone.View.extend({
     initialize: function(){
       _.bindAll(this, 'render');
@@ -35,7 +51,7 @@ CARD = (function() {
         card_img = String(card.num) + String(card.suit) + '.jpg'
         src = location.origin + '/static/images/' + card_img
         cards.push('<li class="card" num="' + card.num + '" suit="' + card.suit + '">' + 
-                    '<img src="' + src + '" alt="' + card_img + '" class="img-thumbnail card"></li>')
+          '<img src="' + src + '" alt="' + card_img + '" class="img-thumbnail card"></li>')
       }
       this.$el.html(cards.join(''))
       this.$el.find('li').each(function(index, element) {
@@ -54,44 +70,30 @@ CARD = (function() {
       'click': 'draw'
     },
     draw: function() {
-      $.post(this.$el.attr('url'), function(data) {
-        if (!data.status) {
-          $('.game-alert').html('<div class="alert alert-warning">' + data.data + '</div>');
-          $('.game-alert').show();
-          location.href = '#game-state'
-          $('.game-alert').delay(1000).fadeOut('slow');
-        }
-      });
+      $.post(this.$el.attr('url'), showAlert);
       return this;
     }
   });
 
   var FlipView = Backbone.View.extend({
-  el: '#flip-card',
-  initialize: function() {
-    _.bindAll(this, 'flip');
-  },
-  events: {
-    'click': 'flip'
-  },
-  flip: function() {
-    var cards = []
-    $('.card').each(function(index) {
-      if ($(this).attr('play')) {
-        cards.push({num: $(this).attr('num'), suit: $(this).attr('suit')});
-      }
-    });
-    $.post(this.$el.attr('url'), {cards: cards}, function(data) {
-      if (!data.status) {
-        $('.game-alert').html('<div class="alert alert-warning">' + data.data + '</div>');
-        $('.game-alert').show();
-        location.href = '#game-state'
-        $('.game-alert').delay(1000).fadeOut('slow');
-      }
-    });
-    return this;
-  }
-});
+    el: '#flip-card',
+    initialize: function() {
+      _.bindAll(this, 'flip');
+    },
+    events: {
+      'click': 'flip'
+    },
+    flip: function() {
+      var cards = []
+      $('.card').each(function(index) {
+        if ($(this).attr('play')) {
+          cards.push({num: $(this).attr('num'), suit: $(this).attr('suit')});
+        }
+      });
+      $.post(this.$el.attr('url'), {cards: cards}, showAlert);
+      return this;
+    }
+  });
 
   mod.HandView = HandView;
   mod.DrawView = DrawView;
