@@ -120,6 +120,8 @@ def draw_card(game_id):
 def flip_card(game_id):
   game = get_game(game_id)
   player = get_player(game, current_user)
+  if game.state != GAME.DRAWING:
+    raise ValueError('It is too late to flip')
   def chunks(l, n):
     return [l[i:i+n] for i in range(0, len(l), n)]
   cards = chunks(request.form.values(), 2)
