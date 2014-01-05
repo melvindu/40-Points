@@ -8,8 +8,8 @@ CARD = (function() {
       location.href = '#game-state'
       $('.game-alert').delay(1000).fadeOut('slow');
     } else {
-      if (data.data.alert) {
-        $('.game-alert').html('<div class="alert alert-success">' + data.alert + '</div>');
+      if (data.data) {
+        $('.game-alert').html('<div class="alert alert-success">' + data.data.alert + '</div>');
         $('.game-alert').show();
         location.href = '#game-state'
         $('.game-alert').delay(1000).fadeOut('slow');
