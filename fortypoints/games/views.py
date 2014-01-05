@@ -120,10 +120,12 @@ def draw_card(game_id):
 def flip_card(game_id):
   game = get_game(game_id)
   player = get_player(game, current_user)
-  cards = request.form['cards']
+  def chunks(l, n):
+    return [l[i:i+n] for i in range(0, len(l), n)]
+  cards = chunks(request.form.values(), 2)
   to_flip_cards = []
-  for card in cards:
-    card = CardMixin(card['num'], cards['suit'])
+  for num, suit in cards:
+    card = CardMixin(num, suit)
     if player.owns_card(card):
       to_flip_cards.append(player_card)
     else:
