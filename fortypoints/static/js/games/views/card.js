@@ -35,6 +35,11 @@ CARD = (function() {
     },
     draw: function() {
       $.post(this.$el.attr('url'), function(data) {
+        if (!data.status) {
+          $('.game-alert').html('<div class="alert alert-warning">' + data.data + '</div>');
+          $('.game-alert').show();
+          $('.game-alert').delay(1000).fadeOut('slow');
+        }
       });
       return this;
     }

@@ -9,6 +9,7 @@ import fortypoints as fp
 from fortypoints.template import templated
 from fortypoints.cards import Flip
 from fortypoints.cards.exceptions import FlipError
+from fortypoints.cards.models import CardMixin
 from fortypoints.games import create_game, get_game, constants as GAME
 from fortypoints.games.decorators import game_required, game_response
 from fortypoints.games.forms import NewGameForm
@@ -84,7 +85,7 @@ def draw_card(game_id):
   game = get_game(game_id)
   player = get_player(game, current_user)
 
-  if player.active:
+  if player.active and game.undealt_cards:
     card = player.draw()
     player.next_player.active = True
 
@@ -95,11 +96,15 @@ def draw_card(game_id):
       game.house_lead.draw_all()
 
     db.session.commit()
-    return {}
+    return None
   else:
-    raise ValueError('It is not your turn to draw')
+    if not game.undealt_cards:
+      raise ValueError('No cards to draw')
+    else:
+      raise ValueError('It is not your turn to draw')
 
 @game.route('/flip-card/<int:game_id>', methods=['POST'])
+@game_response('player:update')
 @game_required
 def flip_card(game_id):
   game = get_game(game_id)
@@ -107,12 +112,13 @@ def flip_card(game_id):
   cards = request.form['cards']
   to_flip_cards = []
   for card in cards:
-    for player_card in player.cards:
-      if card['num'] == player_card.num and card['suit'] == player_card.suit:
-        to_flip_cards.append(player_card)
-        break
-    raise ValueError('Player doesn\'t own requested card to flip')
-  flipped_cards = lambda c: c.flipped, game.cards
+    card = CardMixin(card['num'], cards['suit'])
+    if player.owns_card(card):
+      to_flip_cards.append(player_card)
+    else:
+      raise ValueError('Player doesn\'t own requested card to flip')
+
+  flipped_cards = filter(lambda c: c.flipped, game.cards)
   flipped = Flip(flipped_cards)
   to_flip = Flip(to_flip_cards)
   if to_flip > flipped:
