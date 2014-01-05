@@ -128,7 +128,7 @@ def flip_card(game_id):
 
   if not cards:
     raise ValueError('No cards selected to flip')
-    
+
   to_flip_cards = []
   for num, suit in cards:
     num = int(num)
@@ -141,6 +141,10 @@ def flip_card(game_id):
       raise ValueError('Player doesn\'t own requested card to flip')
 
   flipped_cards = filter(lambda c: c.flipped, game.cards)
+
+  if to_flip_cards == flipped_cards:
+    raise ValueError('Card(s) already flipped.')
+
   flipped = Flip(game, flipped_cards)
   to_flip = Flip(game, to_flip_cards)
   if to_flip > flipped:
