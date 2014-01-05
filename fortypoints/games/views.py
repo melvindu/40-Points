@@ -8,6 +8,7 @@ from flask_login import current_user, login_required
 import fortypoints as fp
 from fortypoints.template import templated
 from fortypoints.cards import Flip
+from fortypoints.cards.decorators import cards_required, get_cards_from_form
 from fortypoints.cards.exceptions import FlipError
 from fortypoints.cards.models import CardMixin
 from fortypoints.games import create_game, get_game, constants as GAME
@@ -23,11 +24,6 @@ game = Blueprint('games', __name__, template_folder='templates/games')
 
 db = fp.db
 
-def get_cards_from_form(form):
-  def chunks(l, n):
-    return [l[i:i+n] for i in range(0, len(l), n)]
-  cards = chunks(form.values(), 2)
-  return [CardMixin(int(num), int(suit)) for (num, suit) in cards]
 
 @game.route('/<int:game_id>')
 @game_required
@@ -121,6 +117,7 @@ def draw_card(game_id):
 
 @game.route('/flip-card/<int:game_id>', methods=['POST'])
 @game_response(['game:update', 'player:update'])
+@cards_required
 @game_required
 def flip_card(game_id):
   game = get_game(game_id)
@@ -172,6 +169,7 @@ def play_cards(game_id):
   update_game_client(game_id, 'scoreboard:update', render_scores(players))
 
 @game.route('/cover-cards/<int:game_id>')
+@cards_required
 @game_required
 def cover_cards(game_id):
   game = get_game(game_id)
