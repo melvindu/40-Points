@@ -16,7 +16,7 @@ CARD = (function() {
       console.log(this.model)
       for (var index in this.model.get('cards')) {
         card = this.model.get('cards')[index]
-        card_img = card.num + card.suit.charAt(0).toUpperCase() + '.jpg'
+        card_img = String(card.num) + String(card.suit) + '.jpg'
         src = location.origin + '/static/images/' + card_img
         cards.push('<li><img src="' + src + '" alt="' + card_img + '" class="img-thumbnail card"></li>')
       }
