@@ -98,7 +98,7 @@ def draw_card(game_id):
     card = player.draw()
     player.next_player.active = True
 
-    if game.undealt_cards == game.bottom_size:
+    if len(game.undealt_cards) == game.bottom_size:
     # all cards are drawn
       if not game.house_lead:
         game.house_lead = random.choice(game.players)
