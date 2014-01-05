@@ -30,6 +30,10 @@ class Game(db.Model, ModelMixin):
     self.state = GAME.DRAWING
 
   @property
+  def name(self):
+    return 'Game #{game_id}'.format(game_id=self.id)
+    
+  @property
   def state(self):
     return self._state
 
@@ -101,6 +105,17 @@ class Game(db.Model, ModelMixin):
     card = random.choice(self.undealt_cards)
     card.player_id = player.id
     return card
+
+  def to_dict(self):
+    return {
+      'id': self.id,
+      'trump_number': self.trump_number,
+      'trump_suit': self.trump_suit,
+      'size': self.size,
+      'first': self.first,
+      'state': self.state,
+      'next_game_id': self.next_game_id
+    }
 
   def __repr__(self):
     return '<Game size={size} trump_number={num} trump_suit={suit}>'.format(

@@ -2,6 +2,10 @@
   margin-top: 0;
 }
 
+#game-name h1 {
+  margin-top: 0;
+}
+
 #chat, #scoreboard {
   border-radius: 5px;
   border: 1px solid black;

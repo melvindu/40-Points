@@ -13,7 +13,16 @@
 {% endblock %}
 
 {% block content %}
-<div id="game-state" class="pull-right"></div>
+<div class="row">
+  <div class="col-md-6">
+    <div id="game-name">
+      <h1>{{ game.name }}</h1>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div id="game-state" class="pull-right"></div>
+  </div>
+</div>
 <div class="game-alert">
 </div>
 <div class="row">

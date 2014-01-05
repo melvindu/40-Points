@@ -23,13 +23,22 @@ game = Blueprint('games', __name__, template_folder='templates/games')
 
 db = fp.db
 
+
+@game.route('/<int:game_id>')
+@game_required
+def game_status(game_id):
+  game = get_game(game_id)
+  return jsonify(game.to_dict())
+
+
 @game.route('/play/<int:game_id>')
 @game_required
 def play(game_id):
   """
   Play a game.
   """
-  players = get_game(game_id).players
+  game = get_game(game_id)
+  players = game.players
   others = []
   me = None
   # sort order others relative to me
@@ -44,7 +53,7 @@ def play(game_id):
       break
     else:
       others.append(player)
-  return render_template('games/play.html', game_id=game_id, me=me, others=others, players=[me] + others)
+  return render_template('games/play.html', game=game, game_id=game_id, me=me, others=others, players=[me] + others)
 
 
 @game.route('/new', methods=['GET', 'POST'])

@@ -22,7 +22,9 @@ GAME = (function() {
       } else if (state == 3) {
         state = 'COMPLETE'
       }
-      this.$el.html('<span class="label label-info">' + state + '</span>');
+      if (typeof this.model.get('state') != 'undefined') {
+        this.$el.html('<span class="label label-info">' + state + '</span>');
+      }
       return this;
     }
   });
