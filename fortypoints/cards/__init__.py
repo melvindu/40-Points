@@ -12,8 +12,11 @@ class Flip(object):
   def __init__(self, game, cards):
     # check unflippable
     flippable_nums = (game.trump_number, CARD.SMALL_JOKER, CARD.BIG_JOKER)
+    if not cards:
+      raise FlipError('No cards to flip')
     if not all(card.num in flippable_nums for card in cards):
       raise FlipError('Can\'t flip non-level card')
+      
     # check nonequal cards
     if len(cards) > 1:
       if len(set(cards)) > 1:
