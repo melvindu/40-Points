@@ -55,6 +55,12 @@ class Player(db.Model, ModelMixin):
       self.house = True
       self.lead = True
 
+  def owns_card(self, card):
+    for my_card in self.hand:
+      if card.num == my_card.num and card.suit == my_card.suit:
+        return True
+    return False
+
   @property
   def hand(self):
     return sorted(self.cards)
