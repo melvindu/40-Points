@@ -23,6 +23,11 @@ game = Blueprint('games', __name__, template_folder='templates/games')
 
 db = fp.db
 
+def get_cards_from_form(form):
+  def chunks(l, n):
+    return [l[i:i+n] for i in range(0, len(l), n)]
+  cards = chunks(form.values(), 2)
+  return [CardMixin(int(num), int(suit)) for (num, suit) in cards]
 
 @game.route('/<int:game_id>')
 @game_required
@@ -122,18 +127,13 @@ def flip_card(game_id):
   player = get_player(game, current_user)
   if game.state != GAME.DRAWING:
     raise ValueError('It is too late to flip')
-  def chunks(l, n):
-    return [l[i:i+n] for i in range(0, len(l), n)]
-  cards = chunks(request.form.values(), 2)
+  cards = get_cards_from_form(request.form)
 
   if not cards:
     raise ValueError('No cards selected to flip')
 
   to_flip_cards = []
-  for num, suit in cards:
-    num = int(num)
-    suit = int(suit)
-    card = CardMixin(num, suit)
+  for card in cards:
     player_card = player.get_card(card)
     if player_card:
       to_flip_cards.append(player_card)
@@ -170,6 +170,21 @@ def play_cards(game_id):
   players = get_game(game_id).players
   render_scores = get_template_attribute('games/macros.html', 'render_scores')
   update_game_client(game_id, 'scoreboard:update', render_scores(players))
+
+@game.route('/cover-cards/<int:game_id>')
+@game_required
+def cover_cards(game_id):
+  game = get_game(game_id)
+  current_player = get_player(game, current_user)
+  cards = get_cards_from_form(request.form)
+
+  if len(cards) != game.bottom_size:
+    raise ValueError('Must cover {num} cards'.format(num=game.bottom_size))
+
+  for card in cards:
+    current_player.get_card(card).bottom = True
+  db.session.commit()
+  return {'alert': 'Cover Successful!'}
 
 
 @game.route('/update/<int:game_id>', methods=['GET', 'POST'])
