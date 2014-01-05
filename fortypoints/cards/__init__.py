@@ -21,6 +21,9 @@ class Flip(object):
     self.game = game
     self.cards = cards
 
+  def __len__(self):
+    return len(self.cards)
+
   def __eq__(self, other):
     self.cards == other.cards
 
