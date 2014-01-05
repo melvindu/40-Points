@@ -90,10 +90,12 @@ def draw_card(game_id):
     player.next_player.active = True
 
     if game.undealt_cards == game.bottom_size:
+    # all cards are drawn
       if not game.house_lead:
         game.house_lead = random.choice(game.players)
       game.house_lead.active = True
       game.house_lead.draw_all()
+      game.state = GAME.COVERING
 
     db.session.commit()
     return None
