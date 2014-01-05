@@ -39,7 +39,7 @@ GAME = (function() {
     render: function() {
       var number = String(this.model.get('trump_number'));
       this.$el.html(number + ' <span style="color:lightgray">of</span> ');
-      if (typeof this.model.get('trump_suit') != 'undefined') {
+      if (typeof this.model.get('trump_suit') != 'undefined' && this.model.get('trump_suit') != null) {
         var suit_src = '/static/images/' + String(this.model.get('trump_suit')) + '.png';
         this.$el.append('<img src="' + suit_src + '" alt="' + suit_src + '" class="img-rounded trump-suit">');
       } else {
