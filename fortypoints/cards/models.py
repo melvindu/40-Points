@@ -101,7 +101,7 @@ class Card(db.Model, ModelMixin, CardMixin):
   def to_dict(self):
     return {
       'num': self.num,
-      'suit': CARD.SUIT[self.suit],
+      'suit': self.suit,
       'points': self.points,
       'bottom': self.bottom,
       'flipped': self.flipped
