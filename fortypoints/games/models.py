@@ -1,7 +1,7 @@
 import random
 import fortypoints as fp
 
-from fortypoints.cards import Card
+from fortypoints.cards import Card, constants as CARD
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
 from fortypoints.players import get_player, get_player_by_id
@@ -51,6 +51,18 @@ class Game(db.Model, ModelMixin):
   def trump(self, card):
     self.trump_number = card.num
     self.trump_suit = card.suit
+
+  @property
+  def trump_letters(self):
+    if self.trump_suit is None:
+      return ''
+    if self.trump_number == CARD.SMALL_JOKER:
+      return 'SJ'
+    elif self.trump_number == CARD.BIG_JOKER:
+      return 'BJ'
+    else:
+      return '{0}{1}'.format(CARD.NUMBER[self.trump_number], 
+                             CARD.SUIT[self.trump_suit]).upper()
 
   @property
   def current_player(self):
@@ -112,6 +124,7 @@ class Game(db.Model, ModelMixin):
       'id': self.id,
       'trump_number': self.trump_number,
       'trump_suit': self.trump_suit,
+      'trump_letters': self.trump_letters,
       'size': self.size,
       'first': self.first,
       'state': self.state,
