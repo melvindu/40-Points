@@ -145,11 +145,21 @@ def flip_card(game_id):
   if to_flip_cards == flipped_cards:
     raise ValueError('Card(s) already flipped.')
 
+  if not flipped_cards:
+    player.flip(to_flip_cards)
+    db.session.commit()
+    return {
+      'alert': 'Flip Successful!'
+    }
+
   flipped = Flip(game, flipped_cards)
   to_flip = Flip(game, to_flip_cards)
   if to_flip > flipped:
     player.flip(to_flip_cards)
     db.session.commit()
+    return {
+      'alert': 'Flip Successful!'
+    }
   else:
     raise ValueError('Can\'t flip weaker cards')
 
