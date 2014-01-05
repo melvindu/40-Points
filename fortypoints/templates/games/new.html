@@ -10,9 +10,9 @@
       {% for field in form.players.entries %}
       {{ render_field(field, class="form-control", placeholder="Invite User") }}
       {% endfor %}
-      {{ form.add_player(class="btn btn-success") }}
-      <hr/>
       <input type="submit" value="Start Game" class="btn btn-default">
+      <hr/>
+      {{ form.add_player(class="btn btn-success") }}
     </form>
   </div>
 </div>
