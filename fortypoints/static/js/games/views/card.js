@@ -1,6 +1,22 @@
 CARD = (function() {
   var mod = {};
 
+  var CardView = Backbone.View.extend({
+    initialize: function(){
+      _.bindAll(this, 'render');
+    },
+    events: {
+      'click': 'toggle'
+    },
+    toggle: function() {
+      console.log(this.el);
+      if (this.$el.attr('play')) {
+        this.$el.removeAttr('play');
+      } else {
+        this.$el.attr('play', true);
+      }
+    }
+  });
 
   var HandView = Backbone.View.extend({
     tagName: 'span',
@@ -21,6 +37,9 @@ CARD = (function() {
                     '<img src="' + src + '" alt="' + card_img + '" class="img-thumbnail card"></li>')
       }
       this.$el.html(cards.join(''))
+      this.$el.find('li').each(function(index, element) {
+        new CardView({el: $(element)});
+      });
       return this;
     }
   });
