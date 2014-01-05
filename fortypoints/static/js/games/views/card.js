@@ -58,6 +58,7 @@ CARD = (function() {
         if (!data.status) {
           $('.game-alert').html('<div class="alert alert-warning">' + data.data + '</div>');
           $('.game-alert').show();
+          location.href = '#game-state'
           $('.game-alert').delay(1000).fadeOut('slow');
         }
       });
@@ -84,6 +85,7 @@ CARD = (function() {
       if (!data.status) {
         $('.game-alert').html('<div class="alert alert-warning">' + data.data + '</div>');
         $('.game-alert').show();
+        location.href = '#game-state'
         $('.game-alert').delay(1000).fadeOut('slow');
       }
     });
