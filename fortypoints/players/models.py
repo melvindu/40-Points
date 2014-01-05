@@ -55,6 +55,9 @@ class Player(db.Model, ModelMixin):
       self.house = True
       self.lead = True
 
+    #modify game trumps
+    self.game.trump_suit = card.suit
+
   def owns_card(self, card):
     for my_card in self.hand:
       if card.num == my_card.num and card.suit == my_card.suit:
