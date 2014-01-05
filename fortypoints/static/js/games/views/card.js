@@ -9,11 +9,12 @@ CARD = (function() {
       'click': 'toggle'
     },
     toggle: function() {
-      console.log(this.el);
       if (this.$el.attr('play')) {
         this.$el.removeAttr('play');
+        this.$el.find('img').removeClass('label-info');
       } else {
         this.$el.attr('play', true);
+        this.$el.find('img').addClass('label-info');
       }
     }
   });
@@ -33,7 +34,7 @@ CARD = (function() {
         card = this.model.get('cards')[index]
         card_img = String(card.num) + String(card.suit) + '.jpg'
         src = location.origin + '/static/images/' + card_img
-        cards.push('<li num="' + card.num + '" suit="' + card.suit + '">' + 
+        cards.push('<li class="card" num="' + card.num + '" suit="' + card.suit + '">' + 
                     '<img src="' + src + '" alt="' + card_img + '" class="img-thumbnail card"></li>')
       }
       this.$el.html(cards.join(''))

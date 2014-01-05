@@ -58,10 +58,11 @@
   margin-top: 5px;
 }
 
-.hand li {
+.card {
   list-style-type: none;
   display: inline;
   margin: 0 2px;
+  cursor: pointer;
 }
 
 .board {
