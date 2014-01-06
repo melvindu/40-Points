@@ -179,8 +179,8 @@ def cover_cards(game_id):
   if len(cards) != game.bottom_size:
     raise ValueError('Must cover {num} cards'.format(num=game.bottom_size))
 
-  for card in cards:
-    current_player.get_card(card).bottom = True
+  for card in current_player.get_cards(cards):
+    card.bottom = True
   db.session.commit()
   return {'alert': 'Cover Successful!'}
 

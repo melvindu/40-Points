@@ -58,17 +58,18 @@ class Player(db.Model, ModelMixin):
     #modify game trumps
     self.game.trump_suit = card.suit
 
-  def owns_card(self, card):
-    for my_card in self.hand:
-      if card.num == my_card.num and card.suit == my_card.suit:
-        return True
-    return False
-
-  def get_card(self, card):
-    for my_card in self.hand:
-      if card.num == my_card.num and card.suit == my_card.suit:
-        return my_card
-    return None
+  def get_cards(self, cards):
+    my_cards = self.hand
+    ret_cards = []
+    for card in cards:
+      for my_card in my_cards:
+        if card.num == my_card.num and card.suit == my_card.suit:
+          my_cards.remove(my_card)
+          ret_cards.append(my_card)
+          break
+    if not len(ret_cards) == len(cards):
+      raise ValueError('Player doesn\'t own requested cards')
+    return ret_cards
 
   @property
   def hand(self):

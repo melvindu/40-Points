@@ -28,9 +28,6 @@ def cards_required(func):
     player = get_player(game, current_user)
 
     cards = get_cards_from_form(request.form)
-    for card in cards:
-      player_card = player.get_card(card)
-      if not player_card:
-        raise ValueError('Player doesn\'t own requested card')
+    player.get_cards(cards)
     return func(*args, **kwargs)
   return wrapper
