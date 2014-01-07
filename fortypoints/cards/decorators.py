@@ -9,9 +9,11 @@ from fortypoints.players import get_player
 
 
 def get_cards_from_form(form):
-  def chunks(l, n):
-    return [l[i:i+n] for i in range(0, len(l), n)]
-  cards = chunks(form.values(), 2)
+  cards = []
+  for index in range(len(request.form) / 2):
+    num_key = 'cards[{index}][num]'.format(index=index)
+    suit_key = 'cards[{index}][suit]'.format(index=index)
+    cards.append((request.form[num_key], request.form[suit_key]))
   return [CardMixin(int(num), int(suit)) for (num, suit) in cards]
 
 
