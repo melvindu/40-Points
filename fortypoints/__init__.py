@@ -26,6 +26,13 @@ def create_app():
   app.register_blueprint(players_view, url_prefix='/player')
   app.register_blueprint(chats_view, url_prefix='/chat')
 
+  if not app.debug:
+    import logging
+    from loggin import FileHandler
+    file_handler = FileHandler('fortypoints.log')
+    file_handler.setLevel(logging.WARNING)
+    app.logger.addHandler(file_handler)
+
   return app
 
 app = create_app()
