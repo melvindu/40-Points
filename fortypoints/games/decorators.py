@@ -46,7 +46,7 @@ def game_response(updates):
         for update in updates:
           update_game_client(game.id, update, result)
         return jsonify({'status': True, 'data': result})
-      except GameError, CardError as e:
+      except (GameError, CardError) as e:
         logging.exception(e)
         return jsonify({'status': False, 'data': e.message})
       except Exception as e:
