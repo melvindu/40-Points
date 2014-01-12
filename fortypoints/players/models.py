@@ -1,6 +1,7 @@
 import fortypoints as fp
 
 from fortypoints.cards import Card, constants as CARD, Flip
+from fortypoints.cards.exceptions import CardError
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
 
@@ -34,7 +35,7 @@ class Player(db.Model, ModelMixin):
     if self.active:
       return self.game.deal(self)
     else:
-      raise ValueError('Inactive player cannot draw.')
+      raise CardError('Inactive player cannot draw.')
 
   def draw_all(self):
     while self.game.undealt_cards:
@@ -68,7 +69,7 @@ class Player(db.Model, ModelMixin):
           ret_cards.append(my_card)
           break
     if not len(ret_cards) == len(cards):
-      raise ValueError('Player doesn\'t own requested cards')
+      raise CardError('Player doesn\'t own requested cards')
     return ret_cards
 
   @property

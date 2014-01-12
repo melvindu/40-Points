@@ -5,6 +5,7 @@ from flask import g, jsonify, redirect, url_for
 from flask.ext.login import current_user, login_required
 
 from fortypoints.cards.decorators import get_cards_from_form
+from fortypoints.cards.exceptions import CardError
 from fortypoints.games import get_game
 from fortypoints.games.exceptions import GameError
 from fortypoints.games.updates import update_game_client
@@ -45,9 +46,12 @@ def game_response(updates):
         for update in updates:
           update_game_client(game.id, update, result)
         return jsonify({'status': True, 'data': result})
-      except Exception as e:
+      except GameError, CardError as e:
         logging.exception(e)
         return jsonify({'status': False, 'data': e.message})
+      except Exception as e:
+        logging.exception(e)
+        return jsonify('status': False, 'error': True)
     return decorator
   return wrapper
 

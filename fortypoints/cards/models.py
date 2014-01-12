@@ -2,6 +2,7 @@ import random
 
 import fortypoints as fp
 from fortypoints.cards import constants as CARD
+from fortypoints.cards.exceptions import CardError
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
 
@@ -14,7 +15,7 @@ class CardMixin(object):
     self._suit = suit
     if self.num in CARD.JOKERS or self.suit in CARD.JOKERS:
       if self.num != self.suit:
-        raise ValueError('Card() joker initialization failed')
+        raise CardError('Card() joker initialization failed')
 
   @property
   def name(self):
@@ -32,7 +33,7 @@ class CardMixin(object):
   @num.setter
   def num(self, num):
     if num not in (CARD.NUMBERS + CARD.JOKERS):
-      raise ValueError('Card() value is invalid')
+      raise CardError('Card() value is invalid')
     self._num = num
 
   @property
@@ -42,7 +43,7 @@ class CardMixin(object):
   @suit.setter
   def suit(self, suit):
     if suit not in (CARD.SUITS + CARD.JOKERS):
-      raise ValueError('Card() suit is invalid')
+      raise CardError('Card() suit is invalid')
     self._suit = suit
 
   @property

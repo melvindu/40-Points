@@ -4,6 +4,7 @@ import fortypoints as fp
 from fortypoints.cards import Card, constants as CARD
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
+from fortypoints.games.exceptions import GameError
 from fortypoints.players import get_player, get_player_by_id
 
 db = fp.db
@@ -40,7 +41,7 @@ class Game(db.Model, ModelMixin):
   @state.setter
   def state(self, game_state):
     if game_state not in GAME.STATES:
-      raise ValueError('Unknown game state {0}'.format(game_state))
+      raise GameError('Unknown game state {0}'.format(game_state))
     self._state = game_state
 
   @property

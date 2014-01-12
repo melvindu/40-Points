@@ -9,10 +9,11 @@ import fortypoints as fp
 from fortypoints.template import templated
 from fortypoints.cards import Flip
 from fortypoints.cards.decorators import cards_required, get_cards_from_form
-from fortypoints.cards.exceptions import FlipError
+from fortypoints.cards.exceptions import CardError, FlipError
 from fortypoints.cards.models import CardMixin
 from fortypoints.games import create_game, get_game, constants as GAME
 from fortypoints.games.decorators import game_required, game_response
+from fortypoints.games.exceptions import GameError
 from fortypoints.games.forms import NewGameForm
 from fortypoints.games.updates import update_game_client, GameClientUpdater
 from fortypoints.request import WebSocketManager, websocket
@@ -111,9 +112,9 @@ def draw_card(game_id):
     return None
   else:
     if not game.undealt_cards:
-      raise ValueError('No cards to draw')
+      raise GameError('No cards to draw')
     else:
-      raise ValueError('It is not your turn to draw')
+      raise GameError('It is not your turn to draw')
 
 @game.route('/flip-card/<int:game_id>', methods=['POST'])
 @game_response(['game:update', 'player:update'])
@@ -123,17 +124,17 @@ def flip_card(game_id):
   game = get_game(game_id)
   player = get_player(game, current_user)
   if game.state != GAME.DRAWING:
-    raise ValueError('It is too late to flip')
+    raise GameError('It is too late to flip')
   cards = get_cards_from_form(request.form)
 
   if not cards:
-    raise ValueError('No cards selected to flip')
+    raise GameError('No cards selected to flip')
 
   to_flip_cards = player.get_cards(cards)
   flipped_cards = filter(lambda c: c.flipped, game.cards)
 
   if to_flip_cards == flipped_cards:
-    raise ValueError('Card(s) already flipped.')
+    raise GameError('Card(s) already flipped.')
 
   if not flipped_cards:
     player.flip(to_flip_cards)
@@ -158,7 +159,7 @@ def flip_card(game_id):
       'alert': 'Flip Successful!'
     }
   else:
-    raise ValueError('Can\'t flip weaker cards')
+    raise GameError('Can\'t flip weaker cards')
 
 
 @game.route('/play-cards/<int:game_id>')
@@ -173,14 +174,17 @@ def play_cards(game_id):
 @game_required
 def cover_cards(game_id):
   game = get_game(game_id)
+  if game.state != GAME.COVERING:
+    raise GameError('It is not time to cover.')
   current_player = get_player(game, current_user)
   cards = get_cards_from_form(request.form)
 
   if len(cards) != game.bottom_size:
-    raise ValueError('Must cover {num} cards'.format(num=game.bottom_size))
+    raise GameError('Must cover {num} cards'.format(num=game.bottom_size))
 
   for card in current_player.get_cards(cards):
     card.bottom = True
+  game.state = GAME.PLAYING
   db.session.commit()
   return {'alert': 'Cover Successful!'}
 
