@@ -115,7 +115,8 @@
     var gameUpdater = new WebSocket('ws://' + location.host + '/game/update-stream/' + GAME_ID)
 
     gameUpdater.onmessage = function(message) {
-      var event = JSON.parse(message.data).event;
+      var message = JSON.parse(message.data)
+      var event = message.event;
       console.log(event)
       if (event == 'player:update') {
         players.each(function(player) {
@@ -123,10 +124,12 @@
         });
       } else if (event == 'game:update') {
         game.fetch();
-      } else {
+      } else if (event == 'alert') {
+        CARD.showAlert(message.data)
+      }else {
         console.log(message)
         for (index in views) {
-          views[index].trigger(JSON.parse(message.data).event, message.data);
+          views[index].trigger(message.event, message.data);
         }
       }
     };

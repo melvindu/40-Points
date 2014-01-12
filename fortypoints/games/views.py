@@ -147,6 +147,13 @@ def flip_card(game_id):
   if to_flip > flipped:
     player.flip(to_flip_cards)
     db.session.commit()
+
+    alert_msg = '{player} flipped {num} {card}(s)'.format(
+        player=player.user.name,
+        num=len(to_flip_cards),
+        card=to_flip_cards[0].name
+    )
+    update_game_client(game_id, 'alert', {'status': True, 'data': alert_msg})
     return {
       'alert': 'Flip Successful!'
     }

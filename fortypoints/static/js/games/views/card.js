@@ -98,5 +98,6 @@ CARD = (function() {
   mod.HandView = HandView;
   mod.DrawView = DrawView;
   mod.FlipView = FlipView;
+  mod.showAlert = showAlert;
   return mod;
 }());
