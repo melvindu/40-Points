@@ -28,7 +28,7 @@ def create_app():
 
   if not app.debug:
     import logging
-    from loggin import FileHandler
+    from logging import FileHandler
     file_handler = FileHandler('fortypoints.log')
     file_handler.setLevel(logging.WARNING)
     app.logger.addHandler(file_handler)
