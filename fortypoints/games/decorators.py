@@ -51,7 +51,7 @@ def game_response(updates):
         return jsonify({'status': False, 'data': e.message})
       except Exception as e:
         logging.exception(e)
-        return jsonify('status': False, 'error': True)
+        return jsonify({'status': False, 'error': True})
     return decorator
   return wrapper
 
