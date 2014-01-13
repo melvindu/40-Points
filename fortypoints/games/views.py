@@ -12,7 +12,7 @@ from fortypoints.cards.decorators import cards_required, get_cards_from_form
 from fortypoints.cards.exceptions import CardError, FlipError
 from fortypoints.cards.models import CardMixin
 from fortypoints.games import create_game, get_game, constants as GAME
-from fortypoints.games.decorators import game_required, game_response
+from fortypoints.games.decorators import game_required, game_response, requires
 from fortypoints.games.exceptions import GameError
 from fortypoints.games.forms import NewGameForm
 from fortypoints.games.updates import update_game_client, GameClientUpdater
@@ -170,8 +170,7 @@ def play_cards(game_id):
   update_game_client(game_id, 'scoreboard:update', render_scores(players))
 
 @game.route('/cover-cards/<int:game_id>')
-@cards_required
-@game_required
+@requires('game', 'cards', 'lead', 'active')
 def cover_cards(game_id):
   game = get_game(game_id)
   if game.state != GAME.COVERING:

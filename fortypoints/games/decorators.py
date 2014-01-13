@@ -56,45 +56,47 @@ def game_response(updates):
   return wrapper
 
 def requires(*args):
-  @wraps(func)
-  def wrapper(*args, **kwargs):
-    if not current_user:
+  def decorator(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+      if not current_user:
+        return login_required(func)(*args, **kwargs)
+      player_id = kwargs.get('player_id')
+      game_id = kwargs.get('game_id')
+
+      #prioritize player id
+      if player_id:
+        req_player = get_player_by_id(player_id)
+        game = player.game
+      elif game_id:
+        game = get_game(game_id)
+      
+      curr_player = get_player(game, current_user)
+
+      if 'game' in args:
+        if not curr_player:
+          return redirect(url_for('index'))
+
+      if 'player' in args:
+        if req_player.user.id != current_user.id:
+          return redirect(url_for('index'))
+
+      if 'cards' in args:
+        cards = get_cards_from_form(request.form)
+        curr_player.get_cards(cards)
+
+      if 'active' in args:
+        if not curr_player.active:
+          raise GameError('You are not the currently active player')
+
+      if 'lead' in args:
+        if not curr_player.lead:
+          raise GameError('You are not the game lead.')
+
+      if 'house' in args:
+        if not curr_player.house:
+          raise GameError('You are not on the house team.')
+
       return login_required(func)(*args, **kwargs)
-    player_id = kwargs.get('player_id')
-    game_id = kwargs.get('game_id')
-
-    #prioritize player id
-    if player_id:
-      req_player = get_player_by_id(player_id)
-      game = player.game
-    elif game_id:
-      game = get_game(game_id)
-    
-    curr_player = get_player(game, current_user)
-
-    if 'game' in args:
-      if not curr_player:
-        return redirect(url_for('index'))
-
-    if 'player' in args:
-      if req_player.user.id != current_user.id:
-        return redirect(url_for('index'))
-
-    if 'cards' in args:
-      cards = get_cards_from_form(request.form)
-      curr_player.get_cards(cards)
-
-    if 'active' in args:
-      if not curr_player.active:
-        raise GameError('You are not the currently active player')
-
-    if 'lead' in args:
-      if not curr_player.lead:
-        raise GameError('You are not the game lead.')
-
-    if 'house' in args:
-      if not curr_player.house:
-        raise GameError('You are not on the house team.')
-
-    return login_required(func)(*args, **kwargs)
-  return wrapper
+    return wrapper
+  return decorator
