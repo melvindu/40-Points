@@ -207,7 +207,7 @@ class Play(db.Model, ModelMixin):
         for game_card in game_cards:
           for other_card in other_cards:
             other_game_card = GameCard(game, other_card)
-            if compare_game_cards(game_card, other_game_card)):
+            if compare_game_cards(game_card, other_game_card):
               other_game_cards.append(other_game_card)
 
         for game_card in game_cards:

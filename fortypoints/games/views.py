@@ -163,7 +163,7 @@ def flip_card(game_id):
 
 
 @game.route('/play-cards/<int:game_id>')
-@game_required
+@requires('game', 'cards', 'lead', 'active')
 def play_cards(game_id):
   players = get_game(game_id).players
   render_scores = get_template_attribute('games/macros.html', 'render_scores')

@@ -4,6 +4,7 @@ from fortypoints.cards import Card, constants as CARD, Flip
 from fortypoints.cards.exceptions import CardError
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
+from fortypoints.games.models import Play
 
 db = fp.db
 
@@ -58,6 +59,13 @@ class Player(db.Model, ModelMixin):
 
     #modify game trumps
     self.game.trump_suit = card.suit
+
+  def play(self, cards):
+    if not self.game.round_plays:
+      play = Play.Round(self.game, self, cards)
+    else:
+      # do play validation
+      pass
 
   def get_cards(self, cards):
     my_cards = self.hand

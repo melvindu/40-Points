@@ -88,7 +88,7 @@ class GameCard(Card):
     else:
       if self.game.plays:
         if self.suit == game.round_suit:
-          return self.num > other.num:
+          return self.num > other.num
         else:
           return False
       else:
