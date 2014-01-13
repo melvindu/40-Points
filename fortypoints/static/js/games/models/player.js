@@ -65,8 +65,6 @@ PLAYER = (function() {
         src = location.origin + '/static/images/' + card_img
         cards.push('<li class="card" num="' + card.num + '" suit="' + card.suit + '">' + 
           '<img src="' + src + '" alt="' + card_img + '" class="img-thumbnail card"></li>');
-        $(view).html('<li class="card" num="' + card.num + '" suit="' + card.suit + '">' + 
-          '<img src="' + src + '" alt="' + card_img + '" class="img-thumbnail card"></li>')
       }
       this.$el.html(cards.join(''));
       return this;
