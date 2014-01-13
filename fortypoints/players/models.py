@@ -1,3 +1,5 @@
+import logging
+
 import fortypoints as fp
 
 from fortypoints.cards import Card, constants as CARD, Flip, GameCard
@@ -108,6 +110,9 @@ class Player(db.Model, ModelMixin):
 
   @property
   def current_play(self):
+    logging.info('plays')
+    logging.info(self.plays)
+    logging.info(filter(lambda p: p.round == self.game.round, self.plays))
     return filter(lambda p: p.round == self.game.round, self.plays)
 
   def to_dict(self):
