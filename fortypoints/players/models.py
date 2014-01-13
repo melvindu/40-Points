@@ -123,7 +123,7 @@ class Player(db.Model, ModelMixin):
       'house': self.house,
       'lead': self.lead,
       'cards': [card.to_dict() for card in self.hand],
-      'play': [card.to_dict() for card in self.current_play.cards]
+      'play': [card.to_dict() for card in self.current_play.cards] if self.current_play else []
     }
 
   def __str__(self):
