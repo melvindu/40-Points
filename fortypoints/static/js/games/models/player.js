@@ -51,10 +51,10 @@ PLAYER = (function() {
   var PlayView = Backbone.View.extend({
     initialize: function() {
       _.bindAll(this, 'render');
-      this.model.on('change:play', this.render);
+      this.model.on('change', this.render);
     },
     render: function() {
-      var cards = [];
+      var cards = ['<h4>' + player.get('name') + '</h4>'];
       var src = '';
       var card = {};
       var card_img = '';
@@ -63,7 +63,7 @@ PLAYER = (function() {
         card = player.get('play')[index]
         card_img = String(card.num) + String(card.suit) + '.jpg'
         src = location.origin + '/static/images/' + card_img
-        cards.push('<h4>' + player.name + '</h4><li class="play-card" num="' + card.num + '" suit="' + card.suit + '">' + 
+        cards.push('<li class="play-card" num="' + card.num + '" suit="' + card.suit + '">' + 
           '<img src="' + src + '" alt="' + card_img + '" class="img-thumbnail card"></li>');
       }
       this.$el.html(cards.join(''));
