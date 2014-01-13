@@ -54,11 +54,11 @@ PLAYER = (function() {
       this.model.on('change', this.render);
     },
     render: function() {
-      var cards = ['<h4>' + player.get('name') + '</h4>'];
       var src = '';
       var card = {};
       var card_img = '';
       var player = this.model;
+      var cards = ['<h4>' + player.get('name') + '</h4>'];
       for (var index in player.get('play')) {
         card = player.get('play')[index]
         card_img = String(card.num) + String(card.suit) + '.jpg'
