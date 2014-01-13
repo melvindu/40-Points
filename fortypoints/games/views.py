@@ -166,6 +166,7 @@ def flip_card(game_id):
 @game.route('/play-cards/<int:game_id>', methods=['POST'])
 @requires('game', 'cards', 'active')
 def play_cards(game_id):
+  game = get_game(game_id)
   if game.state != GAME.PLAYING:
     raise GameError('Game State is {state}, not {play}'.format(state=game.state, play=GAME.PLAYING))
   
