@@ -164,6 +164,7 @@ def flip_card(game_id):
 
 
 @game.route('/play-cards/<int:game_id>', methods=['POST'])
+@game_response(['game:update', 'player:update'])
 @requires('game', 'cards', 'active')
 def play_cards(game_id):
   game = get_game(game_id)
