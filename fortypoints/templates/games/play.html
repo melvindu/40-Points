@@ -92,15 +92,15 @@
       {% if loop.index0 == 0 %}
         var hand = new CARD.HandView({model: player});
         var status = new PLAYER.PlayerStatusView({model: player});
+        var play = new PLAYER.PlayView({model: player});
         $('.hand').html(hand.render().el);
         $('.me').html(status.render().el);
+        $('.play[player_id={{player.id}}]').html(play.render().el);
       {% endif %}
     {% endfor %}
 
     var currentPlayerView = new PLAYER.CurrentPlayerView({collection: players});
     $('.current-player').html(currentPlayerView.render().el);
-
-    var PlaysView = PLAYER.PlaysView({collection: players});
 
     players.each(function(player) {
       player.fetch();
