@@ -116,6 +116,7 @@ def draw_card(game_id):
     else:
       raise GameError('It is not your turn to draw')
 
+
 @game.route('/flip-card/<int:game_id>', methods=['POST'])
 @game_response(['game:update', 'player:update'])
 @cards_required
@@ -163,11 +164,19 @@ def flip_card(game_id):
 
 
 @game.route('/play-cards/<int:game_id>')
-@requires('game', 'cards', 'lead', 'active')
+@requires('game', 'cards', 'active')
 def play_cards(game_id):
-  players = get_game(game_id).players
+  if game.state != GAME.PLAYING:
+    raise GameError('Game State is {state}, not {play}'.format(state=game.state, play=GAME.PLAYING))
+  
+  current_player = get_player(game, current_user)
+  cards = get_cards_from_form(request.form)
+  current_player.play(cards)
+  db.session.commit()
   render_scores = get_template_attribute('games/macros.html', 'render_scores')
   update_game_client(game_id, 'scoreboard:update', render_scores(players))
+  return {'alert': 'PLAY SUCCESS'}
+
 
 @game.route('/cover-cards/<int:game_id>', methods=['POST'])
 @game_response(['game:update', 'player:update'])
