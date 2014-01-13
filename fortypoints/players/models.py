@@ -82,7 +82,7 @@ class Player(db.Model, ModelMixin):
 
   @property
   def hand(self):
-    return sorted(filter(lambda c: not c.bottom, self.cards))
+    return sorted(filter(lambda c: not c.bottom and not c.play, self.cards))
 
   @property
   def active(self):

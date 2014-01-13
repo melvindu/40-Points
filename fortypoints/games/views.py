@@ -175,6 +175,7 @@ def play_cards(game_id):
   current_player = get_player(game, current_user)
   cards = get_cards_from_form(request.form)
   current_player.play(cards)
+  current_player.next_player.active = True
   db.session.commit()
   return {'alert': 'PLAY SUCCESS'}
 
