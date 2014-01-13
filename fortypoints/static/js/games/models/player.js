@@ -51,7 +51,7 @@ PLAYER = (function() {
   var PlayView = Backbone.View.extend({
     initialize: function() {
       _.bindAll(this, 'render');
-      this.collection.on('change:play', this.render);
+      this.model.on('change:play', this.render);
     },
     render: function() {
       var cards = []
