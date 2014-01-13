@@ -83,7 +83,7 @@
   color: #5cb85c;
 }
 
-#draw-card, #flip-card, #cover-cards, #play-card {
+#draw-card, #flip-card, #cover-cards, #play-cards {
   margin-top: 10px;
   min-width: 80px;
 }
