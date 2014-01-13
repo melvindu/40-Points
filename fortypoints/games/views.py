@@ -163,7 +163,7 @@ def flip_card(game_id):
     raise GameError('Can\'t flip weaker cards')
 
 
-@game.route('/play-cards/<int:game_id>')
+@game.route('/play-cards/<int:game_id>', methods=['POST'])
 @requires('game', 'cards', 'active')
 def play_cards(game_id):
   if game.state != GAME.PLAYING:
