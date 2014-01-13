@@ -96,7 +96,7 @@ class Game(db.Model, ModelMixin):
 
   @property
   def round(self):
-    if not self.plays:
+    if not len(self.plays):
       return 1
     current_round = max([play.round for play in self.plays])
     plays = filter(lambda p: p.round == current_round, self.plays)
