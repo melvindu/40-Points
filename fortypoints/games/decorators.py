@@ -55,7 +55,7 @@ def game_response(updates):
     return decorator
   return wrapper
 
-def requires(*args):
+def requires(*requirements):
   def decorator(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -73,27 +73,27 @@ def requires(*args):
       
       curr_player = get_player(game, current_user)
 
-      if 'game' in args:
+      if 'game' in requirements:
         if not curr_player:
           return redirect(url_for('index'))
 
-      if 'player' in args:
+      if 'player' in requirements:
         if req_player.user.id != current_user.id:
           return redirect(url_for('index'))
 
-      if 'cards' in args:
+      if 'cards' in requirements:
         cards = get_cards_from_form(request.form)
         curr_player.get_cards(cards)
 
-      if 'active' in args:
+      if 'active' in requirements:
         if not curr_player.active:
           raise GameError('You are not the currently active player')
 
-      if 'lead' in args:
+      if 'lead' in requirements:
         if not curr_player.lead:
           raise GameError('You are not the game lead.')
 
-      if 'house' in args:
+      if 'house' in requirements:
         if not curr_player.house:
           raise GameError('You are not on the house team.')
 
