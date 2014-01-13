@@ -106,6 +106,10 @@ class Player(db.Model, ModelMixin):
     else:
       return next_players[0]
 
+  @property
+  def current_play(self):
+    return filter(lambda p: p.round == self.game.round, self.plays)
+
   def to_dict(self):
     return {
       'id': self.id,
@@ -118,7 +122,8 @@ class Player(db.Model, ModelMixin):
       'level': self.level,
       'house': self.house,
       'lead': self.lead,
-      'cards': [card.to_dict() for card in self.hand]
+      'cards': [card.to_dict() for card in self.hand],
+      'play': [card.to_dict() for card in self.current_play.cards]
     }
 
   def __str__(self):
