@@ -56,6 +56,7 @@ PLAYER = (function() {
     render: function() {
       var view = this;
       this.collection.each(function(player) {
+        console.log('.play[player_id="' + player.id + '"');
         var view = $('.play[player_id="' + player.id + '"');
         var cards = []
         var src = ''
