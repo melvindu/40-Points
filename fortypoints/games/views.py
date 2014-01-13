@@ -169,9 +169,9 @@ def play_cards(game_id):
   render_scores = get_template_attribute('games/macros.html', 'render_scores')
   update_game_client(game_id, 'scoreboard:update', render_scores(players))
 
-@game.route('/cover-cards/<int:game_id>')
+@game.route('/cover-cards/<int:game_id>', methods=['POST'])
 @requires('game', 'cards', 'lead', 'active')
-def cover_cards(game_id, methods=['POST']):
+def cover_cards(game_id):
   game = get_game(game_id)
   if game.state != GAME.COVERING:
     raise GameError('It is not time to cover.')
