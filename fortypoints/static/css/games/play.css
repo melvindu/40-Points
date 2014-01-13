@@ -58,7 +58,7 @@
   margin-top: 5px;
 }
 
-.card {
+.card, .play-card {
   list-style-type: none;
   display: inline;
   margin: 0 2px;
