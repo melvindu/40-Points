@@ -70,7 +70,13 @@ class GameCard(Card):
     elif not self.is_trump and other.is_trump:
       return True
     else:
-      return False
+      if self.game.plays:
+        if self.suit == game.round_suit:
+          return self.num < other.num
+        else:
+          return True
+      else:
+        return False
 
   def __gt__(self, other):
     if self.is_trump and other.is_trump:
@@ -80,7 +86,13 @@ class GameCard(Card):
     elif not self.is_trump and other.is_trump:
       return False
     else:
-      return False
+      if self.game.plays:
+        if self.suit == game.round_suit:
+          return self.num > other.num:
+        else:
+          return False
+      else:
+        return True
 
 class Deck(object):
   def __init__(self, size=1):
