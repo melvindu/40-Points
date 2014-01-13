@@ -40,7 +40,7 @@ class Flip(object):
 class GameCard(Card):
   def __init__(self, game, card):
     self.game = game
-    Card.__init__(card.num, card.suit)
+    Card.__init__(self, card.num, card.suit)
 
   @property
   def trump_number(self):
