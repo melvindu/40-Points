@@ -169,7 +169,8 @@ def flip_card(game_id):
 def play_cards(game_id):
   game = get_game(game_id)
   if game.state != GAME.PLAYING:
-    raise GameError('Game State is {state}, not {play}'.format(state=game.state, play=GAME.PLAYING))
+    raise GameError('Game State is {state}, not {play}'.format(state=GAME.STATES[game.state], 
+                                                               play=GAME.STATES[GAME.PLAYING]))
   
   current_player = get_player(game, current_user)
   cards = get_cards_from_form(request.form)
