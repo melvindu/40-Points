@@ -1,7 +1,7 @@
 from functools import wraps
 import logging
 
-from flask import g, jsonify, redirect, url_for
+from flask import g, jsonify, redirect, request, url_for
 from flask.ext.login import current_user, login_required
 
 from fortypoints.cards.decorators import get_cards_from_form
