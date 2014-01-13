@@ -3,10 +3,17 @@ CARD = (function() {
 
   var showAlert = function(data) {
     if (!data.status) {
-      $('.game-alert').html('<div class="alert alert-warning">' + data.data + '</div>');
-      $('.game-alert').show();
-      location.href = '#game-state'
-      $('.game-alert').delay(1000).fadeOut('slow');
+      if (!data.error) {
+        $('.game-alert').html('<div class="alert alert-warning">' + data.data + '</div>');
+        $('.game-alert').show();
+        location.href = '#game-state'
+        $('.game-alert').delay(1000).fadeOut('slow');
+      } else {
+        $('.game-alert').html('<div class="alert alert-danger">' + FortyPoints Server Error +'</div>');
+        $('.game-alert').show();
+        location.href = '#game-state'
+        $('.game-alert').delay(1000).fadeOut('slow');
+      }
     } else {
       if (data.data) {
         $('.game-alert').html('<div class="alert alert-success">' + data.data.alert + '</div>');
