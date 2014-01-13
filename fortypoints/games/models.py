@@ -94,6 +94,20 @@ class Game(db.Model, ModelMixin):
     return get_player(self, user)
 
   @property
+  def round(self):
+    if not self.plays:
+      return 1
+    current_round = max([play.round for play in self.plays])
+    plays = filter(lambda p: p.round == current_round, self.plays)
+    if len(plays) == len(self.players):
+      return current_round + 1
+    return current_round
+
+  @property
+  def current_plays(self):
+    return filter(lambda p: p.round == self.round, self.plays)
+
+  @property
   def deck(self):
     return self.cards
 
@@ -143,8 +157,12 @@ class Play(db.Model, ModelMixin):
   __tablename__ = 'play'
   id = db.Column(db.Integer(unsigned=True), primary_key=True)
   round = db.Column(db.Integer(unsigned=True), nullable=False)
-  game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'), nullable=True)
-  player_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('player.id'), nullable=True)
+  number = db.Column(db.SmallInteger(unsigned=True), nullable=False)
+  game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'), nullable=True, index=True)
+  player_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('player.id'), nullable=True, index=True)
 
   game = db.relationship('Game', foreign_keys=game_id, backref=db.backref('plays', lazy='dynamic'))
   player = db.relationship('Player', backref=db.backref('plays', lazy='dynamic'))
+
+  def __init__(self, game, player, cards):
+    pass
