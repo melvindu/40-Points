@@ -100,7 +100,7 @@ class Game(db.Model, ModelMixin):
       return 1
     current_round = max([play.round for play in self.plays])
     plays = filter(lambda p: p.round == current_round, self.plays)
-    if len(plays) == len(self.players):
+    if len(plays) == len(list(self.players)):
       return current_round + 1
     return current_round
 
