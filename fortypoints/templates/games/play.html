@@ -100,6 +100,8 @@
     var currentPlayerView = new PLAYER.CurrentPlayerView({collection: players});
     $('.current-player').html(currentPlayerView.render().el);
 
+    var PlaysView = PLAYER.PlaysView({collection: players});
+
     players.each(function(player) {
       player.fetch();
     });
