@@ -6,7 +6,6 @@ from fortypoints.cards import Card, constants as CARD, GameCard
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
 from fortypoints.games.exceptions import GameError
-from fortypoints.players import get_player, get_player_by_id
 
 db = fp.db
 
@@ -90,9 +89,6 @@ class Game(db.Model, ModelMixin):
     for other_player in self.players:
       other_player.lead = False
     player.lead = True
-
-  def get_player(self, user):
-    return get_player(self, user)
 
   @property
   def round(self):
