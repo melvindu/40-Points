@@ -171,7 +171,7 @@ def play_cards(game_id):
 
 @game.route('/cover-cards/<int:game_id>')
 @requires('game', 'cards', 'lead', 'active')
-def cover_cards(game_id):
+def cover_cards(game_id, methods=['POST']):
   game = get_game(game_id)
   if game.state != GAME.COVERING:
     raise GameError('It is not time to cover.')
