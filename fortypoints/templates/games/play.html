@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="col-md-2">
-        <button id="play-card" class="btn btn-primary btn-lg center pull-right">Play</button>
+        <button id="play-cards" class="btn btn-primary btn-lg center pull-right" url="{{ url_for('games.play_cards', game_id=game_id) }}">Play</button>
       </div>
     </div>
     <ol class="hand">
@@ -108,6 +108,7 @@
     var drawView = new CARD.DrawView();
     var flipView = new CARD.FlipView();
     var coverView = new CARD.CoverView();
+    var playButtonView = new CARD.PlayButtonView();
 
     USER = "{{ current_user.name }}";
     GAME_ID = {{ game_id }};

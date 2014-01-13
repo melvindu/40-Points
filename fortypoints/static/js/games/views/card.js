@@ -122,10 +122,30 @@ CARD = (function() {
     }
   });
 
+  var PlayButtonView = Backbone.View.extend({
+    el: '#play-cards',
+    initialize: function() {
+      _.bindAll(this, 'play');
+    },
+    events: {
+      'click': 'play'
+    },
+    play: function() {
+      var cards = []
+      $('.card').each(function(index) {
+        if ($(this).attr('play')) {
+          cards.push({num: $(this).attr('num'), suit: $(this).attr('suit')});
+        }
+      });
+      $.post(this.$el.attr('url'), {cards: cards}, showAlert);
+      return this;
+    }
+  });
   mod.HandView = HandView;
   mod.DrawView = DrawView;
   mod.FlipView = FlipView;
   mod.CoverView = CoverView;
+  mod.PlayButtonView = PlayButtonView;
   mod.showAlert = showAlert;
   return mod;
 }());
