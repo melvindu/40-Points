@@ -23,26 +23,22 @@
       <div class="play center" player_id="{{ players[2].id }}">
         HI
       </div>
-      <span>{{ players[2].name }}</span>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
-      <span>{{ players[3].name }}</span>
       <div class="play center" player_id="{{ players[3].id }}">
         HI
       </div>
     </div>
     <div class="col-md-6">
       <div class="play center" player_id="{{ players[1].id }}">
-      <span>{{ players[1].name }}</span>
         HI
       </div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-12">
-      <span>{{ players[0].name }}</span>
       <div class="play center" player_id="{{ players[0].id }}">
         HI
       </div>
@@ -52,7 +48,7 @@
 {% for player in players %}
   <div class="row">
     <div class="col-md-12">
-      <div class="play" player_id="{{ player.id }}">
+      <div class="play" player_id="{{ players[0].id }}">
         HI
       </div>
     </div>

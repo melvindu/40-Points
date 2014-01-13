@@ -63,7 +63,7 @@ PLAYER = (function() {
         card = player.get('play')[index]
         card_img = String(card.num) + String(card.suit) + '.jpg'
         src = location.origin + '/static/images/' + card_img
-        cards.push('<li class="play-card" num="' + card.num + '" suit="' + card.suit + '">' + 
+        cards.push('<h4>' + player.name + '</h4><li class="play-card" num="' + card.num + '" suit="' + card.suit + '">' + 
           '<img src="' + src + '" alt="' + card_img + '" class="img-thumbnail card"></li>');
       }
       this.$el.html(cards.join(''));

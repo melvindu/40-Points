@@ -119,7 +119,7 @@ class Player(db.Model, ModelMixin):
   def to_dict(self):
     return {
       'id': self.id,
-      'name': self.user.name,
+      'name': self.name,
       'game_id': self.game_id,
       'user_id': self.user_id,
       'number': self.number,
