@@ -1,9 +1,10 @@
 import fortypoints as fp
 
-from fortypoints.cards import Card, constants as CARD, Flip
+from fortypoints.cards import Card, constants as CARD, Flip, GameCard
 from fortypoints.cards.exceptions import CardError
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
+from fortypoints.games.exceptions import GameError
 
 db = fp.db
 
