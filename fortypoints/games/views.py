@@ -176,8 +176,6 @@ def play_cards(game_id):
   cards = get_cards_from_form(request.form)
   current_player.play(cards)
   db.session.commit()
-  render_scores = get_template_attribute('games/macros.html', 'render_scores')
-  update_game_client(game_id, 'scoreboard:update', render_scores(players))
   return {'alert': 'PLAY SUCCESS'}
 
 
