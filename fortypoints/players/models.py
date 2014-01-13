@@ -4,7 +4,6 @@ from fortypoints.cards import Card, constants as CARD, Flip
 from fortypoints.cards.exceptions import CardError
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
-from fortypoints.games.models import Play
 
 db = fp.db
 
@@ -126,3 +125,62 @@ class Player(db.Model, ModelMixin):
                       house=self.house,
                       game_id=self.game_id
     )
+
+
+class Play(db.Model, ModelMixin):
+  __tablename__ = 'play'
+  id = db.Column(db.Integer(unsigned=True), primary_key=True)
+  round = db.Column(db.Integer(unsigned=True), nullable=False)
+  number = db.Column(db.SmallInteger(unsigned=True), nullable=False)
+  game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('game.id'), nullable=True, index=True)
+  player_id = db.Column(db.Integer(unsigned=True), db.ForeignKey('player.id'), nullable=True, index=True)
+
+  game = db.relationship('Game', foreign_keys=game_id, backref=db.backref('plays', lazy='dynamic'))
+  player = db.relationship('Player', backref=db.backref('plays', lazy='dynamic'))
+
+  @classmethod
+  def Round(cls, game, player, cards):
+    play = None
+    if not cards:
+      raise GameError('Can\'t create play without cards')
+
+    game_cards = [GameCard(game, card) for card in cards]
+    # make sure cards are all the same suit
+    if not len(set([card.suit for card in cards])) == 1:
+      if not all(game_card.is_trump for game_card in game_cards):
+        raise GameError('Cannot start a round with cards in multiple suits')
+
+    if len(cards) != 1:
+      card_counts = defaultdict(int)
+      for card in cards:
+        card_counts[(card.num, card.suit)] += 1
+
+      if len(set(card_counts.values())) != 1:
+        # validate topk play
+        compare_game_cards = lambda card, other: other.is_trump if card.is_trump else card.suit == other.suit
+
+        other_cards = []
+        for other_player in game.players:
+          if player.id == other_player.id:
+            continue
+          else:
+            other_cards.extend(other_player.hand)
+
+        other_game_cards = []
+        for game_card in game_cards:
+          for other_card in other_cards:
+            other_game_card = GameCard(game, other_card)
+            if compare_game_cards(game_card, other_game_card):
+              other_game_cards.append(other_game_card)
+
+        for game_card in game_cards:
+          for other_game_card in other_game_cards:
+            if not game_card > other_game_card:
+              raise GameError('Attempted Top K play without Top K cards')
+
+    play = cls(round=game.round, number=1, game_id=game.id, player_id=player.id)
+    db.session.add(play)
+    db.session.flush()
+    for card in cards:
+      card.play_id = play.id
+    return play
