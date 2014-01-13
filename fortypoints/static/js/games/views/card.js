@@ -9,7 +9,7 @@ CARD = (function() {
         location.href = '#game-state'
         $('.game-alert').delay(1000).fadeOut('slow');
       } else {
-        $('.game-alert').html('<div class="alert alert-danger">' + FortyPoints Server Error +'</div>');
+        $('.game-alert').html('<div class="alert alert-danger">FortyPoints Server Error</div>');
         $('.game-alert').show();
         location.href = '#game-state'
         $('.game-alert').delay(1000).fadeOut('slow');
