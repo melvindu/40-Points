@@ -63,6 +63,8 @@ class Player(db.Model, ModelMixin):
   def play(self, cards):
     if not self.game.round_plays:
       play = Play.Round(self.game, self, cards)
+      for card in self.get_cards(cards):
+        card.play_id = play.id
     else:
       # do play validation
       pass
@@ -182,6 +184,4 @@ class Play(db.Model, ModelMixin):
     play = cls(round=game.round, number=1, game_id=game.id, player_id=player.id)
     db.session.add(play)
     db.session.flush()
-    for card in cards:
-      card.play_id = play.id
     return play
