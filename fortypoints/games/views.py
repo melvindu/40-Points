@@ -170,6 +170,7 @@ def play_cards(game_id):
   update_game_client(game_id, 'scoreboard:update', render_scores(players))
 
 @game.route('/cover-cards/<int:game_id>', methods=['POST'])
+@game_response(['game:update', 'player:update'])
 @requires('game', 'cards', 'lead', 'active')
 def cover_cards(game_id):
   game = get_game(game_id)
