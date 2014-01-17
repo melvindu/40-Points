@@ -16,7 +16,7 @@ class Flip(object):
       raise FlipError('No cards to flip')
     if not all(card.num in flippable_nums for card in cards):
       raise FlipError('Can\'t flip non-level card')
-      
+
     # check nonequal cards
     if len(cards) > 1:
       if len(set(cards)) > 1:
@@ -28,7 +28,7 @@ class Flip(object):
     return len(self.cards)
 
   def __eq__(self, other):
-    self.cards == other.cards
+    return self.cards == other.cards
 
   def __lt__(self, other):
     return not (self == other) and len(self) < len(other)
@@ -58,7 +58,7 @@ class GameCard(Card):
 
   def __repr__(self):
     return '<GameCard \'{name}\'>'.format(name=self.name)
-    
+
   def __eq__(self, other):
     return self.suit == other.suit and self.num == other.num
 
@@ -71,7 +71,7 @@ class GameCard(Card):
       return True
     else:
       if self.game.plays:
-        if self.suit == game.round_suit:
+        if self.suit == self.game.round_suit:
           return self.num < other.num
         else:
           return True
@@ -87,7 +87,7 @@ class GameCard(Card):
       return False
     else:
       if self.game.plays:
-        if self.suit == game.round_suit:
+        if self.suit == self.game.round_suit:
           return self.num > other.num
         else:
           return False

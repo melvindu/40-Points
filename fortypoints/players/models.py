@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 import fortypoints as fp
 
 from fortypoints.cards import Card, constants as CARD, Flip, GameCard
@@ -134,7 +136,7 @@ class Player(db.Model, ModelMixin):
 
   def __str__(self):
     return '<Player \'{user}\' level={level} house={house} game_id={game_id}>'.format(
-                      user=self.user.name, 
+                      user=self.user.name,
                       level=self.level,
                       house=self.house,
                       game_id=self.game_id
@@ -164,35 +166,73 @@ class Play(db.Model, ModelMixin):
       if not all(game_card.is_trump for game_card in game_cards):
         raise GameError('Cannot start a round with cards in multiple suits')
 
-    if len(cards) != 1:
-      card_counts = defaultdict(int)
-      for card in cards:
-        card_counts[(card.num, card.suit)] += 1
+    if not cls.numerically_linked(cards):
+      raise GameError('Cards are not numerically linked')
+    else:
+      tuple_sizes = [len(tup) for tup in cls.tuples(cards)]
+      diff_tuple_sizes = len(set(tuple_sizes))
+      has_onetuple = any(tuple_size == 1 for tuple_size in tuple_sizes)
+      if not diff_tuple_sizes == 1 or has_onetuple:
+        if not cls.is_top_k(game, player, cards):
+          raise GameError('Cards are not topK cards')
 
-      if len(set(card_counts.values())) != 1:
-        # validate topk play
-        compare_game_cards = lambda card, other: other.is_trump if card.is_trump else card.suit == other.suit
-
-        other_cards = []
-        for other_player in game.players:
-          if player.id == other_player.id:
-            continue
-          else:
-            other_cards.extend(other_player.hand)
-
-        other_game_cards = []
-        for game_card in game_cards:
-          for other_card in other_cards:
-            other_game_card = GameCard(game, other_card)
-            if compare_game_cards(game_card, other_game_card):
-              other_game_cards.append(other_game_card)
-
-        for game_card in game_cards:
-          for other_game_card in other_game_cards:
-            if not game_card > other_game_card:
-              raise GameError('Attempted Top K play without Top K cards')
 
     play = cls(round=game.round, number=1, game_id=game.id, player_id=player.id)
     db.session.add(play)
     db.session.flush()
     return play
+
+  @classmethod
+  def numerically_linked(cls, cards):
+    prev_card = None
+    for card in sorted(cards):
+      if not prev_card:
+        prev_card = card
+      elif card.num - prev_card.num > 1:
+        return False
+      else:
+        prev_card = card
+
+    return True
+
+  @classmethod
+  def tuples(cls, cards):
+    tup = []
+    tuples = []
+    for card in sorted(cards):
+      if not tup:
+        tup.append(card)
+      else:
+        if all(card == tup_card for tup_card in tup):
+          tup.append(card)
+        else:
+          tuples.append(tup)
+          tup = []
+    return tuples
+
+
+  @classmethod
+  def is_top_k(cls, game, player, cards):
+    game_cards = [GameCard(game, card) for card in cards]
+    compare_game_cards = lambda card, other: other.is_trump if card.is_trump else card.suit == other.suit
+
+    other_cards = []
+    for other_player in game.players:
+      if player.id == other_player.id:
+        continue
+      else:
+        other_cards.extend(other_player.hand)
+
+    other_game_cards = []
+    for game_card in game_cards:
+      for other_card in other_cards:
+        other_game_card = GameCard(game, other_card)
+        if compare_game_cards(game_card, other_game_card):
+          other_game_cards.append(other_game_card)
+
+    for game_card in game_cards:
+      for other_game_card in other_game_cards:
+        if not game_card > other_game_card:
+          return False
+
+    return True
