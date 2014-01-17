@@ -65,11 +65,10 @@ class Player(db.Model, ModelMixin):
   def play(self, cards):
     if not self.game.round_plays:
       play = Play.Round(self.game, self, cards)
-      for card in self.get_cards(cards):
-        card.play_id = play.id
     else:
-      # do play validation
-      pass
+      play = Play.Play(self.game, self, cards)
+    for card in self.get_cards(cards):
+      card.play_id = play.id
 
   def get_cards(self, cards):
     my_cards = self.hand
@@ -153,6 +152,30 @@ class Play(db.Model, ModelMixin):
 
   game = db.relationship('Game', foreign_keys=game_id, backref=db.backref('plays', lazy='dynamic'))
   player = db.relationship('Player', backref=db.backref('plays', lazy='dynamic'))
+
+  @classmethod
+  def Play(cls, game, player, cards):
+    plays = game.round_plays
+    first_play = plays[0]
+    if len(cards) != len(first_play.cards):
+      raise GameError('Must play the same number of cards as the leading play')
+
+    num_cards_in_suit = len([card for card in cards if \
+                             GameCard(game, card).same_game_suit(GameCard(game, first_play.cards[0]))])
+
+    for first_card in first_play.cards:
+      first_game_card = GameCard(game, first_card)
+      for card in cards:
+        game_card = GameCard(game, card)
+        if not first_game_card.same_game_suit(game_card):
+          if num_cards_in_suit > len(first_play.cards):
+            raise GameError('Must play cards of the same suit as the leading play')
+
+    play_number = max([play.number for play in plays]) + 1
+    play = cls(round=game.round, number=play_number, game_id=game.id, player_id=player.id)
+    db.session.add(play)
+    db.session.flush()
+    return play
 
   @classmethod
   def Round(cls, game, player, cards):

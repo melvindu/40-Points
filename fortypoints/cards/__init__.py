@@ -56,6 +56,9 @@ class GameCard(Card):
            self.suit == self.trump_suit or \
            self.num in CARD.JOKERS
 
+  def same_game_suit(self, game_card):
+    return game_card.is_trump if self.is_trump else game_card.suit == self.suit
+
   def __repr__(self):
     return '<GameCard \'{name}\'>'.format(name=self.name)
 
