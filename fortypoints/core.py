@@ -2,10 +2,14 @@
     core module
 """
 
+from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
 #: Flask-SQLAlchemy extension instance
 db = SQLAlchemy()
+
+# Flask login manager
+login_manager = LoginManager()
 
 
 class Service(object):

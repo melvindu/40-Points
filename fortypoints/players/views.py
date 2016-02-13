@@ -4,10 +4,10 @@ from collections import defaultdict
 from flask import Blueprint, flash, get_template_attribute, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
-import fortypoints as fp
 from fortypoints.template import templated
 from fortypoints.cards import Flip
 from fortypoints.cards.exceptions import FlipError
+from fortypoints.core import db
 from fortypoints.games import create_game, get_game, constants as games
 from fortypoints.games.decorators import game_required
 from fortypoints.games.forms import NewGameForm
@@ -19,7 +19,6 @@ from fortypoints.users import get_user
 
 player = Blueprint('players', __name__, template_folder='templates/players')
 
-db = fp.db
 
 @player.route('/<int:player_id>')
 @game_required

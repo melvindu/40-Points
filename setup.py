@@ -1,5 +1,6 @@
 import fortypoints as fp
+from fortypoints.core import db
 
 fp.create_app().test_request_context().push()
-fp.db.create_all()
+db.create_all()
 

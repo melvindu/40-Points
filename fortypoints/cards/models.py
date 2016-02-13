@@ -1,12 +1,10 @@
 import random
 
-import fortypoints as fp
 from fortypoints.cards import constants as CARD
 from fortypoints.cards.exceptions import CardError
+from fortypoints.core import db
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
-
-db = fp.db
 
 
 class CardMixin(object):
@@ -25,7 +23,7 @@ class CardMixin(object):
       num = CARD.NUMBER[self.num]
       suit = '{suit}s'.format(suit=CARD.SUIT[self.suit])
       return '{num} of {suit}'.format(num=num, suit=suit).title()
-      
+
   @property
   def num(self):
     return self._num
@@ -57,7 +55,7 @@ class CardMixin(object):
 
   def __repr__(self):
     return '<Card \'{name}\'>'.format(name=self.name)
-    
+
   def __eq__(self, other):
     return self.suit == other.suit and self.num == other.num
 

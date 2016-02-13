@@ -1,14 +1,13 @@
 from collections import defaultdict
 import random
-import fortypoints as fp
 
 from fortypoints.cards import Card, constants as CARD, GameCard
+from fortypoints.core import db
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
 from fortypoints.games.exceptions import GameError
 from fortypoints.players import get_player, get_player_by_id
 
-db = fp.db
 
 class Game(db.Model, ModelMixin):
   __tablename__ = 'game'
@@ -20,9 +19,9 @@ class Game(db.Model, ModelMixin):
   _state = db.Column('state', db.SmallInteger(unsigned=True), nullable=False)
   next_game_id = db.Column(db.Integer(unsigned=True), db.ForeignKey(id), index=True)
 
-  next_game = db.relationship('Game', 
-                              uselist=False, 
-                              remote_side=[id], 
+  next_game = db.relationship('Game',
+                              uselist=False,
+                              remote_side=[id],
                               backref=db.backref('previous_game', uselist=False))
 
   def __init__(self, num_players, level, first=False):
@@ -63,7 +62,7 @@ class Game(db.Model, ModelMixin):
     elif self.trump_number == CARD.BIG_JOKER:
       return 'BJ'
     else:
-      return '{0}{1}'.format(CARD.NUMBER[self.trump_number], 
+      return '{0}{1}'.format(CARD.NUMBER[self.trump_number],
                              CARD.SUIT[self.trump_suit]).upper()
 
   @property
@@ -159,7 +158,7 @@ class Game(db.Model, ModelMixin):
 
   def __repr__(self):
     return '<Game size={size} trump_number={num} trump_suit={suit}>'.format(
-            size=self.size, 
+            size=self.size,
             num=self.trump_number,
             suit=self.trump_suit
     )

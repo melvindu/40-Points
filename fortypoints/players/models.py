@@ -1,14 +1,12 @@
 from collections import defaultdict
 
-import fortypoints as fp
-
 from fortypoints.cards import Card, constants as CARD, Flip, GameCard
 from fortypoints.cards.exceptions import CardError
+from fortypoints.core import db
 from fortypoints.models import ModelMixin
 from fortypoints.games import constants as GAME
 from fortypoints.games.exceptions import GameError
 
-db = fp.db
 
 class Player(db.Model, ModelMixin):
   __tablename__ = 'player'

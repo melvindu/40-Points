@@ -1,11 +1,10 @@
 from flask.ext.login import UserMixin
 from werkzeug.security import check_password_hash, generate_password_hash
 
-import fortypoints as fp
+from fortypoints.core import db
 from fortypoints.models import ModelMixin
 from fortypoints.users import constants as USER
 
-db = fp.db
 
 class User(db.Model, ModelMixin, UserMixin):
   __tablename__ = 'user'

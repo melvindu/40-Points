@@ -1,7 +1,6 @@
-import fortypoints as fp
+from fortypoints.core import db
 from fortypoints.players.models import Player
 
-db = fp.db
 
 def get_player(game, user):
   return Player.get(game_id=game.id, user_id=user.id)

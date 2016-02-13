@@ -1,11 +1,9 @@
 import random
 
-import fortypoints as fp
 from fortypoints.cards import constants as CARD
 from fortypoints.cards.exceptions import FlipError
 from fortypoints.cards.models import Card as CardModel, CardMixin as Card
-
-db = fp.db
+from fortypoints.core import db
 
 
 class Flip(object):
@@ -131,5 +129,5 @@ def create_deck(size=1, game_id=None):
       card_model.game_id = game_id
     cards.append(card_model)
   db.session.add_all(cards)
-  fp.db.session.commit()
+  db.session.commit()
   return cards

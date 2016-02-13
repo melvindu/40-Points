@@ -3,11 +3,10 @@ import random
 
 from sqlalchemy.exc import IntegrityError
 
-import fortypoints as fp
+from fortypoints.core import db
 from fortypoints.users.models import User
 from fortypoints.users.exceptions import InvalidPasswordException
 
-db = fp.db
 
 user_salts = {}
 user_keys = {}

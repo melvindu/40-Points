@@ -1,13 +1,10 @@
 import os
 
 from flask import Flask, g, redirect, url_for, session
-from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
 
+from fortypoints.core import db, login_manager
 from config import SECRET_KEY, SQLALCHEMY_DATABASE_URI
-
-db = SQLAlchemy()
-login_manager = LoginManager()
 
 
 def create_app():

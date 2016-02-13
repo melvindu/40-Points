@@ -5,12 +5,12 @@ from collections import defaultdict
 from flask import Blueprint, flash, get_template_attribute, jsonify, redirect, render_template, request, url_for
 from flask_login import current_user, login_required
 
-import fortypoints as fp
 from fortypoints.template import templated
 from fortypoints.cards import Flip
 from fortypoints.cards.decorators import cards_required, get_cards_from_form
 from fortypoints.cards.exceptions import CardError, FlipError
 from fortypoints.cards.models import CardMixin
+from fortypoints.core import db
 from fortypoints.games import create_game, get_game, constants as GAME
 from fortypoints.games.decorators import game_required, game_response, requires
 from fortypoints.games.exceptions import GameError
@@ -22,8 +22,6 @@ from fortypoints.players.decorators import player_required
 from fortypoints.users import get_user
 
 game = Blueprint('games', __name__, template_folder='templates/games')
-
-db = fp.db
 
 
 @game.route('/<int:game_id>')
@@ -169,9 +167,9 @@ def flip_card(game_id):
 def play_cards(game_id):
   game = get_game(game_id)
   if game.state != GAME.PLAYING:
-    raise GameError('Game State is {state}, not {play}'.format(state=GAME.STATES[game.state], 
+    raise GameError('Game State is {state}, not {play}'.format(state=GAME.STATES[game.state],
                                                                play=GAME.STATES[GAME.PLAYING]))
-  
+
   current_player = get_player(game, current_user)
   cards = get_cards_from_form(request.form)
   current_player.play(cards)
