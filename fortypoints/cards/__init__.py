@@ -6,6 +6,66 @@ from fortypoints.cards.models import Card as CardModel, CardMixin as Card
 from fortypoints.core import db
 
 
+class BaseCard(object):
+  def __init__(self, num, suit):
+    self.num = num
+    self.suit = suit
+
+  @property
+  def name(self):
+    if self.num == CARD.SMALL_JOKER:
+      return 'Small Joker'
+    elif self.name == CARD.BIG_JOKER:
+      return 'Big Joker'
+    else:
+      num = CARD.NUMBER[self.num]
+      suit = '{suit}s'.format(suit=CARD.SUIT[self.suit])
+      return '{num} of {suit}'.format(num=num, suit=suit).title()
+
+  @property
+  def num(self):
+    return self._num
+
+  @num.setter
+  def num(self, num):
+    if num not in (CARD.NUMBERS + CARD.JOKERS):
+      raise CardError('Card() value is invalid')
+    self._num = num
+
+  @property
+  def suit(self):
+    return self._suit
+
+  @suit.setter
+  def suit(self, suit):
+    if suit not in (CARD.SUITS + CARD.JOKERS):
+      raise CardError('Card() suit is invalid')
+    self._suit = suit
+
+  def __repr__(self):
+    return '<BaseCard \'{name}\'>'.format(name=self.name)
+
+  def __eq__(self, other):
+    return type(self) == type(other) and self.suit == other.suit and self.num == other.num
+
+
+class FortyPointsCard(BaseCard):
+  def __init__(self, num, suit):
+    super(FPCard, self).__init__(num, suit)
+
+  @property
+  def points(self):
+    if self.num == CARD.FIVE:
+      return 5
+    elif self.num in (CARD.TEN, CARD.KING):
+      return 10
+    else:
+      return 0
+
+  def __repr__(self):
+    return '<FPCard \'{name}\'>'.format(name=self.name)
+
+
 class Flip(object):
   def __init__(self, game, cards):
     # check unflippable
