@@ -155,6 +155,15 @@ class GameCard(Card):
       else:
         return True
 
+
+class CardGroup(object):
+  def __init__(self, cards):
+    self.cards = cards
+
+  def add_card(self, card):
+    self.cards.append(card)
+
+
 class Deck(object):
   def __init__(self, size=1):
     deck = []
@@ -173,8 +182,20 @@ class Deck(object):
   def sort(self):
     self.cards.sort()
 
+  def pop(self):
+    return self.cards.pop()
+
+  def deal(self):
+    return self.pop()
+
   def __iter__(self):
     return iter(self.cards)
+
+  def __len__(self):
+    return len(self.cards)
+
+  def __nonzero__(self):
+    return bool(self.cards)
 
 
 def create_deck(size=1, game_id=None):
