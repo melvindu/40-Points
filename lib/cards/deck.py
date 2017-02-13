@@ -7,7 +7,7 @@ class Deck(object):
 	def __init__(self):
 		deck = []
 		for suit in CARD.SUITS:
-			for num in CARD.NUMBERS:
+			for num in CARD.VALUES:
 				card = Card(suit, num)
 				deck.append(card)
 		for joker in CARD.JOKERS:

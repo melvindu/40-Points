@@ -10,8 +10,6 @@ SUIT = {
 	CLUB: 'club',
 	HEART: 'heart',
 	SPADE: 'spade',
-	SMALL_JOKER: 'small_joker',
-	BIG_JOKER: 'big_joker'
 }
 
 TWO = 2
@@ -30,10 +28,10 @@ ACE = 14
 SMALL_JOKER = 15
 BIG_JOKER = 16
 
-NUMBERS = (TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
-					 NINE, TEN, JACK, QUEEN, KING, ACE)
+VALUES = (TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT,
+					NINE, TEN, JACK, QUEEN, KING, ACE)
 
-NUMBER = {
+VALUE = {
 	TWO: 'two',
 	THREE: 'three',
 	FOUR: 'four',
