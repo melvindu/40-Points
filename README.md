@@ -33,3 +33,8 @@ The following assumes you have all of the recommended tools listed above install
     
     $ python run.py
 
+### Generating the sphinx docs
+
+    $ sphinx-apidoc -o docs <module> -f
+    $ cd docs
+    $ make html
