@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>cards Package &mdash; lib  documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="lib  documentation" href="index.html" />
+    <link rel="up" title="lib Package" href="lib.html" />
+    <link rel="prev" title="lib Package" href="lib.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lib.html" title="lib Package"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">lib  documentation</a> &raquo;</li>
+          <li><a href="lib.html" accesskey="U">lib Package</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="cards-package">
+<h1>cards Package<a class="headerlink" href="#cards-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-lib.cards.card">
+<span id="card-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">card</span></tt> Module<a class="headerlink" href="#module-lib.cards.card" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.cards.card.Card">
+<em class="property">class </em><tt class="descclassname">lib.cards.card.</tt><tt class="descname">Card</tt><big>(</big><em>suit</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/lib/cards/card.html#Card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.card.Card" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Represents a basic Card. Holds a suit and a value.</p>
+<p>All cards should have a suit and value, with exception for jokers. Jokers have a value with no suit.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>suit</strong> (<a class="reference internal" href="#lib.cards.card.Suit" title="lib.cards.card.Suit"><tt class="xref py py-class docutils literal"><span class="pre">Suit</span></tt></a> or None) &#8211; the card suit.</li>
+<li><strong>value</strong> (<a class="reference internal" href="#lib.cards.card.Value" title="lib.cards.card.Value"><tt class="xref py py-class docutils literal"><span class="pre">Value</span></tt></a>) &#8211; the card value.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="lib.cards.card.Suit">
+<em class="property">class </em><tt class="descclassname">lib.cards.card.</tt><tt class="descname">Suit</tt><big>(</big><em>suit</em><big>)</big><a class="reference internal" href="_modules/lib/cards/card.html#Suit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.card.Suit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Represents a basic card suit.</p>
+<p>Suit values are stored as integers.
+Diamonds is represented by 0.
+Club is represented by 1.
+Heart is represented by 2.
+Spade is represented by 3.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>suit</strong> (<em>int</em>) &#8211; A suit value (0-3).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="class">
+<dt id="lib.cards.card.Value">
+<em class="property">class </em><tt class="descclassname">lib.cards.card.</tt><tt class="descname">Value</tt><big>(</big><em>value</em><big>)</big><a class="reference internal" href="_modules/lib/cards/card.html#Value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.card.Value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Represents a basic card value.</p>
+<p>Two through ten are represented by their actual numerical values.
+A Jack is represented by 11.
+A Queen is represented by 12.
+A King is represented by 13.
+An Ace is represented by 14.
+A Small Joker is represented by 15.
+A Big Joker is represented by 16.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> (<em>int</em>) &#8211; A card value.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib.cards.constants">
+<span id="constants-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">constants</span></tt> Module<a class="headerlink" href="#module-lib.cards.constants" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-lib.cards.deck">
+<span id="deck-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">deck</span></tt> Module<a class="headerlink" href="#module-lib.cards.deck" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.cards.deck.Deck">
+<em class="property">class </em><tt class="descclassname">lib.cards.deck.</tt><tt class="descname">Deck</tt><a class="reference internal" href="_modules/lib/cards/deck.html#Deck"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.deck.Deck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<dl class="method">
+<dt id="lib.cards.deck.Deck.pop">
+<tt class="descname">pop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/lib/cards/deck.html#Deck.pop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.deck.Deck.pop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lib.cards.deck.Deck.shuffle">
+<tt class="descname">shuffle</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/lib/cards/deck.html#Deck.shuffle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.deck.Deck.shuffle" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="lib.cards.deck.Deck.sort">
+<tt class="descname">sort</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/lib/cards/deck.html#Deck.sort"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.deck.Deck.sort" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib.cards.exceptions">
+<span id="exceptions-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">exceptions</span></tt> Module<a class="headerlink" href="#module-lib.cards.exceptions" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="lib.cards.exceptions.InvalidCardError">
+<em class="property">exception </em><tt class="descclassname">lib.cards.exceptions.</tt><tt class="descname">InvalidCardError</tt><a class="reference internal" href="_modules/lib/cards/exceptions.html#InvalidCardError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.exceptions.InvalidCardError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="lib.cards.exceptions.InvalidSuitError">
+<em class="property">exception </em><tt class="descclassname">lib.cards.exceptions.</tt><tt class="descname">InvalidSuitError</tt><a class="reference internal" href="_modules/lib/cards/exceptions.html#InvalidSuitError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.exceptions.InvalidSuitError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="lib.cards.exceptions.InvalidValueError">
+<em class="property">exception </em><tt class="descclassname">lib.cards.exceptions.</tt><tt class="descname">InvalidValueError</tt><a class="reference internal" href="_modules/lib/cards/exceptions.html#InvalidValueError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.exceptions.InvalidValueError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">exceptions.Exception</span></tt></p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lib.cards.factory">
+<span id="factory-module"></span><h2><tt class="xref py py-mod docutils literal"><span class="pre">factory</span></tt> Module<a class="headerlink" href="#module-lib.cards.factory" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lib.cards.factory.CardFactory">
+<em class="property">class </em><tt class="descclassname">lib.cards.factory.</tt><tt class="descname">CardFactory</tt><a class="reference internal" href="_modules/lib/cards/factory.html#CardFactory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.factory.CardFactory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Factory class for creating cards. The factory contains validations to ensure that cards generated by this class
+are valid cards and contain valid suits and values.</p>
+<dl class="classmethod">
+<dt id="lib.cards.factory.CardFactory.big_joker">
+<em class="property">classmethod </em><tt class="descname">big_joker</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/lib/cards/factory.html#CardFactory.big_joker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.factory.CardFactory.big_joker" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a big joker <tt class="xref py py-class docutils literal"><span class="pre">Card</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lib.cards.factory.CardFactory.card">
+<em class="property">classmethod </em><tt class="descname">card</tt><big>(</big><em>suit</em>, <em>value</em><big>)</big><a class="reference internal" href="_modules/lib/cards/factory.html#CardFactory.card"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.factory.CardFactory.card" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a card object with validations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>suit</strong> (<em>int or None</em>) &#8211; The card suit.</li>
+<li><strong>value</strong> (<em>int</em>) &#8211; The card value.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a <a class="reference internal" href="#lib.cards.card.Card" title="lib.cards.card.Card"><tt class="xref py py-class docutils literal"><span class="pre">lib.cards.card.Card</span></tt></a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="lib.cards.factory.CardFactory.small_joker">
+<em class="property">classmethod </em><tt class="descname">small_joker</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/lib/cards/factory.html#CardFactory.small_joker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#lib.cards.factory.CardFactory.small_joker" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">a small joker <tt class="xref py py-class docutils literal"><span class="pre">Card</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">cards Package</a><ul>
+<li><a class="reference internal" href="#module-lib.cards.card"><tt class="docutils literal"><span class="pre">card</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-lib.cards.constants"><tt class="docutils literal"><span class="pre">constants</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-lib.cards.deck"><tt class="docutils literal"><span class="pre">deck</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-lib.cards.exceptions"><tt class="docutils literal"><span class="pre">exceptions</span></tt> Module</a></li>
+<li><a class="reference internal" href="#module-lib.cards.factory"><tt class="docutils literal"><span class="pre">factory</span></tt> Module</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="lib.html"
+                        title="previous chapter">lib Package</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/lib.cards.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="lib.html" title="lib Package"
+             >previous</a> |</li>
+        <li><a href="index.html">lib  documentation</a> &raquo;</li>
+          <li><a href="lib.html" >lib Package</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017, Author.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
