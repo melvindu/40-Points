@@ -1,8 +1,10 @@
 class InvalidCardError(Exception):
-	pass
+  pass
+
 
 class InvalidSuitError(Exception):
-	pass
+  pass
+
 
 class InvalidValueError(Exception):
-	pass
+  pass
