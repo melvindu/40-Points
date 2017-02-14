@@ -17,7 +17,7 @@ class CardFactory(object):
     :type suit: int or None
     :param value: The card value.
     :type value: int
-    :return: a :class:`Card`.
+    :return: a :class:`lib.cards.card.Card`.
     """
     if value in CARD.JOKERS and suit is not None:
       raise InvalidCardError
@@ -39,13 +39,13 @@ class CardFactory(object):
   @classmethod
   def big_joker(cls):
     """
-    :return: a big joker :class:`Card`.
+    :return: a big joker :class:`lib.cards.card.Card`.
     """
     return cls.card(None, CARD.BIG_JOKER)
 
   @classmethod
   def small_joker(cls):
     """
-    :return: a small joker :class:`Card`.
+    :return: a small joker :class:`lib.cards.card.Card`.
     """
     return cls.card(None, CARD.SMALL_JOKER)

@@ -3,10 +3,11 @@ class Card(object):
   Represents a basic Card. Holds a suit and a value.
 
   All cards should have a suit and value, with exception for jokers. Jokers have a value with no suit.
+
   :param suit: the card suit.
-  :type suit: Suit or None
+  :type suit: :class:`Suit` or None
   :param value: the card value.
-  :type value: Value
+  :type value: :class:`Value`
   """
   def __init__(self, suit, value):
     self.suit = suit
